@@ -1,22 +1,103 @@
-.textbox {
+#main-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/background-2.jpg');
+    background-size: contain;
+}
+
+
+
+.splash-container, .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.splash-container {
+    width: 70%;
+}
+
+.login-container {
+    width: 35%;
+}
+
+.title-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: first baseline;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10%;
 
 }
 
-.account-form {
+
+.title-container h1 {
+    scale: 0.8;
+    margin: 0%;
+}
+
+#title {
+    scale: 1;
+    background: linear-gradient(180deg, #00ff73, #007206);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-form {
+    border-radius: var(--border-radius-md);
+    background-color: rgba(255, 255, 255, 0.01);
+    width: 90%;
+    height: 90%;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-width: var(--border-width-sm);
+    backdrop-filter: blur(5px);
     gap: 10px;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 5%;
+    box-sizing: border-box;
+}
+.textbox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
 }
 
-.account-form input {
-    padding: 10px;
-    border-radius: 5px;
-    border-style: none;
-    background-color: rgb(19, 19, 19);
+.textbox span{
+    font-size: larger;
+    font-weight: 700;
+}
+
+.login-options {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.login-form input[type="email"], .login-form input[type="password"]{
+    padding: var(--form-input-padding-lg);
+    border-radius: var(--border-radius-md);
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    background-color: transparent;
+    font-size: var(--font-size-lg);
+}
+
+.remember-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }
