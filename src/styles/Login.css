@@ -1,21 +1,31 @@
 #main-wrapper{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
+   
+
+}
+
+.background-image-container {
     width: 100vw;
     height: 100vh;
     background-image: url('/background-2.jpg');
     background-size: contain;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
 }
-
 
 
 .splash-container, .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 900px;
     box-sizing: border-box;
 }
 
@@ -25,6 +35,20 @@
 
 .login-container {
     width: 35%;
+}
+
+.login-form-container {
+    width: 80%;
+    padding: 5%;
+    border-style: solid;
+    border-width: var(--border-width-sm);
+    border-radius: var(--border-radius-md);
+    background-color: rgba(255, 255, 255, 0.01);
+    
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .title-container {
@@ -45,25 +69,20 @@
 
 #title {
     scale: 1;
-    background: linear-gradient(180deg, #00ff73, #007206);
+    background: linear-gradient(180deg, var(--primary-color), var(--dark-primary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .login-form {
-    border-radius: var(--border-radius-md);
-    background-color: rgba(255, 255, 255, 0.01);
-    width: 90%;
-    height: 90%;
+    
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-style: solid;
-    border-width: var(--border-width-sm);
-    backdrop-filter: blur(5px);
     gap: 10px;
-    padding: 5%;
     box-sizing: border-box;
 }
 .textbox {
@@ -86,7 +105,7 @@
     margin-top: 10px;
 }
 
-.login-form input[type="email"], .login-form input[type="password"]{
+.login-form input[type="email"], .login-form input[type="password"], .login-form input[type="text"]{
     padding: var(--form-input-padding-lg);
     border-radius: var(--border-radius-md);
     border-style: solid;
@@ -100,4 +119,29 @@
     display: flex;
     flex-direction: row;
     gap: 5px;
+}
+
+#login-button {
+    transition: background-color var(--transition-med) ease;
+    width: 100%;
+    background-color: #00ce33;
+    border-style: none;
+    color: white;
+    padding: var(--form-input-padding-lg);
+}
+
+#login-button:hover {
+    background-color: #00741d;
+}
+
+#new-account-link {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-top: 10%;
+}
+
+.login-wrapper {
+    margin: 0vh;
+    padding: 0vh;
 }

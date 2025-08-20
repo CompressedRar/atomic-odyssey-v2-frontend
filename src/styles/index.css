@@ -29,6 +29,13 @@
   --font-size-sm:8px;
   --font-size-md:12px;
   --font-size-lg:16px;
+
+  --primary-color: #00ff73;
+  --dark-primary-color: #007206;
+
+  --transition-short: 200ms;
+  --transition-med: 500ms;
+  --transition-long: 1000ms;
 }
 
 a {

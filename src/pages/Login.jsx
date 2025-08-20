@@ -9,6 +9,8 @@ function LoginPage(){
     const [email , setEmail] = useState("")
     const [password , setPassword] = useState("")
     const [error , setError] = useState("")
+    const [showPassword, setShowPassword] = useState("password")
+
 
     const handleSignIn = async (e) =>{
         e.preventDefault()
@@ -27,37 +29,54 @@ function LoginPage(){
         }
     } 
 
+    const toggleShowPassword = () => {
+        console.log("test")
+        if (showPassword == "password"){
+            setShowPassword("text")
+        }
+        else {
+            setShowPassword("password")
+        }
+    }
+
     return (
-        <div id="main-wrapper">
-            
+        <div id="main-wrapper" className = "login-wrapper">
+            <div className="background-image-container">
+
+            </div>
             <div className="login-container">
                 
-                <form action="" onSubmit={handleSignIn} className="login-form">
-                    <div className="title-container">
-                        <h1>Login to</h1>
-                        <h1 id="title">Atomic Odyssey</h1>
-                    </div>
-                    <div className="textbox">
-                        <span>Email</span>
-                        <input type="email" name = "email" placeholder="johndoe@gmail.com" required onChange={(element)=>{setEmail(element.target.value)}}/>
-                    </div>
-                    <div className="textbox">
-                        <span>Password</span>
-                        <input type="password" name = "password" placeholder="Password" required onChange={(element)=>{setPassword(element.target.value)}}/>
-                    </div>
-                    <div className="login-options">
-                        <div className="remember-container">
-                            <input type="checkbox" name="remember" id="remember" />
-                            <label htmlFor="remember">Show Password</label>
+                <div className="login-form-container">
+                    <form action="" onSubmit={handleSignIn} className="login-form">
+                        <div className="title-container">
+                            <h1>Login to</h1>
+                            <h1 id="title">Atomic Odyssey</h1>
                         </div>
-                        <div className="forgot-container">
-                            <a href="">Forgot Password</a>
+                        <div className="textbox">
+                            <span>Email</span>
+                            <input type="email" name = "email" placeholder="johndoe@gmail.com" required onChange={(element)=>{setEmail(element.target.value)}}/>
                         </div>
+                        <div className="textbox">
+                            <span>Password</span>
+                            <input type={showPassword} name = "password" placeholder="Password" required onChange={(element)=>{setPassword(element.target.value)}}/>
+                        </div>
+                        <div className="login-options">
+                            <div className="remember-container">
+                                <input type="checkbox" name="remember" id="remember" />
+                                <label htmlFor="remember" onClick={()=>{toggleShowPassword()}}>Show Password</label>
+                            </div>
+                            <div className="forgot-container">
+                                <a href="">Forgot Password</a>
+                            </div>
 
-                    </div>
-                    <button>Login</button>
-                    {error}
-                </form> 
+                        </div>
+                        <button id="login-button">Login</button>
+                        
+                    </form> 
+                    <span id="new-account-link">Don't have an account?<a href="/register">Click here.</a></span>
+                </div>
+
+                
             </div>
 
             
