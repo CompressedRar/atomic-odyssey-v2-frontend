@@ -24,16 +24,17 @@
 }
 
 .profile-button {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     border-style: dashed;
-    border-radius: 10px;
+    border-radius: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     font-weight: 200;
+    clip-path: circle();
     
 }
 
@@ -43,3 +44,36 @@
     margin-top: 20vh;
     margin-bottom: 20vh;
 }
+
+#profile-image-container {
+    max-width: 170%;
+ 
+    max-height: 170%;
+}
+
+.loading-screen {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    background-color: rgba(12,12,12,0.5);
+    backdrop-filter: blur(2px);
+    
+}
+
+.loading-screen label {
+    font-size: 1.5rem;
+}
+
+#loading-icon {
+    font-size: 7rem;
+    margin: 3%;
+    animation: loading 2s infinite;
+}
+

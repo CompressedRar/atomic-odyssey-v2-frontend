@@ -3,9 +3,9 @@ import {auth} from '../configs/FirebaseConfig'
 import { createUserWithEmailAndPassword, sendEmailVerification} from "firebase/auth";
 import '../styles/Login.css'
 import '../styles/SignUp.css'
-import MessageError from '../components/CustomAlerts.js'
+import msg from '../components/CustomAlerts.js'
 import axios from "axios"
-
+import '../styles/animations.css'
 
 function SignUpPage(){
     const [username , setUsername] = useState("")
@@ -15,40 +15,53 @@ function SignUpPage(){
     const [error , setError] = useState("")
     const [showPassword, setShowPassword] = useState("password")
     const [profile, setProfile] = useState(null)
-
+    const [profileBoxText, setProfileBoxText] = useState("Add Image")
+    const [preview, setPreview] = useState(null) 
 
     //make sure the yung password ay laging 8 characters
     const handleSignIn = async (e) =>{
         e.preventDefault()
         try {
-            console.log("signing in")
+            console.log("Validating Input")
+            if(username == null || username == ""){
+                msg.Error("Username must not be empty.")
+                return
+            }
+
+            if(email == null || username == ""){
+                msg.Error("Email must not be empty.")
+                return
+            }
+
+            if(profile == null){
+                msg.Error("Profile must not be empty.")
+                return
+            }
+
+            if(password != confrimPassword){
+                console.log(password + " " + confrimPassword)
+                msg.Error("Passwords must match.")
+                return
+            }
+
             var userCredentials = await createUserWithEmailAndPassword(auth ,email, password)
-            //console.log(userCredentials.user.uid)
-            
             var res = await handleServerCall(userCredentials.user.uid);
+            
+            //if successful
+
+            
             
             
         }
         catch(error){
             setError(error.message)
             console.log(error.message)
-            MessageError("Email address was already taken.")
+            msg.Error("Email address was already taken.")
         }
     } 
 
     const handleServerCall = async (uuid) =>{
         const formData = new FormData()
-
-        if(username == null || username == ""){
-            MessageError("Username must not be empty.")
-        }
-        if(email == null || username == ""){
-            MessageError("Email must not be empty.")
-        }
-        if(profile == null){
-            MessageError("File must not be empty.")
-        }
-
         formData.append("username", username)
         formData.append("uuid", uuid)
         formData.append("file", profile)
@@ -61,13 +74,22 @@ function SignUpPage(){
                 } 
             })
             console.log(result)
+            msg.Success(result["data"]['message'])
+
+            setConfirmPassword("")
+            setEmail("")
+            setPassword("")
+            setProfile(null)
+            setProfileBoxText("Add Image")
+            setUsername("")
+            setPreview(null)
+
+            
         }
         catch(exception){
             console.log(exception)
         }
     }
-
-    
 
     const toggleShowPassword = () => {
         console.log("test")
@@ -79,8 +101,28 @@ function SignUpPage(){
         }
     }
 
+    const handleProfilePicture = (e) => {
+        var newfile = e.target.files[0]
+        if (newfile){
+            setProfile(newfile)
+            setPreview(URL.createObjectURL(newfile))
+            setProfileBoxText("")
+        }
+        else {
+            setProfileBoxText("Upload Image")
+        }
+        
+
+    }
+
     return (
         <div id="main-wrapper" className="sign-wrapper">
+            <div className="loading-screen">
+                <span className="material-symbols-outlined" id="loading-icon">
+                    progress_activity
+                </span>
+                <label htmlFor="">Processing</label>
+            </div>
             <div className="background-image-container">
                 
             </div>
@@ -95,29 +137,33 @@ function SignUpPage(){
                         
                         <div className="textbox profile-container">
                             <span>Profile Picture</span>
-                            <input type="file" name = "profile-picture" id = "profile-picture" onChange={(e)=>{setProfile(e.target.files[0])}} accept="image/*"/>
+                            <input type="file" name = "profile-picture" id = "profile-picture" onChange={handleProfilePicture} accept="image/*" hidden/>
                             <label htmlFor="profile-picture" className="profile-button">
-                                <span>Add Image</span>
+                                
+                                    {profileBoxText}
+                                    <img src = {preview} alt="" id="profile-image-container" />
+                               
                             </label>
                         </div>
                         <div className="textbox">
                             <span>Username</span>
-                            <input type="text" name = "email" placeholder="John Doe" required onChange={(element)=>{setUsername(element.target.value)}}/>
+                            <input type="text" name = "email" placeholder="John Doe" required onChange={(element)=>{setUsername(element.target.value)}} value={username}/>
                         </div>
                         <div className="textbox">
                             <span>Email</span>
-                            <input type="email" name = "email" placeholder="johndoe@gmail.com" required onChange={(element)=>{setEmail(element.target.value)}}/>
+                            <input type="email" name = "email" placeholder="johndoe@gmail.com" required onChange={(element)=>{setEmail(element.target.value)}} value={email}/>
                         </div>
                         <div className="textbox">
                             <span>Password</span>
-                            <input type={showPassword} name = "password" placeholder="8 characters or more...."
+                            <input type={showPassword} name = "password" placeholder="8 characters or more...." value={password}
                             required onChange={(element)=>{setPassword(element.target.value)}}
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                             title="Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."/>
                         </div>
                         <div className="textbox">
                             <span>Confirm Password</span>
-                            <input type={showPassword} name = "password" placeholder="8 characters or more...." required onChange={(element)=>{setPassword(element.target.value)}}
+                            <input type={showPassword} name = "password" placeholder="8 characters or more...." required value={confrimPassword} 
+                            onChange={(element)=>{setConfirmPassword(element.target.value)}}
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                             title="Password must be at least 8 characters long, include uppercase, lowercase, number, and special character."/>
                         </div>
@@ -128,7 +174,7 @@ function SignUpPage(){
                             </div>
 
                         </div>
-                        <button id="login-button">Login</button>
+                        <button id="login-button">Register</button>
                         
                     </form> 
                     <span id="new-account-link">Already have an account?<a href="/">Click here.</a></span>
