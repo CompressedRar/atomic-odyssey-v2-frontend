@@ -6,3 +6,27 @@
         transform: rotate(720deg);
     }
 }
+
+@keyframes bob {
+    0% {
+        scale: 1;
+    }
+    50% {
+        scale: 1.05;
+    }
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes bob-active {
+    0% {
+        scale: 1.5;
+    }
+    50% {
+        scale: 1.7;
+    }
+    100% {
+        scale: 1.5;
+    }
+}

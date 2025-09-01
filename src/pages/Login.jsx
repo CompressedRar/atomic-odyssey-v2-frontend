@@ -3,7 +3,8 @@ import {auth} from '../configs/FirebaseConfig'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import '../styles/App.css';
 import '../styles/Login.css';
-import MessageError from '../components/CustomAlerts.js'
+import msg from '../components/CustomAlerts.js'
+import { Navigate } from "react-router-dom";
 
 function LoginPage(){
     const [email , setEmail] = useState("")
@@ -17,15 +18,12 @@ function LoginPage(){
         console.log(e)
         try {
             var userCredentials = await signInWithEmailAndPassword(auth ,email, password)
-            if (userCredentials.user.emailVerified){
-                MessageError("Test")
-            }
-            else {
-                MessageError("Test")
-            }
+            //msg.Success("Correct Credentials")
+            window.location.replace("/main")
+            
         }
         catch(error){
-            MessageError("The username or password is incorrect.")
+            msg.Error("The username or password is incorrect.")
         }
     } 
 

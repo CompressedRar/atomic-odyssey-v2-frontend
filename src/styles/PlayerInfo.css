@@ -1,0 +1,77 @@
+.player-info-container {
+    display: grid;
+    width: 100%;
+    height: 10vh;
+    background-image: linear-gradient(180deg, black, transparent);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-sizing: border-box;
+    padding-left: 10%;
+    padding-right: 10%;
+    gap: 20px;
+    padding-top: 2%;
+    grid-template-columns: 0.3fr 8fr 1fr;
+}
+
+
+.player-information {
+    display: flex;
+    flex-direction: row;
+    align-items: first baseline;
+    gap: 10px;
+}
+
+.player-ign {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.additional-player-info {
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8rem;
+    gap: 12px;
+}
+
+ .player-mmr, .player-star {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+ }
+
+.profile-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    align-self: first baseline;
+    border-style: solid;
+}
+
+.profile-image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.player-tools {
+    display: flex;
+    gap: 20px;
+    padding-top: 1%;
+    box-sizing: border-box;
+    justify-self: last baseline;
+}
+
+.player-tools span {
+    transition: all 300ms ease-in-out;
+}
+
+.player-tools span:hover {
+    color: #00ff73;
+}
