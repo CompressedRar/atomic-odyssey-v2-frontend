@@ -1,0 +1,127 @@
+.quizzes-container {
+    display: flex;
+    padding: 10%;
+    padding-top: 5%;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    scrollbar-width: none;
+    overflow: scroll;
+}
+
+
+.quizzes-container::-webkit-scrollbar {
+    display: none;
+}
+
+
+.quiz-modes-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 20px;
+    
+}
+
+.quiz-mode {
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: bisque;
+    cursor: pointer;
+}
+
+.quiz-bg {
+    width: 100%;
+    height: 100%;
+    animation: bob 4s infinite ease-in-out;
+}
+
+.quiz-desc {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateY(-200%);
+    padding: 4%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mode-name {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.mode-desc {
+    font-weight: 200;
+    font-size: 0.9rem;
+}
+
+.quiz-grad {
+    background-image: linear-gradient(90deg, black, transparent);
+    width: 160%;
+    height: 100%;
+    transform: translateY(-100%);
+}
+
+#classic .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-classic.webp");
+}
+
+#time .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-time.jpg");
+}
+
+#endless .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-endless.jpg");
+}
+
+#pvp .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-pvp.webp");
+}
+
+#nonmetals .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-nonmetals.webp");
+}
+
+#metalloids .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-metalloids.jpeg");
+}
+
+#metals .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-metals.jpg");
+}
+
+#noblegas .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/bg-noblegas.jpg");
+}

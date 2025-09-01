@@ -5,6 +5,7 @@ import "swiper/css/pagination";
 import {Pagination} from "swiper/modules"
 
 import Table from "./Table";
+import Quizzes from "./Quizzes";
 import PlayerInformation from "../components/PlayerInformation";
 import BackgroundVideo from "../components/BackgroundVideo";
 import "../styles/animations.css"
@@ -20,7 +21,7 @@ function Game() {
                         ${String(icon_name).toLowerCase()}
                     </span> <span class="bullet-name" style = "font-size: 0.6rem;">${bullet_name}</span>`
     }
-    const pages = [bulletMaker("table", "Table"), bulletMaker("quiz", "Quizzes"), bulletMaker("swords", "VS Mode"), bulletMaker("scoreboard", "Leaderboards")]
+    const pages = [bulletMaker("table", "Table"), bulletMaker("swords", "Play"), bulletMaker("scoreboard", "Leaderboards")]
     
     
     return (
@@ -36,10 +37,9 @@ function Game() {
                     }}} 
                     spaceBetween={500} 
                     slidesPerView={1} >
-                <SwiperSlide> <Table/> </SwiperSlide>
-                <SwiperSlide> <h1>TEST 1</h1> </SwiperSlide>
+                <SwiperSlide> <Table/></SwiperSlide>
+                <SwiperSlide> <Quizzes/>  </SwiperSlide>
                 <SwiperSlide> <h1>TEST 2</h1> </SwiperSlide>
-                <SwiperSlide> <h1>TEST 3</h1> </SwiperSlide>
             </Swiper>
         </div>
     )
