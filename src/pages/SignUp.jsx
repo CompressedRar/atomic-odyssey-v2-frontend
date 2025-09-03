@@ -18,6 +18,7 @@ function SignUpPage(){
     const [profileBoxText, setProfileBoxText] = useState("Add Image")
     const [preview, setPreview] = useState(null) 
 
+    const [isLoading, setLoading] = useState("none")
     //make sure the yung password ay laging 8 characters
     const handleSignIn = async (e) =>{
         e.preventDefault()
@@ -44,9 +45,10 @@ function SignUpPage(){
                 return
             }
 
+            setLoading("flex")
             var userCredentials = await createUserWithEmailAndPassword(auth ,email, password)
             var res = await handleServerCall(userCredentials.user.uid);
-            
+            setLoading("none")
             //if successful
 
             
@@ -55,6 +57,7 @@ function SignUpPage(){
         }
         catch(error){
             setError(error.message)
+            setLoading("none")
             console.log(error.message)
             msg.Error("Email address was already taken.")
         }
@@ -115,14 +118,16 @@ function SignUpPage(){
 
     }
 
+
     return (
         <div id="main-wrapper" className="sign-wrapper">
-            <div className="loading-screen">
-                <span className="material-symbols-outlined" id="loading-icon">
+            <div className="loading-screen" style={{display: isLoading}}>
+                <span className="material-symbols-outlined" id="loading-icon" >
                     progress_activity
                 </span>
                 <label htmlFor="">Processing</label>
             </div>
+            
             <div className="background-image-container">
                 
             </div>

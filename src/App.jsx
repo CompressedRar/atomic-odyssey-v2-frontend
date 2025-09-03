@@ -29,6 +29,14 @@ function App() {
           
         </Route>
       </Routes>
+
+      <Routes>
+
+        <Route element={<AuthLayout />}>
+          <Route path="/test" element = {<Game />}/>
+        </Route>
+
+      </Routes>
     </div>
   )
 }

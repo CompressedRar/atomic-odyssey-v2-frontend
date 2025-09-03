@@ -119,6 +119,10 @@ function Table(){
         
     }
 
+    const showELementInformation = () => {
+
+    }
+
     return(
         
         <div className="table-container">
@@ -169,6 +173,9 @@ function Table(){
                 }
                 
             </div>
+
+
+            
         </div>
     )
 }

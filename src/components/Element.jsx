@@ -14,6 +14,7 @@ function Element(props){
     const isEmpty = props.isEmpty ? props.isEmpty: false
     const color = props.Color ? `#${props.Color}` : "#ffffff"
 
+
     const isHighlighted = props.isHighlighted
 
     const [styling, setStyling] = useState({})
@@ -42,7 +43,29 @@ function Element(props){
             <span className="symbol">{symbol}</span>
             <span className="element-name">{elementName}</span>
             <span style={{opacity:0}}>{category}</span>
+
+            <div className="element-information-container ">
+                <div className="element-information">
+                    <div className="element-image-container">
+                        <img src="" alt="" />
+                    </div>
+                    <div className="element-stats-container">
+                        <span className="element-name-symbol-container">
+                            <span className="element-symbol"></span>
+                            <span className="element-stats-name"></span>
+                        </span>
+                    </div>
+                    <div className="element-model-container">
+
+                    </div>
+                    <div className="element-summary-container">
+
+                    </div>
+                </div>
+            </div>
         </div>
+
+        
     )
 }
 
