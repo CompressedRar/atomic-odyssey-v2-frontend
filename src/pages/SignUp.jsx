@@ -6,7 +6,7 @@ import '../styles/SignUp.css'
 import msg from '../components/CustomAlerts.js'
 import axios from "axios"
 import '../styles/animations.css'
-
+import BackgroundVideo from "../components/BackgroundVideo.jsx";
 function SignUpPage(){
     const [username , setUsername] = useState("")
     const [email , setEmail] = useState("")
@@ -128,9 +128,7 @@ function SignUpPage(){
                 <label htmlFor="">Processing</label>
             </div>
             
-            <div className="background-image-container">
-                
-            </div>
+            <BackgroundVideo></BackgroundVideo>
             <div className="login-container">
                 
                 <div className="login-form-container">

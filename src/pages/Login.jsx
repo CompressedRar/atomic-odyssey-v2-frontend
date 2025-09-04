@@ -5,6 +5,7 @@ import '../styles/App.css';
 import '../styles/Login.css';
 import msg from '../components/CustomAlerts.js'
 import { Navigate } from "react-router-dom";
+import BackgroundVideo from "../components/BackgroundVideo.jsx";
 
 function LoginPage(){
     const [email , setEmail] = useState("")
@@ -39,9 +40,7 @@ function LoginPage(){
 
     return (
         <div id="main-wrapper" className = "login-wrapper">
-            <div className="background-image-container">
-
-            </div>
+            <BackgroundVideo></BackgroundVideo>
             <div className="login-container">
                 
                 <div className="login-form-container">

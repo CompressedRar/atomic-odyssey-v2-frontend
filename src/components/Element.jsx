@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import ElementInformation from "./ElementInformation";
 
 
 function Element(props){
@@ -13,7 +14,7 @@ function Element(props){
     const density = props.density ? props.density: 0
     const isEmpty = props.isEmpty ? props.isEmpty: false
     const color = props.Color ? `#${props.Color}` : "#ffffff"
-
+    const imageLink = props.imageLink? props.imageLink: "None"
 
     const isHighlighted = props.isHighlighted
 
@@ -31,6 +32,7 @@ function Element(props){
     const toggleHighlight = () => {
         setStyling(isHighlighted? {backgroundColor: groups[category], color: "black"}: {})
     } 
+
     
     useEffect(()=> {
         
@@ -38,31 +40,13 @@ function Element(props){
     }, [])
     
     return (
-        <div className={ !isEmpty? `element ${category}`: "element empty-element"}>
+        <div className={ !isEmpty? `element ${category}`: "element empty-element"} onClick={props.onClick}>
             <span className="atomic-number">{atomicNumber}</span>
             <span className="symbol">{symbol}</span>
             <span className="element-name">{elementName}</span>
             <span style={{opacity:0}}>{category}</span>
 
-            <div className="element-information-container ">
-                <div className="element-information">
-                    <div className="element-image-container">
-                        <img src="" alt="" />
-                    </div>
-                    <div className="element-stats-container">
-                        <span className="element-name-symbol-container">
-                            <span className="element-symbol"></span>
-                            <span className="element-stats-name"></span>
-                        </span>
-                    </div>
-                    <div className="element-model-container">
-
-                    </div>
-                    <div className="element-summary-container">
-
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
         

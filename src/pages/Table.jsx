@@ -3,6 +3,7 @@ import { Logout } from "../components/Logout";
 import Element from "../components/Element"
 import elements from "../assets/periodic-table.json"
 import BackgroundVideo from "../components/BackgroundVideo";
+import ElementInformation from "../components/ElementInformation";
 
 import "../styles/Game.css"
 
@@ -11,6 +12,8 @@ function Table(){
 
     const [el, setElements] = useState(new Array())
     const [searchKeyword, setSearchKeyword] = useState("")
+
+    const [elementInformation, setInformation] = useState(null)
     const groups = {'nonmetal': "var(--nonmetal)", 
                     'noblegas' : "var(--noblegas)",
                     'alkaline-earth-metal': "var(--earthalkalinemetal)", 
@@ -68,15 +71,21 @@ function Table(){
                 allElementsInHTML = addEmptyElements(allElementsInHTML, 5)
             }
 
-            var newElement = <Element elementName = {elements[i]["name"]} 
+            var newElement = <Element elementName = {elements[i]["name"]}
+            id={elements[i]["number"]} 
             atomicNumber = {elements[i]["number"]} 
             symbol = {elements[i]["symbol"]}
             Color = {elements[i]["cpk-hex"]}
             category = {elements[i]["category"]}
+            onClick = {()=>{
+                showELementInformation(i)
+            }}
             ></Element>;
             
             
+            
             allElementsInHTML = [...allElementsInHTML, newElement]
+            
             count++
         }
         return allElementsInHTML
@@ -118,14 +127,25 @@ function Table(){
         
         
     }
-
-    const showELementInformation = () => {
-
-    }
+    
+    const [currentElement, setCurrentElement] = useState(null)
+    function showELementInformation (elementNames) {
+    
+        setCurrentElement(elementNames)
+        console.log("Natitrigger")
+    }   
 
     return(
         
+        
         <div className="table-container">
+            {currentElement && (
+                <ElementInformation 
+                    key={currentElement} 
+                    elementName={currentElement} 
+                    onClick={() => setCurrentElement(null)} 
+                />
+                )}
             <div className="search-container">
                 <input type="text" placeholder="Search element name, atomic number, group" onChange={checkAllElements}/>
             </div>

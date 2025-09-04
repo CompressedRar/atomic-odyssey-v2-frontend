@@ -411,16 +411,123 @@ body {
     color: black;
 }
 
-.element-stats-container {
-    display: flex;
-    justify-content: center;
+.element-information-container {
+    display: none;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     z-index: 120;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.05);
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     left: 0;
+    padding: 10%;
+    box-sizing: border-box;
+    padding-top: 30%;
+    overflow-y: scroll;
 }
 
+.element-information {
+    background-color: rgba(1, 5, 56, 0.7);
+    border-radius: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    scale: 0.7;
+    margin: -10%;
+    padding: 5%;
+    box-sizing: border-box;
+    border-style: solid;
+}
+
+.element-icons {
+    display: flex;
+    flex-direction: column;
+}
+.element-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 2rem;
+
+}
+
+.element-stat div{
+    font-weight: 800;
+
+}
+
+
+.element-image-container {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    
+} 
+
+.element-image-container img {
+    border-style: solid;
+    width: 100%;
+    
+    border-radius: 10px;
+}
+.element-name-symbol-container {
+    display: flex;
+    flex-direction: column;
+}   
+.pair {
+    display: flex;
+    gap: 5%;
+    flex-direction: row;
+    align-items: center; 
+    font-weight: 800;
+    font-size: 5rem;
+    padding: 5%;
+}
+
+.element-name-symbol-container .element-symbol {
+    border-style: solid;
+    padding: 5%;
+    width: 5%;
+    display: flex;
+    font-size: 3rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    border-radius: 10px;
+}
+
+.stats-container {
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.element-model-container {
+    display: flex;
+    width: 100%;
+}
+
+.element-model-container img {
+    width: 100%;
+}
+
+.element-stat span{
+    font-weight: 200;
+}
+
+#close-button {
+    width: 100%;
+}

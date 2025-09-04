@@ -30,7 +30,7 @@ function Quizzes(){
                     <div className="quiz-bg" ></div>
                     <div className="quiz-grad"></div>
                     <div className="quiz-desc">
-                        <span className="mode-name">Endless</span>
+                        <span className="mode-name">Survival Mode</span>
                         <span className="mode-desc">Survive endless questions as long as you can.</span>
                     </div>
                 </span>
@@ -45,7 +45,7 @@ function Quizzes(){
                 </span>
             </div>
             <br />
-            <h1>Categorized</h1>
+            <h1>Review </h1>
             <div className="quiz-modes-container">
                 <span className="quiz-mode" id="nonmetals">
                     <div className="quiz-bg" ></div>
