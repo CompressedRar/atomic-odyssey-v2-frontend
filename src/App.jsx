@@ -33,7 +33,10 @@ function App() {
       <Routes>
 
         <Route element={<AuthLayout />}>
+        {/*dito mo lagay lahat ng gusto mo itest */}
+        {/*gawa ka route tas ilagay mo sa element yung component na ittetest mo */}
           <Route path="/test" element = {<Game />}/>
+          
         </Route>
 
       </Routes>
