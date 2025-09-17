@@ -36,6 +36,7 @@ function App() {
             }
           />
 
+<<<<<<< HEAD
           <Route
             path="/difficulty"
             element={
@@ -80,6 +81,13 @@ function App() {
               </ProtectedRoute>
             }
           />
+=======
+        <Route element={<AuthLayout />}>
+        {/*dito mo lagay lahat ng gusto mo itest */}
+        {/*gawa ka route tas ilagay mo sa element yung component na ittetest mo */}
+          <Route path="/test" element = {<Game />}/>
+          
+>>>>>>> 5cfc89a0cf4c692e03aabf102afc439f2d1ad997
         </Route>
       </Routes>
 
