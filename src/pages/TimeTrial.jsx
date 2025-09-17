@@ -721,9 +721,11 @@ export default function TimeTrial() {
       <button className="back-btn" onClick={handleBack}>
         ←
       </button>
-      <h1>⏱   Chemistry Time Trial</h1>
-      <p className="timer">Time Left: {formatTime(timeLeft)}</p>
-      <p className="score">Score: {score}</p>
+      <h1 className="time-trial-title">Chemistry Time Trial</h1>
+      <div className="current-state-container">
+        <p className="timer">Time Left: {formatTime(timeLeft)}</p>
+        <p className="score">Score: {score}</p>
+      </div>
 
       <div className="images-grid">
         {currentQuiz.images.map((img, i) => (
@@ -752,7 +754,10 @@ export default function TimeTrial() {
         <button onClick={handleClear}>Clear</button>
         <button onClick={() => nextRound(true)}>Pass</button>
         <button onClick={previousRound}>Previous</button>
-        <button className="hint-btn" onClick={useHint}>💡 Hint {hintsLeft}</button>
+        <button className="hint-btn" onClick={useHint}>
+          <span className="material-symbols-outlined">lightbulb</span>
+          Hint {hintsLeft}
+        </button>
       </div>
     </div>
   );

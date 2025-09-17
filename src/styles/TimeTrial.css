@@ -3,6 +3,7 @@
   margin: auto;
   text-align: center;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 .timer, .score {
@@ -19,10 +20,14 @@
 
 .images-grid img {
   width: 100%;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.time-trial-title {
+  margin-bottom: 10%;
 }
 
 .top-controls {
@@ -43,11 +48,23 @@
   padding: 8px 12px;
   border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 2px;
+}
+
+.hint-btn .material-symbols-outlined {
+  scale: 0.9;
 }
 
 .answer-box {
   margin: 20px 0;
-  font-size: 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
 }
 
 .answer-box .letter,
@@ -64,8 +81,12 @@
 .letters-grid button {
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 1rem;
 }
+.answer-box .letter {
+  scale: 1.5;
+}
+
 
 .letters-grid {
   display: grid;
@@ -80,6 +101,9 @@
   border-radius: 8px;
   cursor: pointer;
   transition: 0.2s;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
 }
 
 .letters-grid button:hover {
@@ -117,6 +141,13 @@
 .ccontrols button {
   padding: 8px 16px;
   border-radius: 6px;
-  border: none;
+  border: solid;
+  border-width: 1px;
   cursor: pointer;
+}
+
+.current-state-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

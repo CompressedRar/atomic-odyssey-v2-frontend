@@ -1,10 +1,12 @@
 .survival-container {
     margin-top: 100px;
     min-height: 100vh;
+    width: 100vw;
     padding: 20px;
     color: #fff;
     text-align: center;
     font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -43,13 +45,45 @@ h1 {
 }
 
 .element-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 12px;
     border: 2px solid #fff;
-    width: 560px;
-    margin: 0 auto 20px;
+    width: 20%;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    animation: shakeFrame 100ms infinite;
+}
+
+.element-card .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.element-card p{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    font-size: 1rem;
+}
+.element-card .stats strong {
+    font-size: 0.8rem;
+}
+
+.card-container {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.element-card img {
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .answer-input {
@@ -78,4 +112,41 @@ h1 {
 .submit-btn:hover {
     background: #27ae60;
     transform: scale(1.05);
+}
+
+
+@keyframes shakeFrame {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(1deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-1deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes shakeHarder {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(2deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    75% {
+        transform: rotate(-2deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
 }

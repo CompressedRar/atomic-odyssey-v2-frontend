@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Survival.css";
 import BackgroundVideo from "../components/BackgroundVideo";
+import another_elements from "../assets/periodic-table.json"
 
 // Periodic table elements (simplified)
 const elements = [
@@ -649,7 +650,10 @@ const Survival = () => {
     const handleBack = () => {
         navigate(-1);
     };
-
+    
+    setTimeout(() => {
+            element.style
+        }, 30000);
     return (
         <div className="survival-container">
             <BackgroundVideo />
@@ -663,15 +667,48 @@ const Survival = () => {
                 <p>❤️ HP: {hp}</p>
                 <p>Score: {score}</p>
             </div>
+            
 
-            <div className="element-card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div>
-                    <p><strong>Atomic Number :</strong> {missingField === "number" ? "???" : currentElement.number}</p>
-                    <p><strong>Symbol :</strong> {missingField === "symbol" ? "???" : currentElement.symbol}</p>
-                    <p><strong>Name :</strong> {missingField === "name" ? "???" : currentElement.name}</p>
+
+            <div className = "card-container">
+                <div className="element-card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                 
+                    {elementImage && <img src={elementImage} alt={currentElement.name} style={{ width: "340px", height: "340px", objectFit: "contain"}} />}
+                    <div className="stats">
+                        <p><strong>Atomic Number</strong> {missingField === "number" ? "???" : currentElement.number}</p>
+                        <p><strong>Symbol</strong> {missingField === "symbol" ? "???" : currentElement.symbol}</p>
+                        <p><strong>Name</strong> {missingField === "name" ? "???" : currentElement.name}</p>
+                        <p><strong>Mass</strong> {another_elements[currentElement.name.toLowerCase()].atomic_mass}</p>
+                        <p><strong>Group</strong> {another_elements[currentElement.name.toLowerCase()].category}</p>
+                    </div>
+                    
                 </div>
-                {elementImage && <img src={elementImage} alt={currentElement.name} style={{ width: "340px", height: "340px", objectFit: "contain" }} />}
+                <div className="element-card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    {elementImage && <img src={elementImage} alt={currentElement.name} style={{ width: "340px", height: "340px", objectFit: "contain" }} />}
+                    <div className="stats">
+                        <p><strong>Atomic Number</strong> {missingField === "number" ? "???" : currentElement.number}</p>
+                        <p><strong>Symbol</strong> {missingField === "symbol" ? "???" : currentElement.symbol}</p>
+                        <p><strong>Name</strong> {missingField === "name" ? "???" : currentElement.name}</p>
+                        <p><strong>Mass</strong> {another_elements[currentElement.name.toLowerCase()].atomic_mass}</p>
+                        <p><strong>Group</strong> {another_elements[currentElement.name.toLowerCase()].category}</p>
+                    </div>
+                    
+                </div>
+                <div className="element-card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    {elementImage && <img src={elementImage} alt={currentElement.name} style={{ width: "340px", height: "340px", objectFit: "contain" }} />}
+                    <div className="stats">
+                        <p><strong>Atomic Number</strong> {missingField === "number" ? "???" : currentElement.number}</p>
+                        <p><strong>Symbol</strong> {missingField === "symbol" ? "???" : currentElement.symbol}</p>
+                        <p><strong>Name</strong> {missingField === "name" ? "???" : currentElement.name}</p>
+                        <p><strong>Mass</strong> {another_elements[currentElement.name.toLowerCase()].atomic_mass}</p>
+                        <p><strong>Group</strong> {another_elements[currentElement.name.toLowerCase()].category}</p>
+                    </div>
+                    
+                </div>
             </div>
+            
+        
+            
 
             <input
                 type="text"
