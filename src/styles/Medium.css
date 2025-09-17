@@ -1,0 +1,132 @@
+.time-trial-container {
+    max-width: 800px;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.timer,
+.score {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* two columns for top row */
+    grid-auto-rows: auto;
+    /* automatically size rows */
+    gap: 10px;
+    margin: 20px 0;
+    justify-items: center;
+    /* center items horizontally by default */
+}
+
+.images img {
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Top row: normal placement */
+.images img:nth-child(1),
+.images img:nth-child(2) {
+    height: 11rem;
+    width: 100%;
+    /* full width of each column */
+}
+
+/* Bottom row: spans 2 columns and centered */
+.images img:nth-child(3) {
+    grid-column: 1 / span 2;
+    height: 11rem;
+    width: 60%;
+    /* smaller than top images */
+    justify-self: center;
+    /* center horizontally */
+}
+
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+}
+
+.hint-btn {
+    background: #ffd633;
+    color: black;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.answer-box {
+    margin: 20px 0;
+    font-size: 24px;
+}
+
+.answer-box .letter,
+.answer-box .blank {
+    display: inline-block;
+    width: 30px;
+    margin: 5px;
+    border-bottom: 2px solid #333;
+    font-weight: bold;
+}
+
+.answer-box .letter,
+.answer-box .blank,
+.letters-grid button {
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.letters-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.letters-grid button {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.letters-grid button:hover {
+    background-color: #0077ff;
+    color: white;
+}
+
+.bck {
+    margin-left: 0;
+    /* removed huge negative offset */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.bck:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
