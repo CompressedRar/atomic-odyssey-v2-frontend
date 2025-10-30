@@ -67,15 +67,7 @@
     margin: 0%;
 }
 
-#title {
-    scale: 1;
-    background: linear-gradient(180deg, var(--primary-color), var(--dark-primary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 .login-form {
-    
     width: 100%;
     height: 100%;
     display: flex;

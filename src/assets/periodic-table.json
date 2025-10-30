@@ -2,6 +2,7 @@
     
     "hydrogen": {
         "name": "Hydrogen",
+        "yt": "https://www.youtube.com/embed/cxFb4hmfVT0",
         "appearance": "colorless gas",
         "atomic_mass": 1.008,
         "boil": 20.271,
@@ -45,6 +46,7 @@
     },
     "helium": {
         "name": "Helium",
+        "yt": "https://www.youtube.com/embed/hLUcO26Q7wE",
         "appearance": "colorless gas, exhibiting a red-orange glow when placed in a high-voltage electric field",
         "atomic_mass": 4.0026022,
         "boil": 4.222,
@@ -89,6 +91,7 @@
     },
     "lithium": {
         "name": "Lithium",
+        "yt": "https://www.youtube.com/embed/byGE-bhNzOY",
         "appearance": "silvery-white",
         "atomic_mass": 6.94,
         "boil": 1603,
@@ -135,6 +138,7 @@
     },
     "beryllium": {
         "name": "Beryllium",
+        "yt": "https://www.youtube.com/embed/GGfkO-2Nh40",
         "appearance": "white-gray metallic",
         "atomic_mass": 9.01218315,
         "boil": 2742,
@@ -182,6 +186,7 @@
     },
     "boron": {
         "name": "Boron",
+        "yt": "https://www.youtube.com/embed/PvTSxOh1PDY",
         "appearance": "black-brown",
         "atomic_mass": 10.81,
         "boil": 4200,
@@ -230,6 +235,7 @@
     },
     "carbon": {
         "name": "Carbon",
+        "yt": "https://www.youtube.com/embed/ULiLt2rtpAg",
         "appearance": null,
         "atomic_mass": 12.011,
         "boil": null,
@@ -279,6 +285,7 @@
     },
     "nitrogen": {
         "name": "Nitrogen",
+        "yt": "https://www.youtube.com/embed/IHfqVe8eq4E",
         "appearance": "colorless gas, liquid or solid",
         "atomic_mass": 14.007,
         "boil": 77.355,
@@ -329,6 +336,7 @@
     },
     "oxygen": {
         "name": "Oxygen",
+        "yt": "https://www.youtube.com/embed/twn_2HQR6fU",
         "appearance": null,
         "atomic_mass": 15.999,
         "boil": 90.188,
@@ -380,6 +388,7 @@
     },
     "fluorine": {
         "name": "Fluorine",
+        "yt": "https://www.youtube.com/embed/aitIRoDbnIw",
         "appearance": null,
         "atomic_mass": 18.9984031636,
         "boil": 85.03,
@@ -432,6 +441,7 @@
     },
     "neon": {
         "name": "Neon",
+        "yt": "https://www.youtube.com/embed/6ev4KHAToWM",
         "appearance": "colorless gas exhibiting an orange-red glow when placed in a high voltage electric field",
         "atomic_mass": 20.17976,
         "boil": 27.104,
@@ -485,6 +495,7 @@
     },
     "sodium": {
         "name": "Sodium",
+        "yt": "https://www.youtube.com/embed/mf9vZ7uLFQA",
         "appearance": "silvery white metallic",
         "atomic_mass": 22.989769282,
         "boil": 1156.09,
@@ -540,6 +551,7 @@
     },
     "magnesium": {
         "name": "Magnesium",
+        "yt": "https://www.youtube.com/embed/hEZmO6qqQww",
         "appearance": "shiny grey solid",
         "atomic_mass": 24.305,
         "boil": 1363,
@@ -596,6 +608,7 @@
     },
     "aluminium": {
         "name": "Aluminium",
+        "yt": "https://www.youtube.com/embed/lLWBE6w_oR4",
         "appearance": "silvery gray metallic",
         "atomic_mass": 26.98153857,
         "boil": 2743,
@@ -653,6 +666,7 @@
     },
     "silicon": {
         "name": "Silicon",
+        "yt": "https://www.youtube.com/embed/Sq3jgT5fjhg",
         "appearance": "crystalline, reflective with bluish-tinged faces",
         "atomic_mass": 28.085,
         "boil": 3538,
@@ -711,6 +725,7 @@
     },
     "phosphorus": {
         "name": "Phosphorus",
+        "yt": "https://www.youtube.com/embed/NdOyFPv7TkY",
         "appearance": "colourless, waxy white, yellow, scarlet, red, violet, black",
         "atomic_mass": 30.9737619985,
         "boil": null,
@@ -770,6 +785,7 @@
     },
     "sulfur": {
         "name": "Sulfur",
+        "yt": "https://www.youtube.com/embed/1ve8cuAq56I",
         "appearance": "lemon yellow sintered microcrystals",
         "atomic_mass": 32.06,
         "boil": 717.8,
@@ -830,6 +846,7 @@
     },
     "chlorine": {
         "name": "Chlorine",
+        "yt": "https://www.youtube.com/embed/0Ddep5cpDwc",
         "appearance": "pale yellow-green gas",
         "atomic_mass": 35.45,
         "boil": 239.11,
@@ -891,6 +908,7 @@
     },
     "argon": {
         "name": "Argon",
+        "yt": "https://www.youtube.com/embed/N0Gw6-xMLlo",
         "appearance": "colorless gas exhibiting a lilac/violet glow when placed in a high voltage electric field",
         "atomic_mass": 39.9481,
         "boil": 87.302,
@@ -953,6 +971,7 @@
     },
     "potassium": {
         "name": "Potassium",
+        "yt": "https://www.youtube.com/embed/IQBr9XKstvI",
         "appearance": "silvery gray",
         "atomic_mass": 39.09831,
         "boil": 1032,
@@ -1017,6 +1036,7 @@
     },
     "calcium": {
         "name": "Calcium",
+        "yt": "https://www.youtube.com/embed/PAU-SqbNsl0",
         "appearance": null,
         "atomic_mass": 40.0784,
         "boil": 1757,
@@ -1082,6 +1102,7 @@
     },
     "scandium": {
         "name": "Scandium",
+        "yt": "https://www.youtube.com/embed/zwfZHEaBc70",
         "appearance": "silvery white",
         "atomic_mass": 44.9559085,
         "boil": 3109,
@@ -1148,6 +1169,7 @@
     },
     "titanium": {
         "name": "Titanium",
+        "yt": "https://www.youtube.com/embed/zFhFq61z2mQ",
         "appearance": "silvery grey-white metallic",
         "atomic_mass": 47.8671,
         "boil": 3560,
@@ -1215,6 +1237,7 @@
     },
     "vanadium": {
         "name": "Vanadium",
+        "yt": "https://www.youtube.com/embed/PEVo9hJvRTg",
         "appearance": "blue-silver-grey metal",
         "atomic_mass": 50.94151,
         "boil": 3680,
@@ -1283,6 +1306,7 @@
     },
     "chromium": {
         "name": "Chromium",
+        "yt": "https://www.youtube.com/embed/G1g6BtcdrR4",
         "appearance": "silvery metallic",
         "atomic_mass": 51.99616,
         "boil": 2944,
@@ -1352,6 +1376,7 @@
     },
     "manganese": {
         "name": "Manganese",
+        "yt": "https://www.youtube.com/embed/VTlLqD_DojQ",
         "appearance": "silvery metallic",
         "atomic_mass": 54.9380443,
         "boil": 2334,
@@ -1422,6 +1447,7 @@
     },
     "iron": {
         "name": "Iron",
+        "yt": "https://www.youtube.com/embed/uAMMQv0rKFI",
         "appearance": "lustrous metallic with a grayish tinge",
         "atomic_mass": 55.8452,
         "boil": 3134,
@@ -1493,6 +1519,7 @@
     },
     "cobalt": {
         "name": "Cobalt",
+        "yt": "https://www.youtube.com/embed/2ihJ_GaSHfI",
         "appearance": "hard lustrous gray metal",
         "atomic_mass": 58.9331944,
         "boil": 3200,
@@ -1565,6 +1592,7 @@
     },
     "nickel": {
         "name": "Nickel",
+        "yt": "https://www.youtube.com/embed/tUKeQXzzpYk",
         "appearance": "lustrous, metallic, and silver with a gold tinge",
         "atomic_mass": 58.69344,
         "boil": 3003,
@@ -1638,6 +1666,7 @@
     },
     "copper": {
         "name": "Copper",
+        "yt": "https://www.youtube.com/embed/gqmkiPPIsUQ",
         "appearance": "red-orange metallic luster",
         "atomic_mass": 63.5463,
         "boil": 2835,
@@ -1712,6 +1741,7 @@
     },
     "zinc": {
         "name": "Zinc",
+        "yt": "https://www.youtube.com/embed/ju6gGLxq99k",
         "appearance": "silver-gray",
         "atomic_mass": 65.382,
         "boil": 1180,
@@ -1778,6 +1808,7 @@
     },
     "gallium": {
         "name": "Gallium",
+        "yt": "https://www.youtube.com/embed/g_VYf8MdVSw",
         "appearance": "silver-white",
         "atomic_mass": 69.7231,
         "boil": 2673,
@@ -1827,6 +1858,7 @@
     },
     "germanium": {
         "name": "Germanium",
+        "yt": "https://www.youtube.com/embed/2xylv_hijXw",
         "appearance": "grayish-white",
         "atomic_mass": 72.6308,
         "boil": 3106,
@@ -1877,6 +1909,7 @@
     },
     "arsenic": {
         "name": "Arsenic",
+        "yt": "https://www.youtube.com/embed/7hUw6_t_Y4o",
         "appearance": "metallic grey",
         "atomic_mass": 74.9215956,
         "boil": null,
@@ -1928,6 +1961,7 @@
     },
     "selenium": {
         "name": "Selenium",
+        "yt": "https://www.youtube.com/embed/IHrUtKjcAFE",
         "appearance": "black, red, and gray (not pictured) allotropes",
         "atomic_mass": 78.9718,
         "boil": 958,
@@ -1980,6 +2014,7 @@
     },
     "bromine": {
         "name": "Bromine",
+        "yt": "https://www.youtube.com/embed/nuW_VbKdvMI",
         "appearance": null,
         "atomic_mass": 79.904,
         "boil": 332,
@@ -2033,6 +2068,7 @@
     },
     "krypton": {
         "name": "Krypton",
+        "yt": "https://www.youtube.com/embed/PWKdzef-ANU",
         "appearance": "colorless gas, exhibiting a whitish glow in a high electric field",
         "atomic_mass": 83.7982,
         "boil": 119.93,
@@ -2108,6 +2144,7 @@
     },
     "rubidium": {
         "name": "Rubidium",
+        "yt": "https://www.youtube.com/embed/g0P-A23m3lE",
         "appearance": "grey white",
         "atomic_mass": 85.46783,
         "boil": 961,
@@ -2164,6 +2201,7 @@
     },
     "strontium": {
         "name": "Strontium",
+        "yt": "https://www.youtube.com/embed/rrDJ8Ri3pXk",
         "appearance": null,
         "atomic_mass": 87.621,
         "boil": 1650,
@@ -2221,6 +2259,7 @@
     },
     "yttrium": {
         "name": "Yttrium",
+        "yt": "https://www.youtube.com/embed/pzWKE_0wOdM",
         "appearance": "silvery white",
         "atomic_mass": 88.905842,
         "boil": 3203,
@@ -2279,6 +2318,7 @@
     },
     "zirconium": {
         "name": "Zirconium",
+        "yt": "https://www.youtube.com/embed/ooie1JwD5Cg",
         "appearance": "silvery white",
         "atomic_mass": 91.2242,
         "boil": 4650,
@@ -2331,6 +2371,7 @@
     },
     "niobium": {
         "name": "Niobium",
+        "yt": "https://www.youtube.com/embed/K90HPbVZOQ4",
         "appearance": "gray metallic, bluish when oxidized",
         "atomic_mass": 92.906372,
         "boil": 5017,
@@ -2384,6 +2425,7 @@
     },
     "molybdenum": {
         "name": "Molybdenum",
+        "yt": "https://www.youtube.com/embed/QWW67ZxJ73k",
         "appearance": "gray metallic",
         "atomic_mass": 95.951,
         "boil": 4912,
@@ -2460,6 +2502,7 @@
     },
     "technetium": {
         "name": "Technetium",
+        "yt": "https://www.youtube.com/embed/6mhDUuljEkE",
         "appearance": "shiny gray metal",
         "atomic_mass": 98,
         "boil": 4538,
@@ -2509,6 +2552,7 @@
     },
     "ruthenium": {
         "name": "Ruthenium",
+        "yt": "https://www.youtube.com/embed/xtY6BpT4DTY",
         "appearance": "silvery white metallic",
         "atomic_mass": 101.072,
         "boil": 4423,
@@ -2558,6 +2602,7 @@
     },
     "rhodium": {
         "name": "Rhodium",
+        "yt": "https://www.youtube.com/embed/t_iMqO89npo",
         "appearance": "silvery white metallic",
         "atomic_mass": 102.905502,
         "boil": 3968,
@@ -2607,6 +2652,7 @@
     },
     "palladium": {
         "name": "Palladium",
+        "yt": "https://www.youtube.com/embed/UPXzbyY9nL0",
         "appearance": "silvery white",
         "atomic_mass": 106.421,
         "boil": 3236,
@@ -2655,6 +2701,7 @@
     },
     "silver": {
         "name": "Silver",
+        "yt": "https://www.youtube.com/embed/jRwUmGpmF38",
         "appearance": "lustrous white metal",
         "atomic_mass": 107.86822,
         "boil": 2435,
@@ -2704,6 +2751,7 @@
     },
     "cadmium": {
         "name": "Cadmium",
+        "yt": "https://www.youtube.com/embed/J3XjitEH2oU",
         "appearance": "silvery bluish-gray metallic",
         "atomic_mass": 112.4144,
         "boil": 1040,
@@ -2753,6 +2801,7 @@
     },
     "indium": {
         "name": "Indium",
+        "yt": "https://www.youtube.com/embed/TviX7V-ay5I",
         "appearance": "silvery lustrous gray",
         "atomic_mass": 114.8181,
         "boil": 2345,
@@ -2803,6 +2852,7 @@
     },
     "tin": {
         "name": "Tin",
+        "yt": "https://www.youtube.com/embed/Q9zdt-rOB0Y",
         "appearance": "silvery-white (beta, β) or gray (alpha, α)",
         "atomic_mass": 118.7107,
         "boil": 2875,
@@ -2854,6 +2904,7 @@
     },
     "antimony": {
         "name": "Antimony",
+        "yt": "https://www.youtube.com/embed/Tf0hPi3uj5c",
         "appearance": "silvery lustrous gray",
         "atomic_mass": 121.7601,
         "boil": 1908,
@@ -2906,6 +2957,7 @@
     },
     "tellurium": {
         "name": "Tellurium",
+        "yt": "https://www.youtube.com/embed/HH79V-FZqCU",
         "appearance": null,
         "atomic_mass": 127.603,
         "boil": 1261,
@@ -2959,6 +3011,7 @@
     },
     "iodine": {
         "name": "Iodine",
+        "yt": "https://www.youtube.com/embed/1UiZYvzkY0o",
         "appearance": "lustrous metallic gray, violet as a gas",
         "atomic_mass": 126.904473,
         "boil": 457.4,
@@ -3008,6 +3061,7 @@
     },
     "xenon": {
         "name": "Xenon",
+        "yt": "https://www.youtube.com/embed/Y7Xes6LV6zE",
         "appearance": "colorless gas, exhibiting a blue glow when placed in a high voltage electric field",
         "atomic_mass": 131.2936,
         "boil": 165.051,
@@ -3057,6 +3111,7 @@
     },
     "cesium": {
         "name": "Cesium",
+        "yt": "https://www.youtube.com/embed/46eKJDFmVHg",
         "appearance": "silvery gold",
         "atomic_mass": 132.905451966,
         "boil": 944,
@@ -3107,6 +3162,7 @@
     },
     "barium": {
         "name": "Barium",
+        "yt": "https://www.youtube.com/embed/dtWVaYXD9xA",
         "appearance": null,
         "atomic_mass": 137.3277,
         "boil": 2118,
@@ -3157,6 +3213,7 @@
     },
     "lanthanum": {
         "name": "Lanthanum",
+        "yt": "https://www.youtube.com/embed/dwjsqpgzpcM",
         "appearance": "silvery white",
         "atomic_mass": 138.905477,
         "boil": 3737,
@@ -3209,6 +3266,7 @@
     },
     "hafnium": {
         "name": "Hafnium",
+        "yt": "https://www.youtube.com/embed/-jLX2D_tta0",
         "appearance": "steel gray",
         "atomic_mass": 178.492,
         "boil": 4876,
@@ -3260,6 +3318,7 @@
     },
     "tantalum": {
         "name": "Tantalum",
+        "yt": "https://www.youtube.com/embed/7tsiT_zdFew",
         "appearance": "gray blue",
         "atomic_mass": 180.947882,
         "boil": 5731,
@@ -3309,6 +3368,7 @@
     },
     "tungsten": {
         "name": "Tungsten",
+        "yt": "https://www.youtube.com/embed/6XxcVg2Dfck",
         "appearance": "grayish white, lustrous",
         "atomic_mass": 183.841,
         "boil": 6203,
@@ -3358,6 +3418,7 @@
     },
     "rhenium": {
         "name": "Rhenium",
+        "yt": "https://www.youtube.com/embed/Duk20wEVgJQ",
         "appearance": "silvery-grayish",
         "atomic_mass": 186.2071,
         "boil": 5869,
@@ -3409,6 +3470,7 @@
     },
     "osmium": {
         "name": "Osmium",
+        "yt": "https://www.youtube.com/embed/D9C_lbivcn4",
         "appearance": "silvery, blue cast",
         "atomic_mass": 190.233,
         "boil": 5285,
@@ -3458,6 +3520,7 @@
     },
     "iridium": {
         "name": "Iridium",
+        "yt": "https://www.youtube.com/embed/lGy1vGnYAak",
         "appearance": "silvery white",
         "atomic_mass": 192.2173,
         "boil": 4403,
@@ -3507,6 +3570,7 @@
     },
     "platinum": {
         "name": "Platinum",
+        "yt": "https://www.youtube.com/embed/vhPu-3b0FnY",
         "appearance": "silvery white",
         "atomic_mass": 195.0849,
         "boil": 4098,
@@ -3556,6 +3620,7 @@
     },
     "gold": {
         "name": "Gold",
+        "yt": "https://www.youtube.com/embed/nuNVbfy9Wig",
         "appearance": "metallic yellow",
         "atomic_mass": 196.9665695,
         "boil": 3243,
@@ -3605,6 +3670,7 @@
     },
     "mercury": {
         "name": "Mercury",
+        "yt": "https://www.youtube.com/embed/K97oJed15j0",
         "appearance": "silvery",
         "atomic_mass": 200.5923,
         "boil": 629.88,
@@ -3655,6 +3721,7 @@
     },
     "thallium": {
         "name": "Thallium",
+        "yt": "https://www.youtube.com/embed/ZvgrXJwMm8I",
         "appearance": "silvery white",
         "atomic_mass": 204.38,
         "boil": 1746,
@@ -3705,6 +3772,7 @@
     },
     "lead": {
         "name": "Lead",
+        "yt": "https://www.youtube.com/embed/LjpthO4r1GY",
         "appearance": "metallic gray",
         "atomic_mass": 207.21,
         "boil": 2022,
@@ -3757,6 +3825,7 @@
     },
     "bismuth": {
         "name": "Bismuth",
+        "yt": "https://www.youtube.com/embed/0YDDPILNQ5I",
         "appearance": "lustrous silver",
         "atomic_mass": 208.980401,
         "boil": 1837,
@@ -3810,6 +3879,7 @@
     },
     "polonium": {
         "name": "Polonium",
+        "yt": "https://www.youtube.com/embed/K97oJed15j0",
         "appearance": "silvery",
         "atomic_mass": 209,
         "boil": 1235,
@@ -3858,6 +3928,7 @@
     },
     "astatine": {
         "name": "Astatine",
+        "yt": "https://www.youtube.com/embed/AirrYWYpVIY",
         "appearance": "unknown, probably metallic",
         "atomic_mass": 210,
         "boil": 610,
@@ -3906,6 +3977,7 @@
     },
     "radon": {
         "name": "Radon",
+        "yt": "https://www.youtube.com/embed/5_I6vj-lXNM",
         "appearance": "colorless gas, occasionally glows green or red in discharge tubes",
         "atomic_mass": 222,
         "boil": 211.5,
@@ -3955,6 +4027,7 @@
     
     "francium": {
         "name": "Francium",
+        "yt": "https://www.youtube.com/embed/K-yxtbar-8A",
         "appearance": null,
         "atomic_mass": 223,
         "boil": 950,
@@ -4004,6 +4077,7 @@
     },
     "radium": {
         "name": "Radium",
+        "yt": "https://www.youtube.com/embed/tlktxXC-ggY",
         "appearance": "silvery white metallic",
         "atomic_mass": 226,
         "boil": 2010,
@@ -4054,6 +4128,7 @@
     },
     "actinium": {
         "name": "Actinium",
+        "yt": "https://www.youtube.com/embed/-C0D6XpDROg",
         "appearance": null,
         "atomic_mass": 227,
         "boil": 3500,
@@ -4104,6 +4179,7 @@
     },
     "rutherfordium": {
         "name": "Rutherfordium",
+        "yt": "https://www.youtube.com/embed/7u9n06ZYz9E",
         "appearance": null,
         "atomic_mass": 267,
         "boil": 5800,
@@ -4153,6 +4229,7 @@
     },
     "dubnium": {
         "name": "Dubnium",
+        "yt": "https://www.youtube.com/embed/aFjgfd8pQEo",
         "appearance": null,
         "atomic_mass": 268,
         "boil": null,
@@ -4200,6 +4277,7 @@
     },
     "seaborgium": {
         "name": "Seaborgium",
+        "yt": "https://www.youtube.com/embed/fPLcgyP0UKc",
         "appearance": null,
         "atomic_mass": 269,
         "boil": null,
@@ -4247,6 +4325,7 @@
     },
     "bohrium": {
         "name": "Bohrium",
+        "yt": "https://www.youtube.com/embed/hN4ckihvPL4",
         "appearance": null,
         "atomic_mass": 270,
         "boil": null,
@@ -4294,6 +4373,7 @@
     },
     "hassium": {
         "name": "Hassium",
+        "yt": "https://www.youtube.com/embed/iNzR5XJTY2Y",
         "appearance": null,
         "atomic_mass": 269,
         "boil": null,
@@ -4341,6 +4421,7 @@
     },
     "meitnerium": {
         "name": "Meitnerium",
+        "yt": "https://www.youtube.com/embed/8PWiaAtiNPI",
         "appearance": null,
         "atomic_mass": 278,
         "boil": null,
@@ -4388,6 +4469,7 @@
     },
     "darmstadtium": {
         "name": "Darmstadtium",
+        "yt": "https://www.youtube.com/embed/lhvMqva3-7M",
         "appearance": null,
         "atomic_mass": 281,
         "boil": null,
@@ -4435,6 +4517,7 @@
     },
     "roentgenium": {
         "name": "Roentgenium",
+        "yt": "https://www.youtube.com/embed/HqmXxk43oMc",
         "appearance": null,
         "atomic_mass": 282,
         "boil": null,
@@ -4482,6 +4565,7 @@
     },
     "copernicium": {
         "name": "Copernicium",
+        "yt": "https://www.youtube.com/embed/S3n_DBNMoqY",
         "appearance": null,
         "atomic_mass": 285,
         "boil": 3570,
@@ -4529,6 +4613,7 @@
     },
     "nihonium": {
         "name": "Nihonium",
+        "yt": "https://www.youtube.com/embed/GeRk-OhSTfI",
         "appearance": null,
         "atomic_mass": 286,
         "boil": 1430,
@@ -4576,6 +4661,7 @@
     },
     "flerovium": {
         "name": "Flerovium",
+        "yt": "https://www.youtube.com/embed/Ub_IZkkKUHI",
         "appearance": null,
         "atomic_mass": 289,
         "boil": 420,
@@ -4623,6 +4709,7 @@
     },
     "moscovium": {
         "name": "Moscovium",
+        "yt": "https://www.youtube.com/embed/DB7GmWrGptg",
         "appearance": null,
         "atomic_mass": 289,
         "boil": 1400,
@@ -4670,6 +4757,7 @@
     },
     "livermorium": {
         "name": "Livermorium",
+        "yt": "https://www.youtube.com/embed/XJJNebuLAww",
         "appearance": null,
         "atomic_mass": 293,
         "boil": 1085,
@@ -4717,6 +4805,7 @@
     },
     "tennessine": {
         "name": "Tennessine",
+        "yt": "https://www.youtube.com/embed/NJio-gOe6jg",
         "appearance": null,
         "atomic_mass": 294,
         "boil": 883,
@@ -4764,6 +4853,7 @@
     },
     "oganesson": {
         "name": "Oganesson",
+        "yt": "https://www.youtube.com/embed/dmg5-Hjl0jE",
         "appearance": null,
         "atomic_mass": 294,
         "boil": 350,
@@ -4811,6 +4901,7 @@
     },
     "cerium": {
         "name": "Cerium",
+        "yt": "https://www.youtube.com/embed/HSa9MvYc90E",
         "appearance": "silvery white",
         "atomic_mass": 140.1161,
         "boil": 3716,
@@ -4864,6 +4955,7 @@
     },
     "praseodymium": {
         "name": "Praseodymium",
+        "yt": "https://www.youtube.com/embed/FHDb-VjDWeE",
         "appearance": "grayish white",
         "atomic_mass": 140.907662,
         "boil": 3403,
@@ -4916,6 +5008,7 @@
     },
     "neodymium": {
         "name": "Neodymium",
+        "yt": "https://www.youtube.com/embed/BDwIc-plsYQ",
         "appearance": "silvery white",
         "atomic_mass": 144.2423,
         "boil": 3347,
@@ -4967,6 +5060,7 @@
     },
     "promethium": {
         "name": "Promethium",
+        "yt": "https://www.youtube.com/embed/9-HvNj2FRO4",
         "appearance": "metallic",
         "atomic_mass": 145,
         "boil": 3273,
@@ -5018,6 +5112,7 @@
     },
     "samarium": {
         "name": "Samarium",
+        "yt": "https://www.youtube.com/embed/aDh8-l7DDbM",
         "appearance": "silvery white",
         "atomic_mass": 150.362,
         "boil": 2173,
@@ -5069,6 +5164,7 @@
     },
     "europium": {
         "name": "Europium",
+        "yt": "https://www.youtube.com/embed/PNl1xsPp6ro",
         "appearance": null,
         "atomic_mass": 151.9641,
         "boil": 1802,
@@ -5120,6 +5216,7 @@
     },
     "gadolinium": {
         "name": "Gadolinium",
+        "yt": "https://www.youtube.com/embed/EXbtlgva32Y",
         "appearance": "silvery white",
         "atomic_mass": 157.253,
         "boil": 3273,
@@ -5171,6 +5268,7 @@
     },
     "terbium": {
         "name": "Terbium",
+        "yt": "https://www.youtube.com/embed/On5LjH9TQxY",
         "appearance": "silvery white",
         "atomic_mass": 158.925352,
         "boil": 3396,
@@ -5222,6 +5320,7 @@
     },
     "dysprosium": {
         "name": "Dysprosium",
+        "yt": "https://www.youtube.com/embed/uc4EVhl-EuY",
         "appearance": "silvery white",
         "atomic_mass": 162.5001,
         "boil": 2840,
@@ -5273,6 +5372,7 @@
     },
     "holmium": {
         "name": "Holmium",
+        "yt": "https://www.youtube.com/embed/v5CNMTfWVJ8",
         "appearance": "silvery white",
         "atomic_mass": 164.930332,
         "boil": 2873,
@@ -5324,6 +5424,7 @@
     },
     "erbium": {
         "name": "Erbium",
+        "yt": "https://www.youtube.com/embed/zJ7SfFTUqgQ",
         "appearance": "silvery white",
         "atomic_mass": 167.2593,
         "boil": 3141,
@@ -5375,6 +5476,7 @@
     },
     "thulium": {
         "name": "Thulium",
+        "yt": "https://www.youtube.com/embed/vS0vhYdOGMc",
         "appearance": "silvery gray",
         "atomic_mass": 168.934222,
         "boil": 2223,
@@ -5426,6 +5528,7 @@
     },
     "ytterbium": {
         "name": "Ytterbium",
+        "yt": "https://www.youtube.com/embed/LGAmrFTr5e4",
         "appearance": null,
         "atomic_mass": 173.0451,
         "boil": 1469,
@@ -5477,6 +5580,7 @@
     },
     "lutetium": {
         "name": "Lutetium",
+        "yt": "https://www.youtube.com/embed/7wrDfRnRHqI",
         "appearance": "silvery white",
         "atomic_mass": 174.96681,
         "boil": 3675,
@@ -5530,6 +5634,7 @@
     
     "thorium": {
         "name": "Thorium",
+        "yt": "https://www.youtube.com/embed/GFAnjEEwPNo",
         "appearance": "silvery, often with black tarnish",
         "atomic_mass": 232.03774,
         "boil": 5061,
@@ -5582,6 +5687,7 @@
     },
     "protactinium": {
         "name": "Protactinium",
+        "yt": "https://www.youtube.com/embed/E0rZ8U6LJB0",
         "appearance": "bright, silvery metallic luster",
         "atomic_mass": 231.035882,
         "boil": 4300,
@@ -5631,6 +5737,7 @@
     },
     "uranium": {
         "name": "Uranium",
+        "yt": "https://www.youtube.com/embed/OlOy9vTBGr0",
         "appearance": null,
         "atomic_mass": 238.028913,
         "boil": 4404,
@@ -5681,6 +5788,7 @@
     },
     "neptunium": {
         "name": "Neptunium",
+        "yt": "https://www.youtube.com/embed/FOfSf3sieeo",
         "appearance": "silvery metallic",
         "atomic_mass": 237,
         "boil": 4447,
@@ -5730,6 +5838,7 @@
     },
     "plutonium": {
         "name": "Plutonium",
+        "yt": "https://www.youtube.com/embed/l_QgTI1bJgU",
         "appearance": "silvery white, tarnishing to dark gray in air",
         "atomic_mass": 244,
         "boil": 3505,
@@ -5779,6 +5888,7 @@
     },
     "americium": {
         "name": "Americium",
+        "yt": "https://www.youtube.com/embed/TDF6j8piKco",
         "appearance": "silvery white",
         "atomic_mass": 243,
         "boil": 2880,
@@ -5828,6 +5938,7 @@
     },
     "curium": {
         "name": "Curium",
+        "yt": "https://www.youtube.com/embed/3qS-CKIoRoE",
         "appearance": "silvery metallic, glows purple in the dark",
         "atomic_mass": 247,
         "boil": 3383,
@@ -5877,6 +5988,7 @@
     },
     "berkelium": {
         "name": "Berkelium",
+        "yt": "https://www.youtube.com/embed/vm13388yQO4",
         "appearance": "silvery",
         "atomic_mass": 247,
         "boil": 2900,
@@ -5926,6 +6038,7 @@
     },
     "californium": {
         "name": "Californium",
+        "yt": "https://www.youtube.com/embed/ZhvRmbpkx9U",
         "appearance": "silvery",
         "atomic_mass": 251,
         "boil": 1743,
@@ -5975,6 +6088,7 @@
     },
     "einsteinium": {
         "name": "Einsteinium",
+        "yt": "https://www.youtube.com/embed/vaKtdnYuvDo",
         "appearance": "silver-colored",
         "atomic_mass": 252,
         "boil": 1269,
@@ -6024,6 +6138,7 @@
     },
     "fermium": {
         "name": "Fermium",
+        "yt": "https://www.youtube.com/embed/9ow8-BLxT2o",
         "appearance": null,
         "atomic_mass": 257,
         "boil": null,
@@ -6073,6 +6188,7 @@
     },
     "mendelevium": {
         "name": "Mendelevium",
+        "yt": "WALANG LINK TO",
         "appearance": null,
         "atomic_mass": 258,
         "boil": null,
@@ -6122,6 +6238,7 @@
     },
     "nobelium": {
         "name": "Nobelium",
+        "yt": "https://www.youtube.com/embed/-TSGlvwN404",
         "appearance": null,
         "atomic_mass": 259,
         "boil": null,
@@ -6171,6 +6288,7 @@
     },
     "lawrencium": {
         "name": "Lawrencium",
+        "yt": "https://www.youtube.com/embed/uZZGEg8aEQI",
         "appearance": null,
         "atomic_mass": 266,
         "boil": null,

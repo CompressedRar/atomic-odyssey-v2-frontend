@@ -1,15 +1,16 @@
-import { useEffect, useRef } from "react"; 
+import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Difficulty.css";
+import "../styles/Modesurvival.css";
 import BackgroundVideo from "../components/BackgroundVideo";
 
-const Difficulty = () => {
+const Modesurvival = () => {
   const navigate = useNavigate();
-  const audioRef = useRef(null);
 
   const handleExit = () => {
     navigate(-1);
   };
+
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -33,7 +34,7 @@ const Difficulty = () => {
   }, []);
 
   return (
-    <div className="difficulty-container">
+    <div className="Modesurvival-container">
       <BackgroundVideo />
 
       <audio
@@ -44,14 +45,29 @@ const Difficulty = () => {
         style={{ display: "none" }}
       />
 
-      <div className="top-buttons" style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}>
-        <button className="exit-btn" onClick={handleExit}
+      <div
+        className="top-buttons"
+        style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}
+      >
+        <button
+          className="exit-btn"
+          onClick={handleExit}
           style={{
-            fontSize: "1.5rem", padding: "10px 15px", borderRadius: "8px",
-            background: "transparent", color: "#fff", fontWeight: "bold", cursor: "pointer",
+            fontSize: "1.5rem",
+            padding: "10px 15px",
+            borderRadius: "8px",
+            background: "transparent",
+            color: "#fff",
+            fontWeight: "bold",
+            cursor: "pointer",
           }}
-          onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
-          onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = "rgba(255,255,255,0.2)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background = "transparent")
+          }
+        >
           ←
         </button>
       </div>
@@ -60,20 +76,14 @@ const Difficulty = () => {
 
       <div className="button-group">
         <button
-          className="difficulty-btn easy"
-          onClick={() => navigate("/timetrial")}
+          className="Modesurvival-btn easy"
+          onClick={() => navigate("/endless")}
         >
-          Easy
+          Normal
         </button>
         <button
-          className="difficulty-btn medium"
-          onClick={() => navigate("/medium")}
-        >
-          Medium
-        </button>
-        <button
-          className="difficulty-btn hard"
-          onClick={() => navigate("/hard")}
+          className="Modesurvival-btn hard"
+          onClick={() => navigate("/shard")}
         >
           Hard
         </button>
@@ -82,4 +92,4 @@ const Difficulty = () => {
   );
 };
 
-export default Difficulty;
+export default Modesurvival;

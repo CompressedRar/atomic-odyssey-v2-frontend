@@ -25,3 +25,5 @@ dist-ssr
 
 # ignore all video files in public/videos
 /public/videos/
+
+/src/configs/FirebaseConfig.js

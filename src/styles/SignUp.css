@@ -1,79 +1,231 @@
-.sign-up-container {
+/* Center everything perfectly */
+.sign-wrapper {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
     height: 100vh;
+    overflow: hidden;
+}
+
+/* Background video sits behind everything */
+.sign-up-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+    position: relative;
 }
 
 .sign-up-form {
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.1);
-    width: 28%;
-    padding: 5%;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    width: 860px;
+    padding: 2.2rem 3rem; /* reduced vertical padding */
     box-sizing: border-box;
-    
+    color: #fff;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.55);
+    transition: 0.3s ease;
 }
 
+/* Title Section */
+.title-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.title-container h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+#title {
+    color: #00ff84;
+    font-weight: 700;
+}
+
+/* Profile Picture Section */
 .profile-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 1rem;
+}
+
+.profile-container span {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .profile-button {
-    width: 200px;
-    height: 200px;
-    border-style: dashed;
+    width: 120px;
+    height: 120px;
+    border: 2px dashed rgba(255, 255, 255, 0.6);
     border-radius: 50%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-weight: 200;
-    clip-path: circle();
-    
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: 0.3s ease;
+    overflow: hidden;
+    position: relative;
 }
 
-.sign-wrapper {
-     padding-top: 10vh;
-    padding-bottom: 10vh;
-    margin-top: 20vh;
-    margin-bottom: 20vh;
+.profile-button:hover {
+    border-color: #00ff84;
+    color: #00ff84;
+    transform: scale(1.05);
 }
 
 #profile-image-container {
-    max-width: 170%;
- 
-    max-height: 170%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
-.loading-screen {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
+/* Input Boxes */
+.textbox {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 0.8rem;
+}
+
+.textbox span {
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.textbox input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: 0.3s ease;
+}
+
+.textbox input:focus {
+    border-color: #00ff84;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 255, 132, 0.4);
+}
+
+/* Show password checkbox */
+.remember-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.remember-container label {
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Register button */
+#login-button {
+    width: 100%;
+    background-color: #00ff84;
+    border: none;
+    color: black;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 0.9rem;
+    border-radius: 10px;
+    margin-top: 0.4rem;
+    transition: 0.3s ease;
+}
+
+#login-button:hover {
+    background-color: #00cc66;
+    transform: translateY(-2px);
+}
+
+/* “Already have an account?” */
+#new-account-link {
+    text-align: center;
+    margin-top: 1.8rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#new-account-link a {
+    color: #4d7eff;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+#new-account-link a:hover {
+    color: #00ff84;
+    text-decoration: underline;
+}
+
+/* Loading Overlay */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
-    background-color: rgba(12,12,12,0.5);
-    backdrop-filter: blur(2px);
-    
+    background-color: rgba(12, 12, 12, 0.5);
+    backdrop-filter: blur(4px);
 }
 
 .loading-screen label {
     font-size: 1.5rem;
+    color: white;
 }
 
 #loading-icon {
     font-size: 7rem;
     margin: 3%;
-    animation: loading 2s infinite;
+    animation: loading 2s infinite linear;
 }
 
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    .sign-up-form {
+        width: 90%;
+        padding: 2rem;
+    }
+
+    .profile-button {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+.sign-up-form {
+    min-height: auto;
+}

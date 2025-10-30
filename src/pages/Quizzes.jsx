@@ -13,11 +13,26 @@ function Quizzes() {
     if (mode === "classic") {
       navigate("/main");
     }
-    if (mode === "endless") {
-      navigate("/endless");
+    if (mode === "modesurvival") {
+      navigate("/modesurvival");
     }
     if (mode === "pvp") {
       navigate("/pvp");
+    }
+    if (mode === "nonmetals") {
+      navigate("/nonmetals");
+    }
+    if (mode === "metalloids") {
+      navigate("/metalloids");
+    }
+    if (mode === "metals") {
+      navigate("/metals");
+    }
+    if (mode === "noblegas") {
+      navigate("/noblegas");
+    }
+    if (mode === "classic") {
+      navigate("/classic");
     }
   };
 
@@ -58,7 +73,7 @@ function Quizzes() {
         <span
           className="quiz-mode"
           id="endless"
-          onClick={() => handleModeClick("endless")}
+          onClick={() => handleModeClick("modesurvival")}
         >
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
@@ -70,7 +85,7 @@ function Quizzes() {
           </div>
         </span>
 
-        <span
+        {/* <span
           className="quiz-mode"
           id="pvp"
           onClick={() => handleModeClick("pvp")}
@@ -83,13 +98,13 @@ function Quizzes() {
               Compete and clash with other players.
             </span>
           </div>
-        </span>
+        </span> */}
       </div>
 
       <br />
       <h1>Review </h1>
       <div className="quiz-modes-container">
-        <span className="quiz-mode" id="nonmetals">
+        <span className="quiz-mode" id="nonmetals" onClick={() => handleModeClick("nonmetals")}>
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">
@@ -100,7 +115,7 @@ function Quizzes() {
           </div>
         </span>
 
-        <span className="quiz-mode" id="metalloids">
+        <span className="quiz-mode" id="metalloids" onClick={() => handleModeClick("metalloids")}>
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">
@@ -111,7 +126,7 @@ function Quizzes() {
           </div>
         </span>
 
-        <span className="quiz-mode" id="metals">
+        <span className="quiz-mode" id="metals" onClick={() => handleModeClick("metals")}>
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">
@@ -120,7 +135,7 @@ function Quizzes() {
           </div>
         </span>
 
-        <span className="quiz-mode" id="noblegas">
+        <span className="quiz-mode" id="noblegas" onClick={() => handleModeClick("noblegas")}>
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">

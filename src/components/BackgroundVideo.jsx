@@ -1,35 +1,115 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
+function BackgroundVideo() {
+  const [currentURL, setCurrentURL] = useState("videos/1.mp4");
+  const [opacity, setOpacity] = useState(0.3);
+  const videoRef = useRef(null);
+  const preloaderRef = useRef(null);
 
-function BackgroundVideo(){
-    
-    const [currentURL, setURL] = useState("videos/bg-vid-1.webm")
-    const [opacity, setOpacity] = useState(0.3)
-    const delay = 200
-    const videoURLs = [ "videos/bg-vid-1.webm", 
-                        "videos/bg-vid-7.webm",
-                        "videos/bg-vid-9.webm",
-                        "videos/bg-vid-10.webm" ]
+  const videoURLs = [
+    "videos/1.mp4",
+    "videos/2.mp4",
+    "videos/3.mp4",
+    "videos/4.mp4",
+  ];
 
-    async function handleVideoChange() {
-        setOpacity(0)
-        var randomIndex = (Math.random() * 3).toFixed(0)
-        var a = await setTimeout(()=>{
-            
-            setURL(videoURLs[randomIndex])
+  // Duration before switching videos (in seconds)
+  const VIDEO_DURATION = 20; // ⏱ adjust to match your video lengths
 
-            setOpacity(0.3)
-        }, 1000)
-        
+  const handleVideoChange = async () => {
+    setOpacity(0);
+
+    // Pick a new random video that’s different
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * videoURLs.length);
+    } while (videoURLs[randomIndex] === currentURL);
+
+    const nextURL = videoURLs[randomIndex];
+
+    // Preload new video silently
+    const preloader = preloaderRef.current;
+    if (preloader) {
+      preloader.src = nextURL;
+      await new Promise((resolve) => {
+        preloader.oncanplaythrough = resolve;
+      });
     }
-    return (
-        
-        <div className="background-video" style={{opacity: opacity}}> 
-            <video src={currentURL} onEnded={()=>{handleVideoChange()}} autoPlay >
 
-            </video>
-        </div>
-    )
+    // Swap and fade back in
+    setCurrentURL(nextURL);
+    setTimeout(() => setOpacity(0.3), 500);
+  };
+
+  // ✅ Continuous video playback + safety restart
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const ensurePlaying = () => {
+      if (video.paused) {
+        video.play().catch(() => { });
+      }
+    };
+
+    // Play and periodically ensure it stays running
+    video.play().catch(() => { });
+    const checkInterval = setInterval(ensurePlaying, 5000); // every 5s
+    return () => clearInterval(checkInterval);
+  }, [currentURL]);
+
+  // ✅ Change video every N seconds (instead of relying on onEnded)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleVideoChange();
+    }, VIDEO_DURATION * 1000);
+    return () => clearInterval(interval);
+  }, [currentURL]);
+
+  // ✅ Prevent duplicate background-video instances
+  useEffect(() => {
+    const existing = document.querySelector(".background-video");
+    if (existing && existing !== videoRef.current?.parentNode) {
+      console.warn("Duplicate background video detected — removing extra.");
+      existing.remove();
+    }
+  }, []);
+
+  return (
+    <>
+      <div
+        className="background-video"
+        style={{
+          opacity,
+          transition: "opacity 1s ease",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: -1,
+          overflow: "hidden",
+        }}
+      >
+        <video
+          ref={videoRef}
+          src={currentURL}
+          autoPlay
+          muted
+          loop // ✅ keep looping each clip until next change
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+      </div>
+
+      {/* Hidden preloader */}
+      <video ref={preloaderRef} muted style={{ display: "none" }} />
+    </>
+  );
 }
 
-export default BackgroundVideo
+export default BackgroundVideo;

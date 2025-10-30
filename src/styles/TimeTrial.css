@@ -1,3 +1,7 @@
+/* 🎮 TIME TRIAL - CLEAN & ARCADE UI STYLESHEET */
+/* -------------------------------------------- */
+
+/* 🧱 Layout */
 .time-trial-container {
   max-width: 800px;
   margin: auto;
@@ -6,30 +10,30 @@
   box-sizing: border-box;
 }
 
-.timer, .score {
+.timer,
+.score {
   font-size: 18px;
   margin: 10px 0;
 }
 
-.images-grid {
+/* 🖼️ Image Grid */
+.images-gridd {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 10px;
   margin: 20px 0;
 }
 
-.images-grid img {
+.images-gridd img {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.time-trial-title {
-  margin-bottom: 10%;
-}
-
+/* 🧭 Top Controls */
 .top-controls {
   display: flex;
   justify-content: space-between;
@@ -41,6 +45,7 @@
   right: 0;
 }
 
+/* 💡 Hint Button */
 .hint-btn {
   background: #ffd633;
   color: black;
@@ -49,20 +54,23 @@
   border-radius: 8px;
   cursor: pointer;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
-  gap: 2px;
+  gap: 4px;
+  transition: transform 0.2s;
+}
+
+.hint-btn:hover {
+  transform: scale(1.05);
 }
 
 .hint-btn .material-symbols-outlined {
   scale: 0.9;
 }
 
+/* 🔤 Answer & Letters */
 .answer-box {
   margin: 20px 0;
   display: flex;
-  flex-direction: row;
   gap: 20px;
   justify-content: center;
 }
@@ -73,20 +81,14 @@
   width: 30px;
   margin: 5px;
   border-bottom: 2px solid #333;
-  font-weight: bold;
-}
-
-.answer-box .letter,
-.answer-box .blank,
-.letters-grid button {
   font-family: "Courier New", Courier, monospace;
   font-weight: bold;
   font-size: 1rem;
 }
+
 .answer-box .letter {
   scale: 1.5;
 }
-
 
 .letters-grid {
   display: grid;
@@ -100,10 +102,10 @@
   font-size: 18px;
   border-radius: 8px;
   cursor: pointer;
+  border: 1px solid white;
+  font-weight: bold;
   transition: 0.2s;
-  border-style: solid;
-  border-width: 1px;
-  border-color: white;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .letters-grid button:hover {
@@ -111,11 +113,11 @@
   color: white;
 }
 
+/* ⬅️ Back Button */
 .bck {
-  margin-left: -45rem;
   position: absolute;
   top: 20px;
-  left: 20px; /* move it inside viewport */
+  left: 20px;
   background: transparent;
   border: 2px solid #fff;
   border-radius: 8px;
@@ -131,23 +133,217 @@
   transform: scale(1.05);
 }
 
+/* 🔄 Controls */
 .ccontrols {
   display: flex;
   justify-content: center;
-  gap: 16px; /* increase to adjust spacing */
+  gap: 16px;
   margin-top: 20px;
 }
 
 .ccontrols button {
   padding: 8px 16px;
   border-radius: 6px;
-  border: solid;
-  border-width: 1px;
+  border: solid 1px #fff;
   cursor: pointer;
 }
 
-.current-state-container {
+.back-btnss {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    opacity: 0;
+    background: transparent;
+    animation: fadeInUI 0.8s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+/* ✨ Animations & Feedback */
+.typing-title {
+  overflow: hidden;
+  border-right: 4px solid #fff;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 2px;
+  animation: typing 3s steps(30, end), blink 0.75s step-end infinite;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s ease-in forwards;
+}
+
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 1.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+.feedback-text {
+  position: absolute;
+  top: 240px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: bold;
+  pointer-events: none;
+  text-shadow: 2px 2px 6px black;
+}
+
+/* 🌀 Fade & Float Animations */
+@keyframes floatUp {
+  0% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -40px); }
+}
+
+/* 🎮 GAME OVER MODAL — Centered + Animated Fix */
+.game-over-screen {
+  position: fixed;
+  inset: 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(12px);
+  background: rgba(10, 10, 25, 0.9);
+  z-index: 9999;
+  animation: fadeInOverlay 0.8s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ✴️ GAME OVER TEXT */
+.game-over-text {
+  font-family: "Orbitron", sans-serif;
+  font-size: 120px;
+  font-weight: 900;
+  color: #ff003c;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  text-align: center;
+  text-shadow:
+    0 0 15px #ff003c,
+    0 0 40px #ff003c,
+    0 0 80px #ff003c,
+    0 0 120px #ff003c;
+  animation: pulseGlow 1.5s infinite alternate ease-in-out;
+  margin-bottom: 60px;
+}
+
+@keyframes pulseGlow {
+  from {
+    transform: scale(1);
+    text-shadow:
+      0 0 25px #ff003c,
+      0 0 50px #ff004c,
+      0 0 100px #ff004c;
+  }
+  to {
+    transform: scale(1.08);
+    text-shadow:
+      0 0 35px #ff5f7e,
+      0 0 70px #ff5f7e,
+      0 0 140px #ff5f7e;
+  }
+}
+
+/* 🧭 MENU CONTAINER WRAPPER — stays centered, handles animation separately */
+.options-menu-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  animation: slideUp 1s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ⚙️ OPTIONS MENU — perfectly centered */
+.options-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: rgba(30, 30, 50, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  height: 290px;
+  width: 500px;
+  padding: 60px 70px;
+  box-shadow:
+    0 0 30px rgba(0, 255, 255, 0.2),
+    inset 0 0 15px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+}
+
+/* 🎯 BUTTONS */
+.options-menu button {
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: 22px;
+  border: none;
+  padding: 18px 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 400px;
+  height: 60px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0 0 12px rgba(0, 198, 255, 0.4);
+}
+
+.options-menu button:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 25px rgba(0, 198, 255, 0.9);
+  background: linear-gradient(90deg, #00c6ff, #007bff);
+}
+
+.tap-to-continue {
+  font-size: 22px;
+  color: #ccc;
+  text-shadow: 0 0 10px #000;
+  animation: blinkText 1.5s infinite;
+  letter-spacing: 2px;
+  user-select: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+@keyframes blinkText {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }

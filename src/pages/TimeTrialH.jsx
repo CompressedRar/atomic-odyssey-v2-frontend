@@ -1,132 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Survival.css";
-import BackgroundVideo from "../components/BackgroundVideo";
-import another_elements from "../assets/periodic-table.json"
-import Swal from "sweetalert2";
+import "../styles/TimeTrialH.css";
+import BackgroundVideo from "../components/BackgroundVideo"
 import { auth } from "../configs/FirebaseConfig";
-import { getDatabase, ref, get, set, onValue } from "firebase/database";
-
-const elements = [
-    { name: "Hydrogen", symbol: "H", number: 1 },
-    { name: "Helium", symbol: "He", number: 2 },
-    { name: "Lithium", symbol: "Li", number: 3 },
-    { name: "Beryllium", symbol: "Be", number: 4 },
-    { name: "Boron", symbol: "B", number: 5 },
-    { name: "Carbon", symbol: "C", number: 6 },
-    { name: "Nitrogen", symbol: "N", number: 7 },
-    { name: "Oxygen", symbol: "O", number: 8 },
-    { name: "Fluorine", symbol: "F", number: 9 },
-    { name: "Neon", symbol: "Ne", number: 10 },
-    { name: "Sodium", symbol: "Na", number: 11 },
-    { name: "Magnesium", symbol: "Mg", number: 12 },
-    { name: "Aluminum", symbol: "Al", number: 13 },
-    { name: "Silicon", symbol: "Si", number: 14 },
-    { name: "Phosphorus", symbol: "P", number: 15 },
-    { name: "Sulfur", symbol: "S", number: 16 },
-    { name: "Chlorine", symbol: "Cl", number: 17 },
-    { name: "Argon", symbol: "Ar", number: 18 },
-    { name: "Potassium", symbol: "K", number: 19 },
-    { name: "Calcium", symbol: "Ca", number: 20 },
-    { name: "Scandium", symbol: "Sc", number: 21 },
-    { name: "Titanium", symbol: "Ti", number: 22 },
-    { name: "Vanadium", symbol: "V", number: 23 },
-    { name: "Chromium", symbol: "Cr", number: 24 },
-    { name: "Manganese", symbol: "Mn", number: 25 },
-    { name: "Iron", symbol: "Fe", number: 26 },
-    { name: "Cobalt", symbol: "Co", number: 27 },
-    { name: "Nickel", symbol: "Ni", number: 28 },
-    { name: "Copper", symbol: "Cu", number: 29 },
-    { name: "Zinc", symbol: "Zn", number: 30 },
-    { name: "Gallium", symbol: "Ga", number: 31 },
-    { name: "Germanium", symbol: "Ge", number: 32 },
-    { name: "Arsenic", symbol: "As", number: 33 },
-    { name: "Selenium", symbol: "Se", number: 34 },
-    { name: "Bromine", symbol: "Br", number: 35 },
-    { name: "Krypton", symbol: "Kr", number: 36 },
-    { name: "Rubidium", symbol: "Rb", number: 37 },
-    { name: "Strontium", symbol: "Sr", number: 38 },
-    { name: "Yttrium", symbol: "Y", number: 39 },
-    { name: "Zirconium", symbol: "Zr", number: 40 },
-    { name: "Niobium", symbol: "Nb", number: 41 },
-    { name: "Molybdenum", symbol: "Mo", number: 42 },
-    { name: "Technetium", symbol: "Tc", number: 43 },
-    { name: "Ruthenium", symbol: "Ru", number: 44 },
-    { name: "Rhodium", symbol: "Rh", number: 45 },
-    { name: "Palladium", symbol: "Pd", number: 46 },
-    { name: "Silver", symbol: "Ag", number: 47 },
-    { name: "Cadmium", symbol: "Cd", number: 48 },
-    { name: "Indium", symbol: "In", number: 49 },
-    { name: "Tin", symbol: "Sn", number: 50 },
-    { name: "Antimony", symbol: "Sb", number: 51 },
-    { name: "Tellurium", symbol: "Te", number: 52 },
-    { name: "Iodine", symbol: "I", number: 53 },
-    { name: "Xenon", symbol: "Xe", number: 54 },
-    { name: "Cesium", symbol: "Cs", number: 55 },
-    { name: "Barium", symbol: "Ba", number: 56 },
-    { name: "Lanthanum", symbol: "La", number: 57 },
-    { name: "Cerium", symbol: "Ce", number: 58 },
-    { name: "Praseodymium", symbol: "Pr", number: 59 },
-    { name: "Neodymium", symbol: "Nd", number: 60 },
-    { name: "Promethium", symbol: "Pm", number: 61 },
-    { name: "Samarium", symbol: "Sm", number: 62 },
-    { name: "Europium", symbol: "Eu", number: 63 },
-    { name: "Gadolinium", symbol: "Gd", number: 64 },
-    { name: "Terbium", symbol: "Tb", number: 65 },
-    { name: "Dysprosium", symbol: "Dy", number: 66 },
-    { name: "Holmium", symbol: "Ho", number: 67 },
-    { name: "Erbium", symbol: "Er", number: 68 },
-    { name: "Thulium", symbol: "Tm", number: 69 },
-    { name: "Ytterbium", symbol: "Yb", number: 70 },
-    { name: "Lutetium", symbol: "Lu", number: 71 },
-    { name: "Hafnium", symbol: "Hf", number: 72 },
-    { name: "Tantalum", symbol: "Ta", number: 73 },
-    { name: "Tungsten", symbol: "W", number: 74 },
-    { name: "Rhenium", symbol: "Re", number: 75 },
-    { name: "Osmium", symbol: "Os", number: 76 },
-    { name: "Iridium", symbol: "Ir", number: 77 },
-    { name: "Platinum", symbol: "Pt", number: 78 },
-    { name: "Gold", symbol: "Au", number: 79 },
-    { name: "Mercury", symbol: "Hg", number: 80 },
-    { name: "Thallium", symbol: "Tl", number: 81 },
-    { name: "Lead", symbol: "Pb", number: 82 },
-    { name: "Bismuth", symbol: "Bi", number: 83 },
-    { name: "Polonium", symbol: "Po", number: 84 },
-    { name: "Astatine", symbol: "At", number: 85 },
-    { name: "Radon", symbol: "Rn", number: 86 },
-    { name: "Francium", symbol: "Fr", number: 87 },
-    { name: "Radium", symbol: "Ra", number: 88 },
-    { name: "Actinium", symbol: "Ac", number: 89 },
-    { name: "Thorium", symbol: "Th", number: 90 },
-    { name: "Protactinium", symbol: "Pa", number: 91 },
-    { name: "Uranium", symbol: "U", number: 92 },
-    { name: "Neptunium", symbol: "Np", number: 93 },
-    { name: "Plutonium", symbol: "Pu", number: 94 },
-    { name: "Americium", symbol: "Am", number: 95 },
-    { name: "Curium", symbol: "Cm", number: 96 },
-    { name: "Berkelium", symbol: "Bk", number: 97 },
-    { name: "Californium", symbol: "Cf", number: 98 },
-    { name: "Einsteinium", symbol: "Es", number: 99 },
-    { name: "Fermium", symbol: "Fm", number: 100 },
-    { name: "Mendelevium", symbol: "Md", number: 101 },
-    { name: "Nobelium", symbol: "No", number: 102 },
-    { name: "Lawrencium", symbol: "Lr", number: 103 },
-    { name: "Rutherfordium", symbol: "Rf", number: 104 },
-    { name: "Dubnium", symbol: "Db", number: 105 },
-    { name: "Seaborgium", symbol: "Sg", number: 106 },
-    { name: "Bohrium", symbol: "Bh", number: 107 },
-    { name: "Hassium", symbol: "Hs", number: 108 },
-    { name: "Meitnerium", symbol: "Mt", number: 109 },
-    { name: "Darmstadtium", symbol: "Ds", number: 110 },
-    { name: "Roentgenium", symbol: "Rg", number: 111 },
-    { name: "Copernicium", symbol: "Cn", number: 112 },
-    { name: "Nihonium", symbol: "Nh", number: 113 },
-    { name: "Flerovium", symbol: "Fl", number: 114 },
-    { name: "Moscovium", symbol: "Mc", number: 115 },
-    { name: "Livermorium", symbol: "Lv", number: 116 },
-    { name: "Tennessine", symbol: "Ts", number: 117 },
-    { name: "Oganesson", symbol: "Og", number: 118 }
-];
+import { getDatabase, ref, get, set } from "firebase/database";
+import Swal from "sweetalert2";
 
 const quizData = [
     { images: ["/images/oxygen/oxygen1.jpg", "/images/oxygen/oxygen2.jpg", "/images/oxygen/oxygen3.jpg", "/images/oxygen/oxygen4.jpg"], answer: "OXYGEN", },
@@ -246,57 +124,59 @@ const quizData = [
     { images: ["/images/oganesson/oganesson1.jpg", "/images/oganesson/oganesson2.jpg", "/images/oganesson/oganesson3.jpg", "/images/oganesson/oganesson4.jpg"], answer: "OGANESSON", },
 ];
 
-// --- Helper Functions ---
-function getRandomElement() {
-    return elements[Math.floor(Math.random() * elements.length)];
-}
+const TOTAL_GAME_TIME = 300;
 
-function getRandomMissingFields() {
-    const fields = ["name", "symbol", "number"];
-    const shuffled = fields.sort(() => 0.5 - Math.random());
-    return [shuffled[0]];
-}
-
-function getElementImage(elementName) {
-    const data = quizData.find(
-        (item) => item.answer.toUpperCase() === elementName.toUpperCase()
-    );
-    if (data) {
-        return data.images[Math.floor(Math.random() * data.images.length)];
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    return null;
+    return shuffled;
 }
 
-const Survival = () => {
-    const navigate = useNavigate();
+function generateLetters(answer) {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let pool = answer.split("");
+    while (pool.length <= 17) {
+        pool.push(alphabet[Math.floor(Math.random() * alphabet.length)]);
+    }
+    return shuffleArray(pool);
+}
 
-    // --- Game States ---
+export default function TimeTrialH() {
+    const navigate = useNavigate();
+    const [questions] = useState(() => shuffleArray(quizData));
+    const [current, setCurrent] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(TOTAL_GAME_TIME);
+    const [score, setScore] = useState(0);
+
+    const [answered, setAnswered] = useState(Array(quizData.length).fill(false));
+    const [hintsLeft, setHintsLeft] = useState(3);
+    const [firstPassUsed, setFirstPassUsed] = useState(false);
+
+    const currentQuiz = questions[current];
+    const [guess, setGuess] = useState(Array(currentQuiz.answer.length).fill(""));
+    const [letters, setLetters] = useState(generateLetters(currentQuiz.answer));
+
     const [isStarting, setIsStarting] = useState(true);
     const [fadeOut, setFadeOut] = useState(false);
-    const [isCountingDown, setIsCountingDown] = useState(false);
-    const [countdown, setCountdown] = useState(3);
 
-    const [hp, setHp] = useState(100);
-    const [score, setScore] = useState(0);
+    const [feedback, setFeedback] = useState(null);
+
+    const [isGameOver, setIsGameOver] = useState(false);
+    // const [showOptions, setShowOptions] = useState(false);
     const [displayedScore, setDisplayedScore] = useState(0);
     const [questionCount, setQuestionCount] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(20);
-    const [feedback, setFeedback] = useState(null);
-    const [isGameOver, setIsGameOver] = useState(false);
 
-    const [answer, setAnswer] = useState("");
+
     const [activeModal, setActiveModal] = useState(null);
     const [leaderboardData, setLeaderboardData] = useState([]);
 
-    // --- Falling Cards ---
-    const [fallingCards, setFallingCards] = useState([]);
-    const columns = [10, 30, 50, 70, 86];
-    const maxFalling = 10;
-    const minDistance = 120;
-
-    // constants for overlap control
-    const CARD_HEIGHT = 300;
-    const SAFE_VERTICAL_GAP = CARD_HEIGHT * 1.2;
+    const showFeedback = (msg, color) => {
+        setFeedback({ msg, color });
+        setTimeout(() => setFeedback(null), 1200);
+    };
 
     const saveScoreToLeaderboard = async (answeredQuestions) => {
         try {
@@ -314,15 +194,12 @@ const Survival = () => {
                 if (snapshot.val().profilePic) profilePic = snapshot.val().profilePic;
             }
 
-            // ✅ Now get the leaderboard entry for this user
-            const leaderboardRef = ref(db, `leaderboards/normalSurvival/${user.uid}`);
+            const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
+            const leaderboardRef = ref(db, `leaderboards/timeTrialHard/${user.uid}`);
             const leaderboardSnap = await get(leaderboardRef);
             const oldData = leaderboardSnap.exists() ? leaderboardSnap.val() : {};
-
-            // ✅ Increment games played safely
             const updatedGamesPlayed = (oldData.gamesPlayed || 0) + 1;
 
-            // ✅ Save the new score and updated gamesPlayed
             await set(leaderboardRef, {
                 uid: user.uid,
                 name: username,
@@ -330,7 +207,7 @@ const Survival = () => {
                 profilePic,
                 score,
                 gamesPlayed: updatedGamesPlayed,
-                questions: answeredQuestions,
+                totalTimeTaken,
                 timestamp: Date.now(),
             });
 
@@ -340,439 +217,364 @@ const Survival = () => {
         }
     };
 
-    // --- Utilities ---
-    const showFeedback = (msg, color = "white") => {
-        setFeedback({ msg, color });
-        setTimeout(() => setFeedback(null), 1200);
-    };
-
-    // --- Position Helper (No Overlap) ---
-    const isSpaceFree = (x, y = -220) => {
-        return !fallingCards.some(card => {
-            const verticalDistance = Math.abs(card.y - y);
-            const horizontalDistance = Math.abs(card.x - x);
-            return horizontalDistance < minDistance && verticalDistance < SAFE_VERTICAL_GAP;
-        });
-    };
-
-    // --- Spawning Cards ---
-    const spawnFallingCard = () => {
-        setFallingCards(prev => {
-            if (prev.length >= maxFalling) return prev;
-
-            const availableColumns = columns.filter(col => {
-                return !prev.some(card => {
-                    const verticalDistance = Math.abs(card.y - (-220));
-                    const horizontalDistance = Math.abs(card.x - col);
-                    return horizontalDistance < minDistance && verticalDistance < SAFE_VERTICAL_GAP;
-                });
-            });
-
-            if (availableColumns.length === 0) return prev;
-
-            const x = availableColumns[Math.floor(Math.random() * availableColumns.length)];
-            const el = getRandomElement();
-
-            const newCard = {
-                id: Date.now() + Math.random(),
-                x,
-                y: -220,
-                speed: Math.random() * 1 + 0.5,
-                element: el,
-                missing: getRandomMissingFields(),
-                image: getElementImage(el.name),
-                fadingOut: false,
-                rotation: Math.random() * 10 - 5,
-                scale: 0.9 + Math.random() * 0.2,
-            };
-
-            return [...prev, newCard];
-        });
-    };
-
-    const spawnMultipleCards = (count = maxFalling) => {
-        setFallingCards(prev => {
-            let spawned = 0;
-            const shuffledColumns = [...columns].sort(() => 0.5 - Math.random());
-            const updated = [...prev];
-
-            for (let col of shuffledColumns) {
-                if (spawned >= count) break;
-                const isFree = !updated.some(card => {
-                    const verticalDistance = Math.abs(card.y - (-220));
-                    const horizontalDistance = Math.abs(card.x - col);
-                    return horizontalDistance < minDistance && verticalDistance < SAFE_VERTICAL_GAP;
-                });
-
-                if (!isFree) continue;
-
-                const el = getRandomElement();
-                const newCard = {
-                    id: Date.now() + Math.random(),
-                    x: col,
-                    y: -220,
-                    speed: Math.random() * 1.2 + 0.5,
-                    element: el,
-                    missing: getRandomMissingFields(),
-                    image: getElementImage(el.name),
-                    fadingOut: false,
-                    rotation: Math.random() * 10 - 5,
-                    scale: 0.9 + Math.random() * 0.2,
-                };
-
-                updated.push(newCard);
-                spawned++;
-            }
-            return updated;
-        });
-    };
-
-    // --- Intro and Countdown ---
     useEffect(() => {
-        if (isStarting) {
-            const timer = setTimeout(() => {
-                setFadeOut(true);
-                setTimeout(() => {
-                    setIsStarting(false);
-                    setIsCountingDown(true);
-                }, 1000);
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [isStarting]);
+        const fadeTimer = setTimeout(() => {
+            setFadeOut(true);
+        }, 3000);
 
-    useEffect(() => {
-        if (!isCountingDown) return;
-        let c = 3;
-        setCountdown(c);
+        const endTimer = setTimeout(() => {
+            setIsStarting(false);
+        }, 4500);
 
-        const interval = setInterval(() => {
-            c -= 1;
-            setCountdown(c);
-
-            if (c < 0) {
-                clearInterval(interval);
-                setIsCountingDown(false);
-                setTimeout(() => spawnMultipleCards(2 + Math.floor(Math.random() * 2)), 300);
-            }
-        }, 1000);
-
-        return () => clearInterval(interval);
-    }, [isCountingDown]);
-
-    // --- Score Display Animation ---
-    useEffect(() => {
-        if (displayedScore === score) return;
-        const step = score > displayedScore ? 1 : -1;
-        const timer = setInterval(() => {
-            setDisplayedScore(prev => {
-                if (prev === score) {
-                    clearInterval(timer);
-                    return prev;
-                }
-                return prev + step;
-            });
-        }, 30);
-        return () => clearInterval(timer);
-    }, [score, displayedScore]);
-
-    const gameOver = () => {
-        if (isGameOver) return;
-        setIsGameOver(true);
-    };
+        return () => {
+            clearTimeout(fadeTimer);
+            clearTimeout(endTimer);
+        };
+    }, []);
 
     useEffect(() => {
         if (isGameOver) {
-            saveScoreToLeaderboard(questionCount);
-            setActiveModal("gameover");
+            const answeredQuestions = answered.filter((a) => a).length;
+            saveScoreToLeaderboard(answeredQuestions);
+            setActiveModal("gameover"); // ✅ FIXED HERE
         }
     }, [isGameOver]);
 
-    // --- Falling Update ---
-    useEffect(() => {
-        if (isGameOver || isCountingDown) return;
-        let animFrame;
-
-        const update = () => {
-            setFallingCards(prev => {
-                const updated = prev.map(card => ({ ...card, y: card.y + card.speed }));
-
-                const survived = updated.filter(card => {
-                    if (card.y > window.innerHeight) {
-                        setHp(h => {
-                            const newHp = h - 10;
-                            if (newHp <= 0) gameOver();
-                            return newHp;
-                        });
-                        showFeedback("-10 HP", "red");
-                        return false;
-                    }
-                    return true;
-                });
-
-                if (survived.length < maxFalling && Math.random() < 0.05) {
-                    spawnMultipleCards(2 + Math.floor(Math.random() * 3));
-                }
-
-                return survived;
-            });
-
-            animFrame = requestAnimationFrame(update);
-        };
-
-        animFrame = requestAnimationFrame(update);
-        return () => cancelAnimationFrame(animFrame);
-    }, [isGameOver, isCountingDown]);
-
-    // --- Handle Answers ---
-    const handleSubmit = () => {
-        if (!answer.trim()) return;
-        handleAnswerCorrect(answer.trim());
-        setAnswer("");
-    };
-
-    const handleAnswerCorrect = (ans) => {
-        setFallingCards(prev => {
-            let found = false;
-            const updated = prev.map(card => {
-                let correct = true;
-                card.missing.forEach(field => {
-                    if (field === "name" && ans.toLowerCase() !== card.element.name.toLowerCase()) correct = false;
-                    if (field === "symbol" && ans.toLowerCase() !== card.element.symbol.toLowerCase()) correct = false;
-                    if (field === "number" && parseInt(ans) !== card.element.number) correct = false;
-                });
-
-                if (correct && !found) {
-                    found = true;
-                    setScore(s => s + 10);
-                    setHp(h => Math.min(100, h + 10));
-                    setQuestionCount(q => q + 1);
-                    showFeedback("+10 pts, +10 HP", "limegreen");
-                    return { ...card, fadingOut: true };
-                }
-                return card;
-            });
-
-            if (!found) {
-                setHp(h => {
-                    const newHp = h - 10;
-                    if (newHp <= 0) gameOver();
-                    return newHp;
-                });
-                showFeedback("-10 HP", "red");
-            }
-
-            return updated.filter(c => !c.fadingOut);
-        });
-    };
-
-    // --- Leaderboard ---
-    const fetchLeaderboard = () => {
-        const db = getDatabase();
-        const lbRef = ref(db, "leaderboards/normalSurvival");
-
-        onValue(lbRef, (snapshot) => {
+    const fetchLeaderboard = async () => {
+        try {
+            const db = getDatabase();
+            const snapshot = await get(ref(db, "leaderboards/timeTrialHard"));
             if (snapshot.exists()) {
-                const data = snapshot.val();
-                const arr = Object.values(data);
-                arr.sort((a, b) => b.questions - a.questions || b.score - a.score);
-                setLeaderboardData(arr);
-            } else {
-                setLeaderboardData([]);
+                const data = Object.values(snapshot.val());
+                const sorted = data.sort((a, b) => b.score - a.score);
+                setLeaderboardData(sorted);
             }
-        });
+        } catch (err) {
+            console.error("❌ Error fetching leaderboard:", err);
+        }
     };
 
-    const handleExit = () => navigate(-1);
+    useEffect(() => {
+        if (isGameOver) return;
 
-    // --- UI RENDER ---
+        const timer = setInterval(() => {
+            setTimeLeft((t) => {
+                if (t <= 1) {
+                    clearInterval(timer);
+                    setIsGameOver(true);
+                    return 0;
+                }
+                return t - 1;
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [isGameOver]);
+
+    // useEffect(() => {
+    //     const handleClick = () => {
+    //         if (isGameOver) {
+    //             setShowOptions(true);
+    //         }
+    //     };
+
+    //     window.addEventListener("click", handleClick);
+    //     return () => window.removeEventListener("click", handleClick);
+    // }, [isGameOver]);
+
+    useEffect(() => {
+        setGuess(Array(currentQuiz.answer.length).fill(""));
+        setLetters(generateLetters(currentQuiz.answer));
+    }, [currentQuiz]);
+
+    const handleLetterClick = (letter, index) => {
+        const emptyIndex = guess.indexOf("");
+        if (emptyIndex !== -1) {
+            const newGuess = [...guess];
+            newGuess[emptyIndex] = letter;
+            setGuess(newGuess);
+
+            const newLetters = [...letters];
+            newLetters[index] = null;
+            setLetters(newLetters);
+        }
+    };
+
+    const handleRemoveLetter = (index) => {
+        const newGuess = [...guess];
+        const letter = newGuess[index];
+        if (!letter) return;
+
+        newGuess[index] = "";
+        setGuess(newGuess);
+
+        const newLetters = [...letters];
+        const firstEmpty = newLetters.indexOf(null);
+        if (firstEmpty !== -1) {
+            newLetters[firstEmpty] = letter;
+        }
+        setLetters(newLetters);
+    };
+
+    const useHint = () => {
+        if (hintsLeft <= 0) {
+            showFeedback("⚠️ No hints left!", "orange");
+            return;
+        }
+
+        const correctLetters = currentQuiz.answer.split("");
+        const wrongIndexes = letters
+            .map((l, i) => (l && !correctLetters.includes(l) ? i : null))
+            .filter((i) => i !== null);
+
+        if (wrongIndexes.length === 0) {
+            showFeedback("ℹ️ No wrong letters left!", "cyan");
+            return;
+        }
+
+        const toRemove = wrongIndexes
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3);
+
+        const newLetters = [...letters];
+        toRemove.forEach((i) => {
+            newLetters[i] = null;
+        });
+
+        setLetters(newLetters);
+        setHintsLeft(hintsLeft - 1);
+        showFeedback("💡 Hint used!", "yellow");
+    };
+
+    const formatTime = (seconds) => {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s.toString().padStart(2, "0")}`;
+    };
+
+    const handleClear = () => {
+        const newLetters = [...letters];
+        guess.forEach((letter) => {
+            if (letter) {
+                const emptySlot = newLetters.indexOf(null);
+                if (emptySlot !== -1) newLetters[emptySlot] = letter;
+            }
+        });
+        setLetters(newLetters);
+        setGuess(Array(currentQuiz.answer.length).fill(""));
+    };
+
+    const checkAnswer = () => {
+        if (guess.includes("")) {
+            showFeedback("⚠️ Fill all Answer Boxes first!", "orange");
+            return;
+        }
+
+        if (guess.join("") === currentQuiz.answer) {
+            setScore((prev) => prev + 10);
+            const newAnswered = [...answered];
+            newAnswered[current] = true;
+            setAnswered(newAnswered);
+
+            showFeedback("+10 pts", "limegreen");
+
+            setTimeout(() => {
+                nextRound(false);
+            }, 1300);
+        } else {
+            setScore((prev) => {
+                if (prev > 0) {
+                    showFeedback("-10 pts", "red");
+                    return Math.max(0, prev - 10);
+                } else {
+                    showFeedback("❌ Wrong Answer!", "red");
+                    return prev;
+                }
+            });
+
+            setLetters((prevLetters) => {
+                const restored = [...prevLetters];
+                guess.forEach((letter) => {
+                    if (letter) {
+                        const emptyIndex = restored.indexOf(null);
+                        if (emptyIndex !== -1) {
+                            restored[emptyIndex] = letter;
+                        }
+                    }
+                });
+                return restored;
+            });
+
+            setGuess(Array(currentQuiz.answer.length).fill(""));
+        }
+    };
+
+    const nextRound = (isPass = false) => {
+        if (isPass) {
+            if (score <= 0) {
+                showFeedback("❌ Not enough points to pass!", "red");
+                return;
+            }
+
+            if (!firstPassUsed) {
+                setFirstPassUsed(true);
+                setScore((prev) => Math.max(0, prev - 10));
+                showFeedback("-10 pts (Pass)", "orange");
+                goToNext();
+            } else {
+                setScore((prev) => Math.max(0, prev - 10));
+                showFeedback("-10 pts (Pass)", "orange");
+                goToNext();
+            }
+        } else {
+            goToNext();
+        }
+    };
+
+    const goToNext = () => {
+        if (current < questions.length - 1) {
+            setCurrent(current + 1);
+        } else {
+            setIsGameOver(true);
+        }
+    };
+
+    const handleExit = () => {
+        navigate(-1);
+    };
+
     if (isStarting) {
         return (
             <div className="time-trial-container">
                 <BackgroundVideo />
                 <h1 className={`time-trial-title ${fadeOut ? "fade-out" : "fade-in"}`}>
-                    Periodic Table Survival
+                    ⚡ Chemistry Time Trial ⚡
                 </h1>
-                <p className={`subtitle ${fadeOut ? "fade-out" : "fade-in"}`}>Get ready...</p>
+                <p className={`subtitle ${fadeOut ? "fade-out" : "fade-in"}`}>
+                    Get ready...
+                </p>
             </div>
         );
     }
 
     return (
-        <div className="survival-container">
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="background-video"
-            >
-                <source src="/videos/4.mp4" type="video/mp4" />
-            </video>
+        <div className="time-trial-container">
+            <BackgroundVideo />
+            <div className="top-buttons" style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}>
+                <button className="exit-btn" onClick={handleExit}
+                    style={{
+                        fontSize: "1.5rem", padding: "10px 15px", borderRadius: "8px",
+                        background: "transparent", color: "#fff", fontWeight: "bold", cursor: "pointer",
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    ←
+                </button>
+            </div>
 
-            {/* Countdown */}
-            {isCountingDown && (
-                <div className="countdown-overlay" style={{
-                    position: "fixed",
-                    inset: 0,
-                    background: "rgba(0,0,0,0.8)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                    fontSize: "8rem",
-                    fontWeight: "bold",
-                    zIndex: 9999,
-                    textShadow: "0 0 20px #00f0ff",
-                }}>
-                    {countdown > 0 ? countdown : "GO!"}
+            {/* {isGameOver && (
+                <div className="game-over-screen">
+                    <h1 className="game-over-text">GAME OVER</h1>
                 </div>
             )}
 
-            {/* UI Layer */}
-            <div className="ui-container" style={{ position: "relative", zIndex: 10 }}>
-                <div className="top-buttons" style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}>
-                    <button className="exit-btn" onClick={handleExit}
-                        style={{
-                            fontSize: "1.5rem", padding: "10px 15px", borderRadius: "8px",
-                            background: "transparent", color: "#fff", fontWeight: "bold", cursor: "pointer",
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
-                        onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                        ←
-                    </button>
+            {showOptions && (
+                <div className="options-menu">
+                    <button onClick={handleBackToMenu}>Back to Menu</button>
+                    <button onClick={handleRestart}>Start New Game</button>
+                    <button onClick={handleLeaderboard}>Leaderboard</button>
                 </div>
+            )} */}
 
-                <h1>Periodic Table Survival - Normal</h1>
+            {!isGameOver && (
+                <div className="game-ui">
+                    <h1 className="time-trial-title">Chemistry Time Trial</h1>
 
-                <div className="status-bar">
-                    <div className="hp-status">
-                        <p>HP : {hp}</p>
-                        <div className="hp-bar">
-                            <div className="hp-fill"
-                                style={{
-                                    width: `${hp}%`,
-                                    background: hp > 50 ? "limegreen" : hp > 20 ? "orange" : "red",
-                                }}
-                            />
-                        </div>
+                    <div className="current-state-container">
+                        <p className="timer">Time Left: {formatTime(timeLeft)}</p>
+                        <p className="score">Score: {score}</p>
                     </div>
-                    <p>Score : {displayedScore}</p>
-                    <p>Answered: {questionCount}</p>
-                </div>
 
-                {feedback && (
-                    <div className="feedback-text" style={{
-                        position: "absolute", top: "100px", left: "50%",
-                        transform: "translateX(-50%)", color: feedback.color,
-                        fontSize: "24px", fontWeight: "bold",
-                        animation: "floatUp 1.2s ease-out", pointerEvents: "none",
-                        textShadow: "2px 2px 4px black",
-                    }}>
-                        {feedback.msg}
-                    </div>
-                )}
-
-                {!isGameOver && (
-                    <div className="answer-wrapper" style={{ marginTop: "500px" }}>
-                        <input
-                            type="text"
-                            value={answer}
-                            placeholder="Enter your answer"
-                            onChange={(e) => setAnswer(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") handleSubmit();
+                    {feedback && (
+                        <div
+                            className="feedback-text"
+                            style={{
+                                position: "absolute",
+                                top: "120px",
+                                left: "50%",
+                                transform: "translateX(-50%)",
+                                color: feedback.color,
+                                fontSize: "28px",
+                                fontWeight: "bold",
+                                animation: "floatUp 1.2s ease-out",
+                                pointerEvents: "none",
+                                textShadow: "2px 2px 6px black",
                             }}
-                            className="answer-input"
-                            autoFocus
-                        />
-                        <button onClick={handleSubmit} className="submit-btn">Submit</button>
-                    </div>
-                )}
-            </div>
-
-            {/* Cards */}
-            <div className="card-container" style={{
-                position: "absolute", top: 0, left: 0,
-                width: "100%", height: "100vh", zIndex: 1, pointerEvents: "none",
-            }}>
-                {fallingCards.map(card => (
-                    <div key={card.id} className={`element-card ${card.fadingOut ? "fade-out" : ""}`}
-                        style={{
-                            position: "absolute", left: `${card.x}%`, top: `${card.y}px`,
-                            transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 0.95})`,
-                            width: "240px", height: "300px", borderRadius: "22px",
-                            backgroundColor: "#222", overflow: "hidden",
-                            boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
-                            border: "2px solid white",
-                            transition: card.fadingOut ? "opacity 0.7s ease-out, transform 0.7s ease-out" : "none",
-                        }}>
-                        <img src={card.image || "/default-bg.jpg"} alt={card.element.name}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.95)" }} />
-                        <div style={{
-                            position: "absolute", inset: 0,
-                            background: "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.15))",
-                        }} />
-                        <div style={{
-                            position: "absolute", bottom: 0, width: "100%",
-                            padding: "18px 15px", color: "#fff", fontFamily: "Poppins, sans-serif",
-                            backdropFilter: "blur(3px)", textAlign: "left",
-                        }}>
-                            <h2 style={{ fontSize: "1.8rem", fontWeight: "700", marginBottom: "6px", marginLeft: "10px" }}>
-                                {card.missing.includes("symbol") ? "???" : card.element.symbol}
-                            </h2>
-                            <p style={{ marginLeft: "10px" }}>
-                                {card.missing.includes("name") ? "???" : card.element.name}
-                            </p>
-                            <p style={{ marginLeft: "10px" }}>
-                                {card.missing.includes("number") ? "Atomic No: ???" : `Atomic No: ${card.element.number}`}
-                            </p>
+                        >
+                            {feedback.msg}
                         </div>
-                    </div>
-                ))}
-            </div>
+                    )}
 
-            <style>{`
-        @keyframes floatUp {
-          0% { opacity: 1; transform: translate(-50%, 0); }
-          100% { opacity: 0; transform: translate(-50%, -50px); }
-        }
-        .fade-out { opacity: 0; transition: opacity 0.7s; }
-      `}</style>
+                    <div className="images-grid">
+                        {currentQuiz.images.slice(0, 2).map((img, i) => (
+                            <img key={i} src={img} alt="chemistry clue" />
+                        ))}
+                    </div>
+
+                    <div className="answer-box">
+                        {guess.map((l, i) => (
+                            <span key={i} className="letter" onClick={() => handleRemoveLetter(i)}>
+                                {l || "_"}
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className="letters-grids">
+                        {letters.map((letter, i) => (
+                            <button key={i} disabled={!letter} onClick={() => handleLetterClick(letter, i)}>
+                                {letter || ""}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="ccontrols">
+                        <button onClick={checkAnswer}>Submit</button>
+                        <button onClick={handleClear}>Clear</button>
+                        <button onClick={() => nextRound(true)}>Pass</button>
+                        <button className="hint-btn" onClick={useHint}>
+                            <span className="material-symbols-outlined">lightbulb</span>
+                            Hint {hintsLeft}
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* --- Game Over Modal --- */}
-            {activeModal === "gameover" && (
+            {isGameOver && activeModal === "gameover" && (
                 <div className="game-over-modal" style={{ zIndex: 20 }}>
                     <div className="modal-content">
                         <h1>Game Over!</h1>
                         <p>Final Score: {score}</p>
-                        <p>Answered Questions: {questionCount}</p>
+                        <p>Answered Questions: {answered.filter(a => a).length}</p>
                         <div className="modal-buttons">
                             <button
                                 className="btn try-again"
                                 onClick={() => {
-                                    // Reset all gameplay stats
-                                    setHp(100);
+                                    setTimeLeft(TOTAL_GAME_TIME);
                                     setScore(0);
                                     setDisplayedScore(0);
                                     setQuestionCount(0);
-                                    setFallingCards([]);
-                                    setTimeLeft(20);
-
-                                    // Close Game Over modal
-                                    setActiveModal(null);
-
-                                    // Mark game as not over
                                     setIsGameOver(false);
-
-                                    // Start countdown again before spawning
-                                    setIsCountingDown(true);
+                                    setActiveModal(null);
+                                    setAnswered(Array(quizData.length).fill(false));
+                                    setCurrent(0);
                                 }}
                             >
                                 Try Again
                             </button>
-                            <button className="btn menu" onClick={() => navigate(-1)}>Back to Menu</button>
+                            <button className="btn menu" onClick={() => navigate(-1)}>
+                                Back to Menu
+                            </button>
                             <button
                                 className="btn leaderboard"
                                 onClick={() => {
@@ -788,33 +590,39 @@ const Survival = () => {
             )}
 
             {/* --- Leaderboard Modal --- */}
-            {activeModal === "leaderboard" && (
+            {isGameOver && activeModal === "leaderboard" && (
                 <div className="leaderboard-modal" style={{ zIndex: 20 }}>
                     <div className="modal-content leaderboard-content">
                         <h2>Leaderboard</h2>
                         <div className="leaderboard-top3">
                             {leaderboardData[1] && (
                                 <div className="podium silver">
-                                    <div className="avatar"><img src={leaderboardData[1].profilePic} alt="" /></div>
+                                    <div className="avatar">
+                                        <img src={leaderboardData[1].profilePic} alt="" />
+                                    </div>
                                     <p className="name">{leaderboardData[1].name}</p>
-                                    <p className="score">Answered Questions: {leaderboardData[1].questions}</p>
+                                    <p className="score">Score: {leaderboardData[1].score}</p>
                                     <p className="username">{leaderboardData[1].email}</p>
                                 </div>
                             )}
                             {leaderboardData[0] && (
                                 <div className="podium gold">
                                     <div className="crown">👑</div>
-                                    <div className="avatar"><img src={leaderboardData[0].profilePic} alt="" /></div>
+                                    <div className="avatar">
+                                        <img src={leaderboardData[0].profilePic} alt="" />
+                                    </div>
                                     <p className="name">{leaderboardData[0].name}</p>
-                                    <p className="score">Answered Questions: {leaderboardData[0].questions}</p>
+                                    <p className="score">Score: {leaderboardData[0].score}</p>
                                     <p className="username">{leaderboardData[0].email}</p>
                                 </div>
                             )}
                             {leaderboardData[2] && (
                                 <div className="podium bronze">
-                                    <div className="avatar"><img src={leaderboardData[2].profilePic} alt="" /></div>
+                                    <div className="avatar">
+                                        <img src={leaderboardData[2].profilePic} alt="" />
+                                    </div>
                                     <p className="name">{leaderboardData[2].name}</p>
-                                    <p className="score">Answered Questions: {leaderboardData[2].questions}</p>
+                                    <p className="score">Score: {leaderboardData[2].score}</p>
                                     <p className="username">{leaderboardData[2].email}</p>
                                 </div>
                             )}
@@ -827,7 +635,7 @@ const Survival = () => {
                                     <div className="info">
                                         <p className="username">{player.email}</p>
                                     </div>
-                                    <p className="score">{player.questions}</p>
+                                    <p className="score">{player.score}</p>
                                 </div>
                             ))}
                         </div>
@@ -840,6 +648,4 @@ const Survival = () => {
             )}
         </div>
     );
-};
-
-export default Survival;
+}
