@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { auth } from "../configs/FirebaseConfig";
 import { getDatabase, ref, get, set } from "firebase/database";
 import Confetti from "react-confetti";
+import { div } from "framer-motion/client";
 
 const elementsData = [
     { number: 1, symbol: "H", name: "Hydrogen", row: 1, col: 1, group: "nonmetal" },
@@ -156,6 +157,8 @@ export default function Classic() {
     const [tableBuilt, setTableBuilt] = useState(false);
     const [questionQueue, setQuestionQueue] = useState([]);
     const [wrongFeedbacks, setWrongFeedbacks] = useState([]);
+
+    const [currentlyGrabbing, setGrabbing] = useState(false)
 
     // ✅ NEW: Track if time is up
     const [isTimeUp, setIsTimeUp] = useState(false);
@@ -372,8 +375,9 @@ export default function Classic() {
 
             {showWelcome && (
                 <div className="welcome-screen" onClick={handleStartGame}>
-                    <h1>⚛ Welcome to Periodic Quest ⚛</h1>
-                    <p>Click anywhere to start</p>
+                    <h1>Welcome to Periodic Quest</h1>
+                    <small><strong>Symbols</strong> of a chemical element are given and you must quickly find its correct position on the periodic table.</small>
+                    <h3>Click anywhere to start</h3>
                 </div>
             )}
 
@@ -468,20 +472,26 @@ export default function Classic() {
                     </div>
                 </div>
             )}
+            <div className="score-container">
+                <span>Score</span>
+                <span>{score}</span>
+            </div>
 
             {currentElement && !showEndModal && !showWelcome && tableBuilt && (
-                <div
-                    className="element-card"
-                    draggable
-                    onDragStart={(e) =>
-                        e.dataTransfer.setData("symbol", currentElement.symbol)
-                    }
-                >
-                    {currentElement.symbol}
+                <div className="current-card-container">
+                    <div
+                        className="element-card"
+                        draggable
+                        onDragStart={(e) =>
+                            e.dataTransfer.setData("symbol", currentElement.symbol)
+                        }
+                    >
+                        {currentElement.symbol}
+                    </div>
                 </div>
             )}
 
-            {!showEndModal && !showWelcome && tableBuilt && (
+            {!showEndModal && !showWelcome && tableBuilt && false && (
                 <>
                     <p>
                         Time Left:{" "}
@@ -489,9 +499,12 @@ export default function Classic() {
                             {timeLeft}s
                         </span>
                     </p>
-                    <p>Score: {score}</p>
+                    
                 </>
             )}
+
+
+            
 
             <div className={`periodic-grid ${tableBuilt ? "built" : ""}`}>
                 {elementsData.map((el, idx) => (
