@@ -135,6 +135,19 @@ const elementsData = [
     { number: 118, symbol: "Og", name: "Oganesson", row: 7, col: 18, group: "noble" },
 ];
 
+const groupColors = {
+  "alkali": "#cc80ff",           // Alkali metals
+  "alkaline": "#c2ff00",         // Alkaline earth metals
+  "transition": "#e06633",       // Transition metals
+  "post-transition": "#668080",  // Post-transition metals
+  "metalloid": "#daa520",        // Metalloids
+  "nonmetal": "#ffff30",         // Nonmetals
+  "noble": "#b3e3f5",            // Noble gases
+  "lanthanide": "#8fffc7",       // Lanthanides
+  "actinide": "#008fff"          // Actinides
+};
+
+
 export default function Classic() {
     const navigate = useNavigate();
 
@@ -482,14 +495,25 @@ export default function Classic() {
                     <div
                         className="element-card"
                         draggable
+                        style={{borderColor:`${groupColors[currentElement.group]}`}}
                         onDragStart={(e) =>
-                            e.dataTransfer.setData("symbol", currentElement.symbol)
+                            {
+                                e.dataTransfer.setData("symbol", currentElement.symbol)
+                                setGrabbing(true)
+                            }                            
                         }
+                        onDragEnd={(e) =>
+                            {
+                                setGrabbing(false)
+                                console.log("ENDED GRABBING")
+                            }  }
                     >
                         {currentElement.symbol}
                     </div>
                 </div>
-            )}
+            )
+
+            }
 
             {!showEndModal && !showWelcome && tableBuilt && false && (
                 <>
@@ -513,16 +537,28 @@ export default function Classic() {
                         className={`cell ${el.group} 
                             ${feedback.symbol === el.symbol ? feedback.type : ""} 
                             ${answered.includes(el.symbol) ? "revealed" : ""}`}
-                        style={{
+                        style={!currentlyGrabbing? {
                             gridRow: el.row,
                             gridColumn: el.col,
                             animationDelay: !tableBuilt ? `${idx * 0.01}s` : "0s",
-                        }}
+                            animation:" buildCell 0.3s forwards, breathCell 2s infinite",
+                            borderColor:`${groupColors[el.group]}`,
+                            color: `${groupColors[el.group]}`
+                        } : {
+                            gridRow: el.row,
+                            gridColumn: el.col,
+                            animation: "shaking 0.1s infinite",
+                            borderColor:`${groupColors[el.group]}`
+                        }
+                    }
                         onDragOver={(e) => e.preventDefault()}
                         onDrop={(e) => {
                             const draggedSymbol = e.dataTransfer.getData("symbol");
                             if (!draggedSymbol || answered.includes(el.symbol)) return;
                             handleAnswer(el.symbol, draggedSymbol);
+                        }}
+                        onClick={(e)=> {
+                            handleAnswer(el.symbol, currentElement.symbol);
                         }}
                     >
                         <span className="number">

@@ -26,6 +26,7 @@
   transform: scale(0.5);
   /* start small */
   animation: buildCell 0.3s forwards;
+  transition: all 200ms;
   
 }
 
@@ -49,12 +50,12 @@
   }
 
   25% {
-    transform: rotate(5deg);
+    transform: rotate(3deg);
   }
 
 
   75% {
-    transform: rotate(-5deg);
+    transform: rotate(-3deg);
   }
 
   100% {
@@ -64,15 +65,14 @@
 
 @keyframes breathCell {
   0% {
-    scale: 0.97;
-    
+    border-color: currentColor;
   }
   50% {
-    scale: 1;
+
   }
 
   100% {
-    scale: 0.97;
+    border-color: rgb(53, 53, 53);
   }
 }
 
@@ -127,47 +127,47 @@
 
 /* --- Group Colors --- */
 .cell.alkali.revealed {
-  background-color: #a18aff;
+  background-color: #cc80ff;
   color: white !important;
 }
 
 .cell.alkaline.revealed {
-  background-color: #ccff33;
+  background-color: #c2ff00;
   color: black !important;
 }
 
 .cell.transition.revealed {
-  background-color: #ffff33;
+  background-color: #e06633;
   color: black !important;
 }
 
 .cell.post-transition.revealed {
-  background-color: #ff9933;
+  background-color: #668080;
   color: black !important;
 }
 
 .cell.metalloid.revealed {
-  background-color: #ff6666;
+  background-color: #daa520;
   color: white !important;
 }
 
 .cell.nonmetal.revealed {
-  background-color: #9999ff;
+  background-color: #ffff30;
   color: white !important;
 }
 
 .cell.noble.revealed {
-  background-color: #66ccff;
+  background-color: #b3e3f5;
   color: black !important;
 }
 
 .cell.lanthanide.revealed {
-  background-color: #33ff33;
+  background-color: #8fffc7;
   color: black !important;
 }
 
 .cell.actinide.revealed {
-  background-color: #cc99ff;
+  background-color: #008fff;
   color: black !important;
 }
 
