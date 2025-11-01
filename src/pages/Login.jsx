@@ -5,6 +5,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
 } from "firebase/auth";
+import { getDatabase, ref, get } from "firebase/database"; // ✅ Import RTDB
 import "../styles/App.css";
 import "../styles/Login.css";
 import msg from "../components/CustomAlerts.js";
@@ -39,9 +40,26 @@ function LoginPage() {
         return;
       }
 
-      msg.Success("Login successful!");
-      window.location.replace("/main");
+      // ✅ Check if user is admin
+      const db = getDatabase();
+      const userRef = ref(db, "users/" + user.uid);
+      const snapshot = await get(userRef);
+
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        if (userData.isAdmin === true) {
+          msg.Success("Welcome, Admin!");
+          window.location.replace("/admin");
+        } else {
+          msg.Success("Login successful!");
+          window.location.replace("/main");
+        }
+      } else {
+        msg.Error("User record not found in database.");
+        await auth.signOut();
+      }
     } catch (error) {
+      console.error("Login Error:", error);
       msg.Error("The email or password is incorrect.");
     } finally {
       setLoading("none");
@@ -101,6 +119,7 @@ function LoginPage() {
         <source src="/videos/3.mp4" type="video/mp4" />
       </video>
 
+      {/* === Forgot Password Modal === */}
       {showForgotModal && (
         <div className="modal-overlay" onClick={() => setShowForgotModal(false)}>
           <div
@@ -116,7 +135,7 @@ function LoginPage() {
             <h2>Forgot Password?</h2>
             <div className="modal-divider"></div>
             <p className="forgot-desc">
-              Enter your registered email to receive a account recovery link.
+              Enter your registered email to receive an account recovery link.
             </p>
 
             <div className="forgot-input-group">
@@ -191,14 +210,14 @@ function LoginPage() {
           </form>
 
           <span id="new-account-link">
-            Don't have an account? <a href="/register">Click here.</a>
+            Don&apos;t have an account? <a href="/register">Click here.</a>
           </span>
         </div>
       </div>
 
-      {/* CSS */}
+      {/* === Styles (same as before) === */}
       <style>{`
-/* === Forgot Password Modal (Interactive Version) === */
+/* === Forgot Password Modal === */
 .forgot-password-modal {
   position: relative;
   width: 440px;
@@ -214,7 +233,6 @@ function LoginPage() {
   overflow: hidden;
 }
 
-/* Divider */
 .modal-divider {
   width: 60%;
   height: 2px;
@@ -224,20 +242,18 @@ function LoginPage() {
   animation: pulseLine 2.2s infinite ease-in-out;
 }
 
-/* === Main Login Container Background Enhancement === */
 .login-form-container {
-  background: rgba(0, 0, 0, 0.65); /* dark semi-transparent background */
+  background: rgba(0, 0, 0, 0.65);
   padding: 2rem 2.5rem;
   border-radius: 20px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px); /* adds a soft glassy blur effect */
-  color: #fff; /* makes labels and text visible */
+  backdrop-filter: blur(8px);
+  color: #fff;
   background: rgba(20, 20, 20, 0.55);
   backdrop-filter: blur(5px);
 }
 
-/* Description */
 .forgot-desc {
   font-size: 0.96rem;
   color: #cfcfcf;
@@ -246,35 +262,16 @@ function LoginPage() {
   letter-spacing: 0.3px;
 }
 
-.forgot-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end; /* optional — if you want it right-aligned */
-  font-size: 0.96rem;
-  white-space: nowrap; /* ✅ prevents line break */
-}
-
 .forgot-container a {
   color: #4d7eff;
   text-decoration: none;
   transition: 0.3s ease;
 }
-
 .forgot-container a:hover {
   color: #00ff84;
   text-decoration: underline;
 }
 
-/* Input Group */
-.forgot-input-group {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-}
-
-/* Input */
 .modal-input {
   flex: 1;
   min-width: 230px;
@@ -293,45 +290,21 @@ function LoginPage() {
   transform: scale(1.02);
 }
 
-/* Button */
 .modal-btn {
   background: linear-gradient(145deg, #00ffc8, #00b89e);
   color: #000;
   font-weight: 700;
-  letter-spacing: 0.3px;
   border: none;
   margin-top: 5px;
   border-radius: 14px;
   padding: 0.95rem 1.3rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 18px rgba(0, 255, 200, 0.2);
-  position: relative;
-  overflow: hidden;
 }
 .modal-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 0 25px rgba(0, 255, 200, 0.5);
 }
-.modal-btn:active {
-  transform: scale(0.97);
-}
-
-/* Glowing pulse inside button */
-.modal-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.2);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.modal-btn:hover::after {
-  opacity: 1;
-  animation: btnPulse 1.5s infinite ease-in-out;
-}
-
-/* Close Button */
 .close-btn {
   position: absolute;
   right: 16px;
@@ -345,29 +318,10 @@ function LoginPage() {
   color: #00ffc8;
   transform: rotate(90deg);
 }
-
-/* === Animations === */
 @keyframes fadeInPop {
-  from {
-    opacity: 0;
-    transform: scale(0.85) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.85) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
-
-@keyframes borderGlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-@keyframes btnPulse {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.4; }
-}
-
 @keyframes pulseLine {
   0%, 100% { opacity: 0.5; transform: scaleX(1); }
   50% { opacity: 1; transform: scaleX(1.1); }

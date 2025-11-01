@@ -26,6 +26,7 @@ import Leaderboard from "./pages/Leaderboard.jsx";
 import BackgroundVideo from "./components/BackgroundVideo.jsx"; // ✅ Add this import
 import Lobby from "./pages/CompetitiveLobby.jsx";
 import Competitive from "./pages/Competitive.jsx";
+import AdminDashboard from "./pages/Administrator.jsx";
 
 function App() {
   return (
@@ -202,10 +203,12 @@ function App() {
           </Route>
         </Routes>
 
+        
+
         <Routes>
-          <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/admin" element={<AdminDashboard></AdminDashboard>}></Route>
         </Routes>
       </div>
     </>
