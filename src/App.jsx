@@ -24,6 +24,8 @@ import Classic from "./pages/Classic.jsx";
 import VerifyEmail from "./pages/VerifyEmail";
 import Leaderboard from "./pages/Leaderboard.jsx";
 import BackgroundVideo from "./components/BackgroundVideo.jsx"; // ✅ Add this import
+import Lobby from "./pages/CompetitiveLobby.jsx";
+import Competitive from "./pages/Competitive.jsx";
 
 function App() {
   return (
@@ -174,6 +176,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Table />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/room"
+              element={
+                <ProtectedRoute>
+                  <Competitive></Competitive>
                 </ProtectedRoute>
               }
             />

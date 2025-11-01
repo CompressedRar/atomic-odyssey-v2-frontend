@@ -1,10 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Quizzes.css";
 import "../styles/animations.css";
+import Competitive from "./Competitive";
+import MatchmakingLobby from "./MatchMakingLobby";
+import BattleRoom from "./BattleRoom";
+
 
 function Quizzes() {
   const navigate = useNavigate();
+  const [isPvp, setPvp] = useState(false)
+
+  const [roomInfo, setRoomInfo] = useState(null);
 
   const handleModeClick = (mode) => {
     if (mode === "time") {
@@ -38,6 +45,7 @@ function Quizzes() {
 
   return (
     <div className="quizzes-container">
+      
       <h1>Game Modes</h1>
       <div className="quiz-modes-container">
         <span
@@ -85,21 +93,25 @@ function Quizzes() {
           </div>
         </span>
 
-        {/* <span
+        <span
           className="quiz-mode"
           id="pvp"
-          onClick={() => handleModeClick("pvp")}
         >
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">
-            <span className="mode-name">Competitive</span>
-            <span className="mode-desc">
-              Compete and clash with other players.
-            </span>
+            <MatchmakingLobby onStartGame={(roomCode, userInfo) =>
+                setRoomInfo({ roomCode, userInfo })
+            }></MatchmakingLobby>
           </div>
-        </span> */}
+        </span> 
+
+        
       </div>
+
+      {roomInfo && (
+        <BattleRoom {...roomInfo}></BattleRoom>
+      )}
 
       <br />
       <h1>Review </h1>

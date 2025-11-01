@@ -408,7 +408,7 @@ function PlayerInformation() {
       {/* 💬 GLOBAL CHAT MODAL */}
       {showGlobalChat && (
         <div className="settings-modal-overlay" onClick={() => setShowGlobalChat(false)}>
-          <div className="settings-modal chat-modal" onClick={(e) => e.stopPropagation()}>
+          <div id = "chat-container" className="settings-modal chat-modal"  onClick={(e) => e.stopPropagation()}>
             <span
               className="close-btn material-symbols-outlined"
               onClick={() => setShowGlobalChat(false)}
@@ -426,19 +426,23 @@ function PlayerInformation() {
                 return (
                   <div key={index} className={`chat-message ${isOwn ? "own" : ""}`}>
                     {!isOwn && (
-                      <img
-                        src={
-                          msg.profilePic && msg.profilePic !== ""
-                            ? msg.profilePic
-                            : "https://placehold.co/40x40/2b2b2b/ffffff?text=P"
-                        }
-                        alt="PFP"
-                        className="chat-avatar"
-                      />
+                      <div className="chat-pair">
+                        <img
+                          src={
+                            msg.profilePic && msg.profilePic !== ""
+                              ? msg.profilePic
+                              : "https://placehold.co/40x40/2b2b2b/ffffff?text=P"
+                          }
+                          alt="PFP"
+                          className="chat-avatar"
+                        />
+                      
+                      </div>
                     )}
                     <div className="chat-bubble">
+                      
                       {!isOwn && <span className="chat-username">{msg.username}</span>}
-                      <p>{msg.message}</p>
+                      <span className="chat-content">{msg.message}</span>
                     </div>
                   </div>
                 );
@@ -795,7 +799,7 @@ function PlayerInformation() {
 
 .settings-modal h2 {
   font-size: 1.6rem;
-  margin: 1rem 0 1rem 1px;
+  margin: 0 0 1rem 0;
 }
 
 .modal-divider {
@@ -1164,158 +1168,190 @@ function PlayerInformation() {
   color: #fff;
 }
 
-/* 🌌 Chat modal — compact glass neon style */
 .chat-modal {
   width: 80vw;
   height: 80vh;
   max-width: 900px;
   display: flex;
   flex-direction: column;
-  background: rgba(20, 20, 20, 0.55);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: #1b1b1b;
+  padding: 1.5rem;
   border-radius: 20px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1rem;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
 }
 
-/* Chat area */
 .chat-messages {
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem; /* tighter space between messages */
-  padding: 0.5rem 0.6rem;
+  gap: 0.35rem;
+  padding: 0.8rem 1rem;
 }
 
-/* Message container */
+/* Base message layout */
 .chat-message {
   display: flex;
   align-items: flex-end;
-  gap: 0.35rem;
+  gap: 0.4rem;
   max-width: 70%;
-  font-size: 0.8rem; /* smaller font */
 }
 
-/* Align own messages right */
+/* Align own messages to the right */
 .chat-message.own {
   align-self: flex-end;
   flex-direction: row-reverse;
+  justify-content: flex-end;
 }
 
-/* Hide avatar for own messages */
+/* Avatar (hidden for own messages) */
 .chat-message.own .chat-avatar {
   display: none;
 }
 
-/* Avatar — smaller */
 .chat-avatar {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1.5px solid #3b82f6;
-  box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+  border: 2px solid #3b82f6;
 }
 
-/* 🗨️ Chat bubble */
+/* 🟢 Chat bubble style */
 .chat-bubble {
   display: inline-block;
-  padding: 0.35rem 0.6rem;
-  border-radius: 10px;
-  line-height: 1.3;
+  padding: 0.4rem 0.8rem;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  max-width: 100%;
   word-wrap: break-word;
   width: fit-content;
-  max-width: 80%;
-  background: rgba(40, 40, 40, 0.6);
-  color: #f3f3f3;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
+  background: #2b2b2b;
+  color: #e4e4e4;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
-/* 💙 Own messages */
+/* 💙 Your messages (gaming theme blue) */
 .chat-message.own .chat-bubble {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
   color: white;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-  border-radius: 10px 10px 3px 10px;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+  border-radius: 16px 16px 4px 16px;
 }
 
-/* 🟣 Others’ messages */
+/* 🟣 Other users' messages (darker, subtle contrast) */
 .chat-message.other .chat-bubble {
-  background: rgba(25, 25, 25, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #eaeaea;
-  border-radius: 10px 10px 10px 3px;
+  background: #1f1f1f;
+  border: 1px solid #333;
+  color: #ddd;
+  border-radius: 16px 16px 16px 4px;
 }
 
-/* Username (for others only) */
+/* Username (only for others) */
 .chat-message.other .chat-username {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: #aaa;
-  margin-bottom: 0.1rem;
-  margin-left: 4px;
+  margin-bottom: 0.15rem;
+  display: block;
 }
 
 .chat-message.own .chat-username {
   display: none;
 }
 
-/* ✍️ Input section */
+/* Avatar */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+}
+
+/* Chat bubble */
+.chat-bubble {
+  background: #2b2b2b;
+  color: #eee;
+  padding: 0.6rem 0.9rem;
+  border-radius: 14px;
+  word-wrap: break-word;
+  line-height: 1.4;
+  position: relative;
+  font-size: 0.95rem;
+  max-width: 100%;
+}
+
+/* Blue bubble for own messages */
+.chat-message.own .chat-bubble {
+  background: #3b82f6;
+  color: #fff;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 14px;
+}
+
+/* Dark gray bubble for others */
+.chat-message.other .chat-bubble {
+  background: #2f2f2f;
+  color: #eaeaea;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 14px;
+}
+
+/* Username above the bubble */
+.chat-username {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-bottom: 0.2rem;
+  margin-left: 4px;
+}
+
+/* Input area */
 .chat-input-section {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.6rem;
+  padding-top: 1rem;
 }
 
 .chat-input-section input {
   flex: 1;
-  padding: 0.6rem 0.9rem;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: none;
   outline: none;
-  background: rgba(15, 15, 15, 0.6);
+  background: #111;
   color: white;
-  font-size: 0.9rem;
-  transition: 0.2s ease;
+  font-size: 1rem;
 }
 
 .chat-input-section input:focus {
-  background: rgba(25, 25, 25, 0.75);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
+  background: #1a1a1a;
 }
 
-/* 🟠 Send button */
 .chat-input-section button {
-  padding: 0.6rem 1rem;
+  padding: 0.8rem 1.4rem;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #f59e0b, #f97316);
+  border-radius: 12px;
+  background: #f39c12;
   color: white;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(249, 115, 22, 0.35);
-  transition: all 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .chat-input-section button:hover {
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+  background: #e67e22;
 }
 
 /* Scrollbar */
 .chat-messages::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 .chat-messages::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #3b82f6, #f59e0b);
-  border-radius: 3px;
+  background: #f39c12;
+  border-radius: 4px;
 }
 `}</style>
     </>
