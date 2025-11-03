@@ -101,6 +101,7 @@ function LoginPage() {
   return (
     <div id="main-wrapper" className="login-wrapper">
       {/* Loading Screen */}
+
       <div className="loading-screen" style={{ display: isLoading }}>
         <span className="material-symbols-outlined" id="loading-icon">
           progress_activity
@@ -115,6 +116,7 @@ function LoginPage() {
         playsInline
         preload="auto"
         className="background-video"
+        style={{backgroundColor:"white"}}
       >
         <source src="/videos/3.mp4" type="video/mp4" />
       </video>

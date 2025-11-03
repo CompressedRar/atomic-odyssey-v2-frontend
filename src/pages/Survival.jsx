@@ -607,6 +607,7 @@ const Survival = () => {
                 playsInline
                 preload="auto"
                 className="background-video"
+                style={{opacity:"1", filter:"brightness(10%)"}}
             >
                 <source src="/videos/4.mp4" type="video/mp4" />
             </video>
@@ -707,6 +708,7 @@ const Survival = () => {
                             boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
                             border: "2px solid white",
                             transition: card.fadingOut ? "opacity 0.7s ease-out, transform 0.7s ease-out" : "none",
+                            scale:"0.9"
                         }}>
                         <img src={card.image || "/default-bg.jpg"} alt={card.element.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.95)" }} />

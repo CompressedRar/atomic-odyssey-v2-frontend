@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Classic.css";
-import BackgroundVideo from "../components/BackgroundVideo"
 import Swal from "sweetalert2";
 import { auth } from "../configs/FirebaseConfig";
 import { getDatabase, ref, get, set } from "firebase/database";
@@ -343,7 +342,7 @@ export default function Classic() {
     };
 
     return (
-        <div className="periodic-game">
+        <div className="periodic-game" >
             <video
                 autoPlay
                 loop
@@ -351,6 +350,7 @@ export default function Classic() {
                 playsInline
                 preload="auto"
                 className="background-video"
+                style={{opacity:"1", filter:"brightness(20%)"}}
             >
                 <source src="/videos/4.mp4" type="video/mp4" />
             </video>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/Metals.css";
+import "../styles/Rnon_metals.css";
 import BackgroundVideo from "../components/BackgroundVideo";
 import Swal from "sweetalert2";
 
@@ -181,101 +181,122 @@ const Metals = () => {
 
     return (
         <div className="quiz-wrapper">
-            <BackgroundVideo />
-            <div className="quiz-container">
-                <div className="quiz-header">
-                    <div className="progress-container">
-                        <div className="progress-bar" style={{ width: `${progress}%` }}></div>
-                    </div>
-                    <span className="question-count">
-                        {questionIndex + 1}/{TOTAL_QUESTIONS}
-                    </span>
-                    <button className="quiz-close" onClick={() => setShowQuitModal(true)}>
-                        ✕
-                    </button>
-                </div>
+      <BackgroundVideo />
 
-                <h2 className="quiz-title">{selectedCategory} Quiz</h2>
-
-                {currentQuestion.quizType === "symbol" ? (
-                    <div className="symbol-layout">
-                        <div className="symbol-box">
-                            <h1>{currentQuestion.symbol}</h1>
-                        </div>
-                        <div className="symbol-options">
-                            {options.map((opt, idx) => (
-                                <button
-                                    key={idx}
-                                    className={`symbol-option-btn ${inputAnswer === opt ? "selected" : ""}`}
-                                    onClick={() => setInputAnswer(opt)}
-                                >
-                                    {opt}
-                                </button>
-                            ))}
-                            <button
-                                className="submit-btn"
-                                disabled={!inputAnswer}
-                                onClick={() => checkAnswer(inputAnswer)}
-                            >
-                                Submit
-                            </button>
-                        </div>
-                    </div>
-                ) : currentQuestion.quizType === "multiple" ? (
-                    <>
-                        <div className="images">
-                            {currentQuestion.images.map((src, idx) => (
-                                <img key={idx} src={src} alt="element clue" />
-                            ))}
-                        </div>
-                        <div className="options">
-                            {options.map((opt, idx) => (
-                                <button key={idx} onClick={() => checkAnswer(opt)}>
-                                    {opt}
-                                </button>
-                            ))}
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <div className="images">
-                            {currentQuestion.images.map((src, idx) => (
-                                <img key={idx} src={src} alt="element clue" />
-                            ))}
-                        </div>
-                        <div className="identification">
-                            <input
-                                type="text"
-                                value={inputAnswer}
-                                onChange={(e) => setInputAnswer(e.target.value)}
-                                placeholder="Type your answer"
-                            />
-                            <button onClick={() => checkAnswer(inputAnswer)}>Submit</button>
-                        </div>
-                    </>
-                )}
-
-                {feedback && (
-                    <div className={`feedback-box ${feedback.includes("✅") ? "correct" : "wrong"}`}>
-                        <p>{feedback}</p>
-                    </div>
-                )}
-            </div>
-
-            {showQuitModal && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <p>Are you sure you want to quit this session?</p>
-                        <button className="keep-btn" onClick={() => setShowQuitModal(false)}>
-                            KEEP PRACTICING
-                        </button>
-                        <button className="quit-btns" onClick={() => window.history.back()}>
-                            QUIT
-                        </button>
-                    </div>
-                </div>
-            )}
+      <div className="quiz-container">
+        {/* Header */}
+        <div className="quiz-header">
+          <div className="progress-container">
+            <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+          </div>
+          <span className="question-count">
+            {questionIndex + 1}/{TOTAL_QUESTIONS}
+          </span>
+          <button className="quiz-close" onClick={() => setShowQuitModal(true)}>
+            ✕
+          </button>
         </div>
+
+        {/* Title */}
+        <h2 className="quiz-title">Guess the Non-Metal Element</h2>
+
+        {/* Question Content */}
+        <div className="quiz-content">
+          {currentQuestion.quizType === "symbol" && (
+            <div className="sym-choices">
+              <div className="symbol-box">
+                <h1>{currentQuestion.symbol}</h1>
+              </div>
+              <div className="quiz-options">
+                {options.map((opt, idx) => (
+                  <button
+                    key={idx}
+                    className={`option-btn ${inputAnswer === opt ? "selected" : ""}`}
+                    onClick={() => checkAnswer(opt)}
+                  >
+                    {opt}
+                  </button>
+                ))}
+                
+              </div>
+            </div>
+          )}
+
+          {currentQuestion.quizType === "multiple" && (
+            <div className="img-multi">
+              <div className="quiz-images">
+                {currentQuestion.images.map((src, idx) => (
+                  <img key={idx} src={src} alt="element clue" />
+                ))}
+              </div>
+              <div className="quiz-options">
+                {options.map((opt, idx) => (
+                  <button
+                    key={idx}
+                    className="option-btn"
+                    onClick={() => checkAnswer(opt)}
+                  >
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {currentQuestion.quizType === "identification" && (
+            <div className="img-identify">
+              <div className="quiz-images">
+                {currentQuestion.images.map((src, idx) => (
+                  <img key={idx} src={src} alt="element clue" />
+                ))}
+              </div>
+              <div className="quiz-input">
+                <input
+                  type="text"
+                  value={inputAnswer}
+                  onChange={(e) => setInputAnswer(e.target.value)}
+                  placeholder="Type your answer"
+                />
+                <button
+                  className="submit-btn"
+                  disabled={!inputAnswer}
+                  onClick={() => checkAnswer(inputAnswer)}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Feedback */}
+        {feedback && (
+          <div
+            className={`toast ${
+              feedback.includes("✅") ? "toast-success" : "toast-error"
+            }`}
+          >
+            <p>{feedback}</p>
+          </div>
+        )}
+
+      </div>
+
+      {/* Quit Modal */}
+      {showQuitModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Are you sure you want to quit this session?</p>
+            <button className="keep-btn" onClick={() => setShowQuitModal(false)}>
+              KEEP PRACTICING
+            </button>
+            <button className="quit-btns" onClick={() => window.history.back()}>
+              QUIT
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
     );
 };
 

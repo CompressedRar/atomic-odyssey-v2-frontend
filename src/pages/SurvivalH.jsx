@@ -606,6 +606,7 @@ const SurvivalH = () => {
         playsInline
         preload="auto"
         className="background-video"
+        style={{opacity:"1", filter:"brightness(10%)"}}
       >
         <source src="/videos/4.mp4" type="video/mp4" />
       </video>

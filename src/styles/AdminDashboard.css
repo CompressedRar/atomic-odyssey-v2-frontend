@@ -10,13 +10,6 @@
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background-color: var(--bg-dark);
-  color: var(--text-light);
-}
-
 /* Layout */
 .admin-dashboard {
   display: flex;
@@ -194,15 +187,6 @@ body {
 .stat-icon {
   font-size: 40px;
   color: var(--primary);
-}
-
-/* Reset page spacing */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* optional: remove scroll on body */
 }
 
 /* Force dashboard to take full space */
