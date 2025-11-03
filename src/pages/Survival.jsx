@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { auth } from "../configs/FirebaseConfig";
 import { getDatabase, ref, get, set, onValue } from "firebase/database";
 
+
 const elements = [
     { name: "Hydrogen", symbol: "H", number: 1 },
     { name: "Helium", symbol: "He", number: 2 },
@@ -252,7 +253,7 @@ function getRandomElement() {
 }
 
 function getRandomMissingFields() {
-    const fields = ["name", "symbol", "number"];
+    const fields = ["name", "symbol"];
     const shuffled = fields.sort(() => 0.5 - Math.random());
     return [shuffled[0]];
 }
@@ -698,41 +699,41 @@ const Survival = () => {
                 position: "absolute", top: 0, left: 0,
                 width: "100%", height: "100vh", zIndex: 1, pointerEvents: "none",
             }}>
-                {fallingCards.map(card => (
-                    <div key={card.id} className={`element-card ${card.fadingOut ? "fade-out" : ""}`}
-                        style={{
-                            position: "absolute", left: `${card.x}%`, top: `${card.y}px`,
-                            transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 0.95})`,
-                            width: "240px", height: "300px", borderRadius: "22px",
-                            backgroundColor: "#222", overflow: "hidden",
-                            boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
-                            border: "2px solid white",
-                            transition: card.fadingOut ? "opacity 0.7s ease-out, transform 0.7s ease-out" : "none",
-                            scale:"0.9"
-                        }}>
-                        <img src={card.image || "/default-bg.jpg"} alt={card.element.name}
-                            style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.95)" }} />
-                        <div style={{
-                            position: "absolute", inset: 0,
-                            background: "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.15))",
-                        }} />
-                        <div style={{
-                            position: "absolute", bottom: 0, width: "100%",
-                            padding: "18px 15px", color: "#fff", fontFamily: "Poppins, sans-serif",
-                            backdropFilter: "blur(3px)", textAlign: "left",
-                        }}>
-                            <h2 style={{ fontSize: "1.8rem", fontWeight: "700", marginBottom: "6px", marginLeft: "10px" }}>
-                                {card.missing.includes("symbol") ? "???" : card.element.symbol}
-                            </h2>
-                            <p style={{ marginLeft: "10px" }}>
-                                {card.missing.includes("name") ? "???" : card.element.name}
-                            </p>
-                            <p style={{ marginLeft: "10px" }}>
-                                {card.missing.includes("number") ? "Atomic No: ???" : `Atomic No: ${card.element.number}`}
-                            </p>
-                        </div>
-                    </div>
-                ))}
+                {fallingCards.map((card) => (
+  <div
+    key={card.id}
+    className={`element-card-modern ${card.fadingOut ? "fade-out" : ""}`}
+    style={{
+      left: `${card.x}%`,
+      top: `${card.y}px`,
+      transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 1})`,
+    }}
+  >
+    <div className="card-glow"></div>
+    <img
+      src={card.image || "/default-bg.jpg"}
+      alt={card.element.name}
+      className="card-image"
+    />
+    <div className="card-gradient"></div>
+
+    <div className="card-content">
+      <h2 className="card-symbol">
+        {card.missing.includes("symbol") ? "???" : card.element.symbol}
+      </h2>
+      <p className="card-name">
+        {card.missing.includes("name") ? "???" : card.element.name}
+      </p>
+      <p className="card-number">
+        {card.missing.includes("number")
+          ? "Atomic No: ???"
+          : `Atomic No: ${card.element.number}`}
+      </p>
+    </div>
+  </div>
+))}
+
+
             </div>
 
             <style>{`

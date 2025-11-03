@@ -225,9 +225,11 @@ h1 {
    Floating Animation
 ======================== */
 @keyframes floatUp {
-  0% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, -50px); }
+  0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -20px) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -60px) scale(0.9); }
 }
+
 
 /* ========================
    Leaderboard Modal
@@ -394,9 +396,9 @@ h1 {
   }
 }
 
-/* html, body {
+html, body {
   overflow: hidden; /* disables scroll */
-*/
+}
 
 body {
   scrollbar-width: none; /* Firefox */
@@ -405,4 +407,192 @@ body {
 
 body::-webkit-scrollbar {
   display: none;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 10px 20px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 60%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  backdrop-filter: blur(8px);
+}
+
+.hp-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.hp-text {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 4px;
+  text-shadow: 0 0 5px black;
+}
+
+.hp-bar-outer {
+  width: 100%;
+  height: 14px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hp-bar-inner {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats p {
+  margin: 0 10px;
+  color: white;
+  font-weight: 500;
+}
+
+.answer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.answer-input {
+  width: 420px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: none;
+  font-size: 1.1rem;
+  outline: none;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  transition: 0.3s ease;
+}
+
+.answer-input:focus {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px #00f0ff;
+}
+
+.submit-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #4C8DFF;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.submit-btn:hover {
+  background: #76A9FF;
+  box-shadow: 0 0 10px #4C8DFFAA;
+}
+
+.element-card-modern {
+  position: absolute;
+  width: 230px;
+  height: 300px;
+  border-radius: 18px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2),
+              inset 0 0 15px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  transition: transform 0.3s ease, opacity 0.5s ease;
+}
+
+.element-card-modern:hover {
+  transform: scale(1.05) rotateZ(1deg);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) contrast(1.1);
+  transition: filter 0.3s ease;
+}
+
+.element-card-modern:hover .card-image {
+  filter: brightness(1) contrast(1.2);
+}
+
+.card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.3) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  z-index: 1;
+}
+
+.card-content {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  padding: 18px;
+  color: #fff;
+  text-align: left;
+  font-family: "Orbitron", "Poppins", sans-serif;
+}
+
+.card-symbol {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #00f0ff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.9);
+  margin-bottom: 8px;
+}
+
+.card-name {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.card-number {
+  font-size: 0.95rem;
+  color: #8fffee;
+  margin-top: 5px;
+}
+
+/* Neon border glow animation */
+.card-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, #00f0ff, #0077ff, #00f0ff);
+  background-size: 300%;
+  z-index: 0;
+  opacity: 0.3;
+  animation: glowShift 5s linear infinite;
+}
+
+@keyframes glowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Smooth fade out when disappearing */
+.fade-out {
+  opacity: 0;
+  transform: scale(0.9) translateY(-20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }

@@ -250,7 +250,7 @@ function getRandomElement() {
 }
 
 function getRandomMissingFields() {
-  const fields = ["name", "symbol", "number"];
+  const fields = ["name", "symbol"];
   const shuffled = fields.sort(() => 0.5 - Math.random());
   return [shuffled[0]];
 }
@@ -409,13 +409,13 @@ const SurvivalH = () => {
           id: Date.now() + Math.random(),
           x: col,
           y: -220,
-          speed: Math.random() * 1 + 0.5,
+          speed: Math.random() * 2 + 0.5,
           element: el,
           missing: getRandomMissingFields(),
           image: getElementImage(el.name),
           fadingOut: false,
           rotation: Math.random() * 10 - 5,
-          scale: 0.9 + Math.random() * 0.2,
+          scale: 0.7 + Math.random() * 0.2,
         };
 
         updated.push(newCard);
@@ -453,7 +453,7 @@ const SurvivalH = () => {
         setIsCountingDown(false);
         setTimeout(() => spawnMultipleCards(2 + Math.floor(Math.random() * 2)), 300);
       }
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [isCountingDown]);
@@ -544,9 +544,9 @@ const SurvivalH = () => {
         if (correct && !found) {
           found = true;
           setScore(s => s + 10);
-          setHp(h => Math.min(100, h + 10));
+          setHp(h => Math.min(100, h + 3));
           setQuestionCount(q => q + 1);
-          showFeedback("+10 pts, +10 HP", "limegreen");
+          showFeedback("+10 pts, +3 HP", "limegreen");
           return { ...card, fadingOut: true };
         }
         return card;
@@ -724,40 +724,39 @@ const SurvivalH = () => {
         position: "absolute", top: 0, left: 0,
         width: "100%", height: "100vh", zIndex: 1, pointerEvents: "none",
       }}>
-        {fallingCards.map(card => (
-          <div key={card.id} className={`element-card ${card.fadingOut ? "fade-out" : ""}`}
-            style={{
-              position: "absolute", left: `${card.x}%`, top: `${card.y}px`,
-              transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 0.95})`,
-              width: "240px", height: "300px", borderRadius: "22px",
-              backgroundColor: "#222", overflow: "hidden",
-              boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
-              border: "2px solid white",
-              transition: card.fadingOut ? "opacity 0.7s ease-out, transform 0.7s ease-out" : "none",
-            }}>
-            <img src={card.image || "/default-bg.jpg"} alt={card.element.name}
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.95)" }} />
-            <div style={{
-              position: "absolute", inset: 0,
-              background: "linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.15))",
-            }} />
-            <div style={{
-              position: "absolute", bottom: 0, width: "100%",
-              padding: "18px 15px", color: "#fff", fontFamily: "Poppins, sans-serif",
-              backdropFilter: "blur(3px)", textAlign: "left",
-            }}>
-              <h2 style={{ fontSize: "1.8rem", fontWeight: "700", marginBottom: "6px", marginLeft: "10px" }}>
-                {card.missing.includes("symbol") ? "???" : card.element.symbol}
-              </h2>
-              <p style={{ marginLeft: "10px" }}>
-                {card.missing.includes("name") ? "???" : card.element.name}
-              </p>
-              <p style={{ marginLeft: "10px" }}>
-                {card.missing.includes("number") ? "Atomic No: ???" : `Atomic No: ${card.element.number}`}
-              </p>
-            </div>
-          </div>
-        ))}
+        {fallingCards.map((card) => (
+  <div
+    key={card.id}
+    className={`element-card-modern ${card.fadingOut ? "fade-out" : ""}`}
+    style={{
+      left: `${card.x}%`,
+      top: `${card.y}px`,
+      transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 1})`,
+    }}
+  >
+    <div className="card-glow"></div>
+    <img
+      src={card.image || "/default-bg.jpg"}
+      alt={card.element.name}
+      className="card-image"
+    />
+    <div className="card-gradient"></div>
+
+    <div className="card-content">
+      <h2 className="card-symbol">
+        {card.missing.includes("symbol") ? "???" : card.element.symbol}
+      </h2>
+      <p className="card-name">
+        {card.missing.includes("name") ? "???" : card.element.name}
+      </p>
+      <p className="card-number">
+        {card.missing.includes("number")
+          ? "Atomic No: ???"
+          : `Atomic No: ${card.element.number}`}
+      </p>
+    </div>
+  </div>
+))}
       </div>
 
       <style>{`

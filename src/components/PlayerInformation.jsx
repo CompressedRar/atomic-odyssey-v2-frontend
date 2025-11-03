@@ -342,9 +342,9 @@ function PlayerInformation() {
         </div>
 
         <div className="player-information">
-          <span className="player-ign">
+          <span className="player-ign" style={{marginTop:"15px"}}>
             <span>{userInfo.username}</span>
-            <span className="additional-player-info">
+            <span className="additional-player-info" style={{display:"none"}}>
               <span className="player-mmr">
                 <span className="material-symbols-outlined">trophy</span>
                 <span>{userInfo.mmr || 0}</span>
@@ -389,7 +389,7 @@ function PlayerInformation() {
             </span>
             <h2>Settings</h2>
             <div className="modal-divider"></div>
-            <button className="modal-btn" onClick={handleViewProfile}>
+            <button className="modal-btn" style={{display:"none"}} onClick={handleViewProfile}>
               View Profile
             </button>
             <button className="modal-btn" onClick={handleEditAccount}>
@@ -464,7 +464,7 @@ function PlayerInformation() {
       )}
 
       {/* View Profile Modal */}
-      {showViewProfile && (
+      {showViewProfile  && (
         <div
           className="settings-modal-overlay"
           onClick={() => setShowViewProfile(false)}
