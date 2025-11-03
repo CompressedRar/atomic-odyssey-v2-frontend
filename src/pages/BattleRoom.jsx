@@ -57,37 +57,37 @@ export default function BattleRoom({ roomCode }) {
 
   // ✅ Listen for room updates
   useEffect(() => {
-  if (!roomCode) return;
-  const roomRef = ref(db, `rooms/${roomCode}`);
+    if (!roomCode) return;
+    const roomRef = ref(db, `rooms/${roomCode}`);
 
-  let hasStarted = false; // track auto-start status in this effect
+    let hasStarted = false; // track auto-start status in this effect
 
-  const unsub = onValue(roomRef, async (snapshot) => {
-    if (!snapshot.exists()) return;
-    const data = snapshot.val();
-    setRoomData(data);
-    setQuestion(data.currentQuestion || null);
-    setWinner(data.winner || null);
-    setLoading(false);
+    const unsub = onValue(roomRef, async (snapshot) => {
+      if (!snapshot.exists()) return;
+      const data = snapshot.val();
+      setRoomData(data);
+      setQuestion(data.currentQuestion || null);
+      setWinner(data.winner || null);
+      setLoading(false);
 
-    // 🧠 Auto-start only ONCE when ready
-    const playerCount = Object.keys(data.players || {}).length;
-    if (
-      !hasStarted &&
-      data.host === username &&
-      !data.currentQuestion &&
-      playerCount >= 2 &&
-      !data.answered &&
-      !data.winner
-    ) {
-      hasStarted = true;
-      console.log("🟢 Auto-starting first question...");
-      setTimeout(() => startNewQuestion(), 1000); // slight delay
-    }
-  });
+      // 🧠 Auto-start only ONCE when ready
+      const playerCount = Object.keys(data.players || {}).length;
+      if (
+        !hasStarted &&
+        data.host === username &&
+        !data.currentQuestion &&
+        playerCount >= 2 &&
+        !data.answered &&
+        !data.winner
+      ) {
+        hasStarted = true;
+        console.log("🟢 Auto-starting first question...");
+        setTimeout(() => startNewQuestion(), 1000); // slight delay
+      }
+    });
 
-  return () => unsub();
-}, [roomCode, username]);
+    return () => unsub();
+  }, [roomCode, username]);
 
   // ✅ Generate questions
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
@@ -148,30 +148,32 @@ export default function BattleRoom({ roomCode }) {
     const roomRef = ref(db, `rooms/${roomCode}`);
     const snapshot = await get(roomRef);
     const data = snapshot.val();
-    if (!data || data.answered) return;
+    if (!data) return;
 
     const correct = choice === question.correct;
-    const updates = { answered: true };
+    const updates = {}; // ✅ don't auto mark answered true yet
 
     if (correct) {
       const newScore = (data.players[username]?.score || 0) + 1;
       updates[`players/${username}/score`] = newScore;
       updates.feedback = `${username} answered correctly!`;
+      updates.answered = true; // ✅ only mark true if correct
       if (newScore >= MAX_POINTS) updates.winner = username;
     } else {
-      updates.feedback = `${username} answered wrong!`;
+      updates.feedback = `${username} answered wrong! Try again.`;
+      updates.answered = false; // ❌ stay on same question
     }
 
     await update(roomRef, updates);
   };
 
-  // ✅ Auto next question
+  // ✅ Auto next question only when last answer was correct
   useEffect(() => {
-    if (roomData?.answered && !roomData?.winner) {
+    if (roomData?.feedback?.includes("answered correctly") && !roomData?.winner) {
       const t = setTimeout(() => startNewQuestion(), 2000);
       return () => clearTimeout(t);
     }
-  }, [roomData?.answered, roomData?.winner]);
+  }, [roomData?.feedback, roomData?.winner]);
 
   // ✅ End room when no one online
   useEffect(() => {
@@ -204,7 +206,7 @@ export default function BattleRoom({ roomCode }) {
     return (
       <div className="victory battle-room">
         <h1 className="text-3xl font-bold mb-4">
-        {winner} wins the battle!
+          {winner} wins the battle!
         </h1>
         <button
           onClick={() => window.location.reload()}
@@ -218,12 +220,32 @@ export default function BattleRoom({ roomCode }) {
   return (
     <div className="battle-room">
       <div className="scores-container">
-        {Object.values(roomData?.players || {}).map((p) => (
-          <span className="sc" key={p.name}>
-            <span>{p.name}:</span><span className="pl-sc">{p.score ?? 0}</span>
-          </span>
-        ))}
+        {Object.values(roomData?.players || {})
+          .sort((a, b) => (b.score ?? 0) - (a.score ?? 0)) // 🔹 sort high → low
+          .map((p, index) => (
+            <span
+              className={`sc ${index === 0 ? "bg-yellow-500 text-black" : "bg-purple-800 text-yellow-400"
+                }`}
+              key={p.name}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "5px 10px",
+                borderRadius: "8px",
+                marginBottom: "5px",
+                fontWeight: "bold",
+                transition: "all 0.3s ease",
+              }}
+            >
+              <span>
+                {index + 1}. {p.name}
+              </span>
+              <span className="pl-sc">{p.score ?? 0}</span>
+            </span>
+          ))}
       </div>
+
       {question ? (
         <div className="question-container">
           <h2 className="question">{question.text}</h2>
