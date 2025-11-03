@@ -250,6 +250,15 @@ function PlayerInformation() {
   const [message, setMessage] = useState("");
   const db = getDatabase();
 
+  const chatContainerRef = useRef(null);
+
+  useEffect(() => {
+    // Auto-scroll to bottom whenever messages update
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   const handleExit = () => {
     navigate(-1);
   };
@@ -407,10 +416,11 @@ function PlayerInformation() {
               close
             </span>
 
-            <h2>Global Chat</h2>
+            <h2 className="title">Global Chat</h2>
             <div className="modal-divider"></div>
 
-            <div className="chat-messages">
+            {/* Chat messages container with ref for auto-scroll */}
+            <div className="chat-messages" ref={chatContainerRef}>
               {messages.map((msg, index) => {
                 const isOwn = msg.userId === auth.currentUser?.uid;
                 return (
@@ -762,7 +772,587 @@ function PlayerInformation() {
 
       {/* CSS */}
       <style>{`
+.settings-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.25s ease-in-out;
+}
 
+.settings-modal {
+  position: relative;
+  background: linear-gradient(145deg, #181818, #242424);
+  color: #fff;
+  padding: 2.5rem 2.5rem 2rem;
+  border-radius: 18px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  width: 580px;
+  max-width: 90%;
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+.settings-modal h2 {
+  font-size: 1.6rem;
+  margin: 0 0 1rem 0;
+}
+
+.modal-divider {
+  width: 60%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0.8rem auto 1.5rem;
+  border-radius: 2px;
+}
+
+/* Profile Upload */
+.profile-upload-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.profile-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.8rem;
+  border: 3px solid #444;
+  transition: all 0.3s ease;
+}
+.profile-preview:hover {
+  transform: scale(1.05);
+  border-color: #f39c12;
+}
+.upload-label {
+  cursor: pointer;
+  color: #ddd;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+.upload-label:hover {
+  color: #f39c12;
+  transform: scale(1.05);
+}
+
+/* Inputs */
+.modal-input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.25rem; /* uniform spacing */
+  border-radius: 14px;
+  border: 1px solid #333;
+  background: linear-gradient(145deg, #1e1e1e, #232323);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  height: 3rem;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+.modal-input:focus {
+  border-color: #f39c12;
+  background: linear-gradient(145deg, #252525, #2a2a2a);
+  box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+}
+
+/* Password + Eye Icon */
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem; /* same as other inputs */
+}
+.password-container .modal-input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.1rem; /* uniform spacing */
+  border-radius: 14px;
+  border: 1px solid #333;
+  background: linear-gradient(145deg, #1e1e1e, #232323);
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  height: 3rem;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
+}
+.password-eye {
+  position: absolute;
+  right: 12px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #ccc;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: color 0.2s, transform 0.2s;
+}
+.password-eye:hover {
+  color: #f39c12;
+  transform: translateY(-50%) scale(1.2);
+}
+
+/* Buttons */
+.modal-btn {
+  display: block;
+  width: 100%;
+  padding: 0.85rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(145deg, #2b2b2b, #313131);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+}
+.modal-btn:hover {
+  background: linear-gradient(145deg, #313131, #383838);
+  transform: translateY(-2px);
+}
+.logout-btn {
+  background: linear-gradient(145deg, #b91c1c, #c0392b);
+  box-shadow: 0 4px 8px rgba(192, 57, 43, 0.5);
+}
+.logout-btn:hover {
+  background: linear-gradient(145deg, #c0392b, #e74c3c);
+  transform: translateY(-2px);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  color: #aaa;
+  transition: color 0.2s ease;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  cursor: pointer;
+  color: #888;
+  font-size: 1.4rem;
+  transition: 0.2s ease;
+}
+.close-btn:hover {
+  color: #b91c1c;
+  transform: rotate(90deg);
+}
+
+/* === Animations === */
+@keyframes fadeInPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes borderGlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes btnPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes pulseLine {
+  0%, 100% { opacity: 0.5; transform: scaleX(1); }
+  50% { opacity: 1; transform: scaleX(1.1); }
+}
+
+/* === Settings Icon === */
+.settings-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: -24px;
+  justify-content: center;
+  transform: translateY(-4px);
+  transition: transform 0.25s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+.settings-icon:hover {
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+  transform: translateY(-6px) scale(1.15);
+}
+
+/* === Rotation Animation === */
+.rotate {
+  animation: spinBounce 0.6s cubic-bezier(0.45, 1.5, 0.5, 1);
+}
+@keyframes spinBounce {
+  0% { transform: rotate(0deg) scale(1); }
+  40% { transform: rotate(100deg) scale(1.2); }
+  70% { transform: rotate(80deg) scale(0.95); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* View Profile Section */
+.profile-view-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.profile-view-section h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+.profile-view-section p {
+  margin: 0;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+/* Score Cards */
+.score-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.score-card {
+  background: linear-gradient(145deg, #1e1e1e, #232323);
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  min-width: 100px;
+  text-align: center;
+  color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.score-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+}
+.score-card h4 {
+  margin: 0 0 0.2rem 0;
+  font-size: 1rem;
+}
+.score-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #f39c12;
+}
+
+/* Make scores scrollable if too many */
+.scrollable-scores {
+  max-height: 220px; /* limits modal height */
+  overflow-y: auto;
+  padding-right: 4px; /* avoid scrollbar overlaying cards */
+}
+
+/* Smooth scrollbar styling */
+.scrollable-scores::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollable-scores::-webkit-scrollbar-thumb {
+  background: #f39c12;
+  border-radius: 3px;
+}
+.scrollable-scores::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Optional: tweak score cards spacing */
+.score-card {
+  min-width: 110px;
+  margin-bottom: 0.5rem;
+}
+
+.logout-confirm-modal {
+  width: 320px;      /* mas maliit kaysa sa 580px ng iba */
+  padding: 1.5rem 2rem;
+  text-align: center;
+}
+.logout-confirm-modal p {
+  font-size: 0.95rem;
+}
+.logout-confirm-modal .modal-btn {
+  width: 100px;      /* mas maliit na buttons */
+  padding: 0.6rem 0;
+}
+
+/* Base modal overlay ay pwede pa rin pareho */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(5px);
+}
+
+/* Logout Modal Style */
+.logout-modal {
+  width: 320px;
+  padding: 1.5rem 2rem;
+  background: linear-gradient(145deg, #181818, #242424);
+  border-radius: 18px;
+  text-align: center;
+}
+
+/* Edit Profile Modal Style */
+.edit-profile-modal {
+  width: 580px;
+  padding: 2.5rem;
+  background: linear-gradient(145deg, #181818, #242424);
+  border-radius: 18px;
+  text-align: center;
+}
+
+/* View Profile Modal Style */
+.view-profile-modal {
+  width: 580px;
+  padding: 2.5rem;
+  background: linear-gradient(145deg, #181818, #242424);
+  border-radius: 18px;
+  text-align: center;
+}
+
+/* Circle Stat */
+.circle-stat {
+  position: relative; /* Needed for absolute positioning of label */
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Centered Label Inside Circle */
+.circle-stat-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Perfect center */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none; /* So clicking on label doesn’t interfere */
+}
+
+.circle-stat-label span {
+  font-size: 0.75rem;
+  color: #ccc;
+}
+
+.circle-stat-label strong {
+  font-size: 1rem;
+  color: #fff;
+}
+
+.chat-modal {
+  width: 80vw;
+  height: 80vh;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  background: #1b1b1b;
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.8rem 1rem;
+}
+
+/* Base message layout */
+.chat-message {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+  max-width: 70%;
+}
+
+/* Align own messages to the right */
+.chat-message.own {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+/* Avatar (hidden for own messages) */
+.chat-message.own .chat-avatar {
+  display: none;
+}
+
+.chat-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+}
+
+/* 🟢 Chat bubble style */
+.chat-bubble {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  max-width: 100%;
+  word-wrap: break-word;
+  width: fit-content;
+  background: #2b2b2b;
+  color: #e4e4e4;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 💙 Your messages (gaming theme blue) */
+.chat-message.own .chat-bubble {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+  border-radius: 16px 16px 4px 16px;
+}
+
+/* 🟣 Other users' messages (darker, subtle contrast) */
+.chat-message.other .chat-bubble {
+  background: #1f1f1f;
+  border: 1px solid #333;
+  color: #ddd;
+  border-radius: 16px 16px 16px 4px;
+}
+
+/* Username (only for others) */
+.chat-message.other .chat-username {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-bottom: 0.15rem;
+  display: block;
+}
+
+.chat-message.own .chat-username {
+  display: none;
+}
+
+/* Avatar */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+}
+
+/* Chat bubble */
+.chat-bubble {
+  background: #2b2b2b;
+  color: #eee;
+  padding: 0.6rem 0.9rem;
+  border-radius: 14px;
+  word-wrap: break-word;
+  line-height: 1.4;
+  position: relative;
+  font-size: 0.95rem;
+  max-width: 100%;
+}
+
+/* Blue bubble for own messages */
+.chat-message.own .chat-bubble {
+  background: #3b82f6;
+  color: #fff;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 14px;
+}
+
+/* Dark gray bubble for others */
+.chat-message.other .chat-bubble {
+  background: #2f2f2f;
+  color: #eaeaea;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 14px;
+}
+
+/* Username above the bubble */
+.chat-username {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-bottom: 0.2rem;
+  margin-left: 4px;
+}
+
+/* Input area */
+.chat-input-section {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-top: 1rem;
+}
+
+.chat-input-section input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: #111;
+  color: white;
+  font-size: 1rem;
+}
+
+.chat-input-section input:focus {
+  background: #1a1a1a;
+}
+
+.chat-input-section button {
+  padding: 0.8rem 1.4rem;
+  border: none;
+  border-radius: 12px;
+  background: #f39c12;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.chat-input-section button:hover {
+  background: #e67e22;
+}
+
+/* Scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #f39c12;
+  border-radius: 4px;
+}
 `}</style>
     </>
   );
