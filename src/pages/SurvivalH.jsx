@@ -608,7 +608,7 @@ const SurvivalH = () => {
         className="background-video"
         style={{opacity:"1", filter:"brightness(10%)"}}
       >
-        <source src="/videos/4.mp4" type="video/mp4" />
+        <source src="/videos/3.mp4" type="video/mp4" />
       </video>
 
       {/* Countdown */}

@@ -27,7 +27,6 @@ body {
     display: flex;
     gap: 10%;
     box-sizing: border-box;
-    height: 25%;
     margin-bottom: -1%;
     bottom: 0;
     justify-content: center;
@@ -78,8 +77,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10%;
-    padding-top: 40%;
     box-sizing: border-box;
     gap: 20px;
 }
@@ -89,11 +86,12 @@ body {
     flex-direction: row;
     width: 100%;
     justify-content: flex-end;
+    grid-column: span 7;
 }
 
 .search-container input[type="text"] {
 
-    max-width: 600px;
+    width: 100%;
     font-family: 'Poppins';
     padding: 10px;
     border-radius: 10px;
@@ -101,8 +99,7 @@ body {
     background-color: rgba(12, 12, 12, 0.8);
     border-color: white;
     box-shadow: 0px 0px 0px white;
-
-
+    
 }
 
 .search-container input[type="text"]::placeholder {
@@ -115,20 +112,26 @@ body {
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.2fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr 0.2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 5px;
-    width: 100%;
-
+    width: 80vw;
+    height: 90vh;
+    scale: 0.8;
 }
 
 
 .legend-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
-    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 15%;
     scale: 0.8;
     background-color: transparent;
     top: 5%;
+    margin-bottom: -15vh;
     box-sizing: border-box;
+    scale: 0.8;
+    position: fixed;
+    left: 0;
+    top: 10vh;
 }
 
 .legend {
@@ -196,11 +199,8 @@ body {
 }
 
 .element {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
     display: flex;
+    padding: 10px;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -208,9 +208,8 @@ body {
     border-width: 1px;
     border-radius: 5px;
     box-sizing: border-box;
-    min-width: 60px;
-    min-height: 100px;
-    max-height: 120px;
+    min-width: 5%;
+    min-height: 7%;
     transition: 300ms ease;
     background-color: transparent;
 }
@@ -219,15 +218,14 @@ body {
     scale: 1.2;
 }
 
+
 .atomic-number {
     width: 100%;
-    position: relative;
-    left: -30%;
-    scale: 0.9;
+    font-size: 0.8rem;
 }
 
 .symbol {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
 }
 

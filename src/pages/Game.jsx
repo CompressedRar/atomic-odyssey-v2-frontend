@@ -53,7 +53,6 @@ function Game() {
 
     return (
         <div className="game-wrapper">
-            <BackgroundVideo />
             <PlayerInformation />
             
             <audio

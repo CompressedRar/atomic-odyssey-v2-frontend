@@ -146,10 +146,13 @@ function Table(){
                     onClick={() => setCurrentElement(null)} 
                 />
                 )}
-            <div className="search-container">
-                <input type="text" placeholder="Search element name, atomic number, group" onChange={checkAllElements}/>
-            </div>
+            
             <div className="legend-container">
+
+                <div className="search-container">
+                    <input type="text" placeholder="Search element name, atomic number, group" onChange={checkAllElements}/>
+                </div>
+                
                 <div className="legend" >
                     <div className="element-legend actinide">*</div>
                     <div>Alkali Metal</div>
@@ -186,8 +189,12 @@ function Table(){
                     <div className="element-legend actinide">*</div>
                     <div>Actinide</div>
                 </div>
+
+                
             </div>
-            <div className="table">
+
+            
+            <div className="table" >
                 {
                     iterateElements()
                 }

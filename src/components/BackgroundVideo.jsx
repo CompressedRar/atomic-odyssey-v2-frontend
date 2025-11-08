@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
 function BackgroundVideo() {
-  const [currentURL, setCurrentURL] = useState("videos/1.mp4");
+  const [currentURL, setCurrentURL] = useState("videos/3.mp4");
   const [opacity, setOpacity] = useState(0.3);
   const videoRef = useRef(null);
   const preloaderRef = useRef(null);
 
   const videoURLs = [
-    "videos/1.mp4",
-    "videos/2.mp4",
+    "videos/3.1.mp4",
+    "videos/3.2.mp4",
     "videos/3.mp4",
-    "videos/4.mp4",
+    "videos/3.3.mp4",
   ];
 
   // Duration before switching videos (in seconds)
@@ -38,7 +38,6 @@ function BackgroundVideo() {
 
     // Swap and fade back in
     setCurrentURL(nextURL);
-    setTimeout(() => setOpacity(0.3), 500);
   };
 
   // ✅ Continuous video playback + safety restart
@@ -85,8 +84,8 @@ function BackgroundVideo() {
           position: "fixed",
           top: 0,
           left: 0,
-          width: "100%",
-          height: "100%",
+          width: "100vw",
+          height: "100vh",
           zIndex: -1,
           overflow: "hidden",
         }}
@@ -99,8 +98,7 @@ function BackgroundVideo() {
           loop // ✅ keep looping each clip until next change
           playsInline
           style={{
-            width: "100%",
-            height: "100%",
+            scale:1,
             objectFit: "cover",
           }}
         />

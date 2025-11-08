@@ -343,17 +343,7 @@ export default function Classic() {
 
     return (
         <div className="periodic-game" >
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="background-video"
-                style={{opacity:"1", filter:"brightness(20%)"}}
-            >
-                <source src="/videos/4.mp4" type="video/mp4" />
-            </video>
+            
 
             {showConfetti && (
                 <Confetti width={window.innerWidth} height={window.innerHeight} />
