@@ -41,13 +41,35 @@ function Quizzes() {
     if (mode === "classic") {
       navigate("/classic");
     }
+    if (mode === "fusion") {
+      navigate("/fusion");
+    }
   };
 
   return (
     <div className="quizzes-container">
       
       <h1>Game Modes</h1>
+      
+
       <div className="quiz-modes-container">
+
+        <span
+          className="quiz-mode"
+          id="fusion"
+          onClick={() => handleModeClick("fusion")}
+        >
+          <div className="quiz-bg"></div>
+          <div className="quiz-grad"></div>
+          <div className="quiz-desc">
+            <span className="mode-name">Fusion</span>
+            <span className="mode-desc">
+              Mix and feel the thrill of creating compounds.
+            </span>
+          </div>
+        </span>
+
+
         <span
           className="quiz-mode"
           id="classic"
@@ -56,9 +78,9 @@ function Quizzes() {
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">
-            <span className="mode-name">Classic</span>
+            <span className="mode-name">Guess Where</span>
             <span className="mode-desc">
-              Test your knowledge with all of the elements.
+              Can you guess the placements of all the elements?
             </span>
           </div>
         </span>

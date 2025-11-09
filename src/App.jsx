@@ -27,6 +27,7 @@ import BackgroundVideo from "./components/BackgroundVideo.jsx"; // ✅ Add this 
 import Lobby from "./pages/CompetitiveLobby.jsx";
 import Competitive from "./pages/Competitive.jsx";
 import AdminDashboard from "./pages/Administrator.jsx";
+import FusionMode from "./pages/Fusion.jsx";
 
 function App() {
   return (
@@ -177,6 +178,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Table />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/fusion"
+              element={
+                <ProtectedRoute>
+                  <FusionMode />
                 </ProtectedRoute>
               }
             />

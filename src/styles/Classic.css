@@ -258,14 +258,20 @@
   border-color: #cc99ff;
 }
 
+.game-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
 /* Top Buttons */
 .top-buttons {
-  position: absolute;
+
   top: 10px;
   width: 4%;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
   z-index: 10;
 }
 
@@ -861,5 +867,191 @@
   flex-direction: column;
   font-weight: 800;
   font-size: 3rem;
-  margin-top: 10vh;
+  text-align: right;
+}
+
+/* FULLSCREEN INTRO OVERLAY */
+.fusion-target-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.fusion-target-overlay h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.fusion-target-overlay p {
+  font-size: 1.3rem;
+  color: #ccc;
+}
+
+/* SMALL FIXED HEADER AFTER CLOSING */
+.fusion-target-header {
+  position: fixed;
+  top: 60px; /* <-- move the header BELOW the top UI */
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 6px 14px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 10px;
+  border-width: 1px;
+  width: 30%;
+  backdrop-filter: blur(4px);
+
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+  gap: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  z-index: 1200; /* above grid, below overlay */
+  pointer-events: none; /* does not block touches */
+}
+
+.fusion-target-header strong {
+  
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  pointer-events: auto;
+
+}
+
+
+.fusion-cell {
+  transition: all 0.2s;
+  border-style: none;
+
+}
+
+.fusion-cell:hover {
+  scale: 0.9;
+  filter: brightness(90%);
+}
+
+.fusion-cell:active {
+  scale: 1.1;
+  filter: brightness(110%);
+}
+
+.selected-display {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.selected-card {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  pointer-events: auto;
+}
+
+.selected-card:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.06);
+}
+
+.card-symbol {
+  font-weight: 700;
+  color: #fff;
+}
+
+.card-count {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.submit-floating {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  background: #00aaff;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  z-index: 1200;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.submit-floating:hover {
+  transform: scale(1.08);
+  background: #32c8ff;
+}
+
+/* Feedback bubble */
+.feedback-popup {
+  position: fixed;
+  left: 0px;
+  top: 0;
+
+  height: 100%;
+  width: 100%;
+
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
+
+  font-size: 5rem;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  animation: fadeOut 1s ease 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(8px); }
 }
