@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 function BackgroundVideo() {
-  const [currentURL, setCurrentURL] = useState("videos/3.3.mp4");
+  const [currentURL, setCurrentURL] = useState("videos/3.mp4");
   const [opacity, setOpacity] = useState(0.3);
   const videoRef = useRef(null);
   const preloaderRef = useRef(null);
@@ -38,6 +38,7 @@ function BackgroundVideo() {
 
     // Swap and fade back in
     setCurrentURL(nextURL);
+    setOpacity(0.3)
   };
 
   // ✅ Continuous video playback + safety restart
@@ -55,14 +56,6 @@ function BackgroundVideo() {
     video.play().catch(() => { });
     const checkInterval = setInterval(ensurePlaying, 5000); // every 5s
     return () => clearInterval(checkInterval);
-  }, [currentURL]);
-
-  // ✅ Change video every N seconds (instead of relying on onEnded)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleVideoChange();
-    }, VIDEO_DURATION * 1000);
-    return () => clearInterval(interval);
   }, [currentURL]);
 
   // ✅ Prevent duplicate background-video instances

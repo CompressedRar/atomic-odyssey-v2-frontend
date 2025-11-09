@@ -265,6 +265,10 @@
   padding-top: 20px;
 }
 
+.game-options .top-button {
+  height: fit-content;
+}
+
 /* Top Buttons */
 .top-buttons {
 
@@ -635,13 +639,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 1999;
   animation: fadeIn 0.4s ease;
 }
 
 /* --- Shared modal content --- */
 .modal-content {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(32, 32, 32, 0.08);
   border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: 18px;
   padding: 40px 50px;
@@ -936,6 +940,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: 2rem;
   padding: 4px 10px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -948,6 +953,8 @@
 }
 
 
+
+
 .fusion-cell {
   transition: all 0.2s;
   border-style: none;
@@ -956,6 +963,7 @@
 
 .fusion-cell:hover {
   scale: 0.9;
+  background-color: currentColor;
   filter: brightness(90%);
 }
 
@@ -1031,10 +1039,11 @@
 /* Feedback bubble */
 .feedback-popup {
   position: fixed;
-  left: 0px;
+  left: 0;
   top: 0;
+  margin-top: -5vh;
 
-  height: 100%;
+  height: 120%;
   width: 100%;
 
   background: rgba(0, 0, 0, 0.75);
@@ -1055,3 +1064,4 @@
 @keyframes fadeOut {
   to { opacity: 0; transform: translateY(8px); }
 }
+

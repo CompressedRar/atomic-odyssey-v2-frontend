@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import periodicJspon from "../assets/periodic-table.json"
 import "../styles/Classic.css";
-
+import { auth } from "../configs/FirebaseConfig";
+import { getDatabase, ref, get, set } from "firebase/database";
 
 const elementsData  = Object.values(periodicJspon)
 
@@ -76,149 +77,239 @@ const groupColors = {
 export default function FusionMode() {
   const navigate = useNavigate();
 
-  
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selected, setSelected] = useState({});
+  const [currentCompoundIndex, setCurrentCompoundIndex] = useState(0);
+  const [selectedElements, setSelectedElements] = useState({});
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
   const [showOverlay, setShowOverlay] = useState(true);
-  const handleQuit = () => setShowQuitConfirm(true);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
 
-
-  const currentCompound = compounds[currentIndex];
+  const currentCompound = compounds[currentCompoundIndex];
 
   const handleSelectElement = (symbol) => {
-    setSelected(prev => ({
+    setSelectedElements((prev) => ({
       ...prev,
-      [symbol]: (prev[symbol] || 0) + 1
+      [symbol]: (prev[symbol] || 0) + 1,
     }));
   };
 
   const handleRemoveElement = (symbol) => {
-  setSelected(prev => {
-    const copy = { ...prev };
-
-    if (copy[symbol] > 1) {
-      copy[symbol] -= 1;
-    } else {
-      delete copy[symbol];
-    }
-
-    return copy;
-  });
-};
+    setSelectedElements((prev) => {
+      const updated = { ...prev };
+      if (updated[symbol] > 1) updated[symbol] -= 1;
+      else delete updated[symbol];
+      return updated;
+    });
+  };
 
   const handleSubmit = () => {
-    const target = currentCompound.elements;
-    let correct = true;
+    const targetCompound = currentCompound.elements;
+    const isCorrect =
+      Object.keys(targetCompound).every(
+        (key) => selectedElements[key] === targetCompound[key]
+      ) &&
+      Object.keys(selectedElements).length === Object.keys(targetCompound).length;
 
-    for (let el in target) {
-      if ((selected[el] || 0) !== target[el]) correct = false;
-    }
-
-    // also ensure no extra selected elements
-    for (let el in selected) {
-      if (!(el in target)) correct = false;
-    }
-
-    if (correct) {
+    if (isCorrect) {
+      setScore((prev) => prev + 10);
       setFeedback("Correct!");
-      setScore(score + 10);
-      setSelected({});
-      if (currentIndex < compounds.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-      } else {
-        setFeedback("Game Complete!");
-      }
     } else {
-      setFeedback("Wrong Combination!");
-      setScore(Math.max(score - 3, 0));
-      setSelected({});
+      setScore((prev) => Math.max(prev - 5, 0));
+      setFeedback("Wrong!");
     }
 
+    // Show feedback briefly
     setTimeout(() => setFeedback(""), 1000);
+
+    // Move to next compound or end game
+    if (currentCompoundIndex + 1 >= compounds.length) {
+      endGame();
+    } else {
+      setCurrentCompoundIndex((prev) => prev + 1);
+      setSelectedElements({});
+    }
   };
+
+  const endGame = () => {
+    setIsGameOver(true);
+    saveScoreToLeaderboard(score)
+    setActiveModal("gameover");
+  };
+
+  const handleRestart = () => {
+    setCurrentCompoundIndex(0);
+    setSelectedElements({});
+    setScore(0);
+    setFeedback("");
+    setIsGameOver(false);
+    setActiveModal(null);
+    setShowOverlay(true);
+  };
+
+  const saveScoreToLeaderboard = async (answeredQuestions) => {
+          try {
+              const user = auth.currentUser;
+              if (!user) return;
+  
+              const db = getDatabase();
+              const userRef = ref(db, `users/${user.uid}`);
+              const snapshot = await get(userRef);
+  
+              let username = "Anonymous";
+              let profilePic = "https://via.placeholder.com/50";
+              if (snapshot.exists()) {
+                  if (snapshot.val().username) username = snapshot.val().username;
+                  if (snapshot.val().profilePic) profilePic = snapshot.val().profilePic;
+              }
+  
+              const leaderboardRef = ref(db, `leaderboards/Fusion/${user.uid}`);
+              const leaderboardSnap = await get(leaderboardRef);
+              const oldData = leaderboardSnap.exists() ? leaderboardSnap.val() : {};
+              const updatedGamesPlayed = (oldData.gamesPlayed || 0) + 1;
+  
+              await set(leaderboardRef, {
+                  uid: user.uid,
+                  name: username,
+                  email: user.email,
+                  profilePic,
+                  score,
+                  gamesPlayed: updatedGamesPlayed,
+                  timestamp: Date.now(),
+              });
+  
+              console.log("✅ Score saved to leaderboard!");
+          } catch (err) {
+              console.error("❌ Error saving score:", err);
+          }
+      };
+
+
 
   return (
     <div className="periodic-game">
+      {/* Top Bar */}
       <div className="game-options">
         <div className="top-button">
-            <button onClick={() => navigate(-1)}>← Exit</button>
+          <button onClick={() => setShowQuitConfirm(true)}>← Exit</button>
         </div>
 
         <div className="score-container">
-            <span>Score</span> <span>{score}</span>
+          Score: <strong>{score}</strong>
         </div>
       </div>
 
+
+      {/* Start Overlay */}
       {showOverlay && (
-        <div className="fusion-target-overlay" onClick={() => setShowOverlay(false)}>
-            <h1>Create: {currentCompound.formula}</h1>
-            <p>Tap anywhere to start</p>
+        <div
+          className="fusion-target-overlay"
+          onClick={() => setShowOverlay(false)}
+        >
+          <h1>Fusion</h1>
+          <small>Tap the elements to create the indicated compound.</small>
+          <p>Tap anywhere to start</p>
         </div>
-        )}
+      )}
 
-    <div className="fusion-target-header">
-        <span>Create</span> 
-        <strong>{currentCompound.formula}</strong>
-        <span>{currentCompound.name}</span>
-
+      {/* Fixed Header */}
+      <div className="fusion-target-header">
+        <div className="compound-info">
+          <span>Create</span>
+          <strong>{currentCompound.formula}</strong>
+          <span className="compound-name">{currentCompound.name}</span>
+        </div>
         <div className="selected-display">
-            {Object.keys(selected).length === 0 ? (
-                <p>No elements selected</p>
-            ) : (
-                Object.entries(selected).map(([symbol, count]) => (
-                <div
-                    key={symbol}
-                    className="selected-card"
-                    onClick={() => handleRemoveElement(symbol)}
-                >
-                    <span className="card-symbol">{symbol}</span>
-                    <span className="card-count">× {count}</span>
-                </div>
-                ))
-            )}
+          {Object.keys(selectedElements).length === 0 ? (
+            <p>No elements selected</p>
+          ) : (
+            Object.entries(selectedElements).map(([symbol, count]) => (
+              <div
+                key={symbol}
+                className="selected-card"
+                onClick={() => handleRemoveElement(symbol)}
+              >
+                <span className="card-symbol">{symbol}</span>
+                <span className="card-count">× {count}</span>
+              </div>
+            ))
+          )}
         </div>
+      </div>
 
-    </div>
-
-
-      
-
-      <div className="periodic-grid built" style={{scale:0.9}}>
+      {/* Periodic Table Grid */}
+      <div className="periodic-grid" style={{ scale: 0.9 }}>
         {elementsData.map((el) => (
-            <div
+          <div
             key={el.symbol}
             className="cell selectable fusion-cell"
             style={{
-                gridRow: el.ypos,
-                gridColumn: el.xpos,
-                borderStyle:"none", 
-                backgroundColor:`${groupColors[el.category]}`
-                
+              gridRow: el.ypos,
+              gridColumn: el.xpos,
+              borderColor: groupColors[el.category],
             }}
             onClick={() => handleSelectElement(el.symbol)}
+          >
+            <span
+              className="symbol"
+              style={{ color: groupColors[el.category] }}
             >
-            <span className="symbol" style={{ color:"black", }}>{el.symbol}</span>
-            </div>
+              {el.symbol}
+            </span>
+          </div>
         ))}
-        </div>
+      </div>
 
+      {/* Floating Submit Button */}
       <div className="submit-floating" onClick={handleSubmit}>
         Submit
+      </div>
+
+      {/* Feedback Popup */}
+      {feedback && <div className="feedback-popup">{feedback}</div>}
+
+      {/* Game Over Modal */}
+      {isGameOver && activeModal === "gameover" && (
+        <div className="game-over-modal">
+          <div className="modal-content">
+            <h1>Game Over!</h1>
+            <p>Final Score: {score}</p>
+            <div className="modal-buttons">
+              <button onClick={handleRestart}>Try Again</button>
+              <button onClick={() => navigate(-1)}>Exit</button>
+            </div>
+          </div>
         </div>
+      )}
 
-        {feedback && <p className="feedback-popup">
-            <h1>{feedback}</h1>
-            </p>}
-
-
+      {showQuitConfirm && (
+                <div className="quit-confirm-overlay">
+                    <div className="quit-confirm-modal">
+                        <h2>Quit Game?</h2>
+                        <p>Are you sure you want to end the game?</p>
+                        <div className="quit-confirm-buttons">
+                            <button
+                                className="yes-btn"
+                                onClick={() => {
+                                    endGame();
+                                    setShowQuitConfirm(false);
+                                }}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                className="no-btn"
+                                onClick={() => setShowQuitConfirm(false)}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
     </div>
-
-    
   );
 }
