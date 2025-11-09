@@ -78,7 +78,7 @@ function Quizzes() {
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">
-            <span className="mode-name">Guess Where</span>
+            <span className="mode-name">Classic</span>
             <span className="mode-desc">
               Can you guess the placements of all the elements?
             </span>

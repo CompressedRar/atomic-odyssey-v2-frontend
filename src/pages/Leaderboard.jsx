@@ -49,6 +49,14 @@ function Leaderboard() {
 
         {/* === MODE SELECT BUTTONS === */}
         <div className="mode-bar">
+
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            className={`mode-pill ${activeTab === "Fusion" ? "active" : ""}`}
+            onClick={() => handleTabChange("Fusion")}
+          >
+            Fusion
+          </motion.button>
           {/* Classic */}
           <motion.button
             whileTap={{ scale: 0.95 }}
@@ -148,6 +156,9 @@ function Leaderboard() {
                 displayValue = player.questions || 0;
                 label = "Solved";
               } else if (activeTab.toLowerCase().includes("timetrial")) {
+                displayValue = player.score || 0;
+                label = "Score";
+              } else if (activeTab.toLowerCase().includes("fusion")) {
                 displayValue = player.score || 0;
                 label = "Score";
               }

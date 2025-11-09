@@ -132,3 +132,10 @@
     background-position: center;
     background-image: url("/quizzes-bg/bg-noblegas.jpg");
 }
+
+#fusion .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/fusion.jpg");
+}
