@@ -4,6 +4,7 @@ import "../styles/SurvivalH.css";
 import BackgroundVideo from "../components/BackgroundVideo";
 import another_elements from "../assets/periodic-table.json"
 import { auth } from "../configs/FirebaseConfig";
+import Confetti from "react-confetti";
 import { getDatabase, ref, get, set, onValue } from "firebase/database";
 
 const elements = [
@@ -265,6 +266,59 @@ function getElementImage(elementName) {
   return null;
 }
 
+const ResultOverlay = ({ didWin, score, questionCount, onContinue }) => (
+  <div
+    className={`result-overlay ${didWin ? "winner" : "loser"}`}
+    style={{
+      position: "fixed",
+      inset: 0,
+      background: "rgba(0,0,0,0.85)",
+      color: "#fff",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 10000,
+      textAlign: "center",
+      cursor: "pointer",
+      gap: "20px",
+    }}
+    onClick={onContinue}
+  >
+    {didWin && <Confetti numberOfPieces={600} recycle={false} gravity={0.25} />}
+    <h1 style={{ fontSize: "5rem", marginBottom: "20px" }}>
+      {didWin ? "VICTORY!" : "GAME OVER!"}
+    </h1>
+
+    {/* Score and Answered Questions */}
+    <div style={{
+      display: "flex",
+      gap: "40px",
+      justifyContent: "center",
+      alignItems: "center"
+    }}>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ margin: 0, fontSize: "1.3rem", opacity: 0.8 }}>Score</p>
+        <p style={{ margin: 0, fontSize: "1.8rem", fontWeight: "bold" }}>{score}</p>
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ margin: 0, fontSize: "1.3rem", opacity: 0.8 }}>Answered</p>
+        <p style={{ margin: 0, fontSize: "1.8rem", fontWeight: "bold" }}>{questionCount}</p>
+      </div>
+    </div>
+
+    {/* Click anywhere */}
+    <p style={{
+      fontSize: "1rem",
+      opacity: 0.7,
+      marginTop: "20px",
+      fontStyle: "italic"
+    }}>
+      Click anywhere to continue
+    </p>
+  </div>
+);
+
 const SurvivalH = () => {
   const navigate = useNavigate();
 
@@ -285,6 +339,8 @@ const SurvivalH = () => {
   const [answer, setAnswer] = useState("");
   const [activeModal, setActiveModal] = useState(null);
   const [leaderboardData, setLeaderboardData] = useState([]);
+  const [showResultOverlay, setShowResultOverlay] = useState(false);
+  const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
   // --- Falling Cards ---
   const [fallingCards, setFallingCards] = useState([]);
@@ -478,12 +534,14 @@ const SurvivalH = () => {
   const gameOver = () => {
     if (isGameOver) return;
     setIsGameOver(true);
+    setShowResultOverlay(true);
+    saveScoreToLeaderboard(questionCount);
   };
 
   useEffect(() => {
     if (isGameOver) {
       saveScoreToLeaderboard(questionCount);
-      setActiveModal("gameover");
+      // DO NOT trigger modal here
     }
   }, [isGameOver]);
 
@@ -582,7 +640,11 @@ const SurvivalH = () => {
     });
   };
 
-  const handleExit = () => navigate(-1);
+  const handleExit = () => setShowQuitConfirm(true);
+  const handleQuitGame = () => {
+    setShowQuitConfirm(false);
+    navigate(-1); // goes back to menu
+  };
 
   // --- UI RENDER ---
   if (isStarting) {
@@ -590,7 +652,7 @@ const SurvivalH = () => {
       <div className="time-trial-container">
         <BackgroundVideo />
         <h1 className={`time-trial-title ${fadeOut ? "fade-out" : "fade-in"}`}>
-              Periodic Table Survival
+          Periodic Table Survival
         </h1>
         <p className={`subtitle ${fadeOut ? "fade-out" : "fade-in"}`}>Get ready...</p>
       </div>
@@ -606,7 +668,7 @@ const SurvivalH = () => {
         playsInline
         preload="auto"
         className="background-video"
-        style={{opacity:"1", filter:"brightness(10%)"}}
+        style={{ opacity: "1", filter: "brightness(10%)" }}
       >
         <source src="/videos/3.mp4" type="video/mp4" />
       </video>
@@ -660,13 +722,21 @@ const SurvivalH = () => {
       {/* UI Layer */}
       <div className="ui-container" style={{ position: "relative", zIndex: 10 }}>
         <div className="top-buttons" style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}>
-          <button className="exit-btn" onClick={handleExit}
+          <button
+            className="exit-btn"
+            onClick={handleExit} // ✅ now triggers Quit Confirmation
             style={{
-              fontSize: "1.5rem", padding: "10px 15px", borderRadius: "8px",
-              background: "transparent", color: "#fff", fontWeight: "bold", cursor: "pointer",
+              fontSize: "1.5rem",
+              padding: "10px 15px",
+              borderRadius: "8px",
+              background: "transparent",
+              color: "#fff",
+              fontWeight: "bold",
+              cursor: "pointer",
             }}
             onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
-            onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+            onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+          >
             ←
           </button>
         </div>
@@ -725,38 +795,38 @@ const SurvivalH = () => {
         width: "100%", height: "100vh", zIndex: 1, pointerEvents: "none",
       }}>
         {fallingCards.map((card) => (
-  <div
-    key={card.id}
-    className={`element-card-modern ${card.fadingOut ? "fade-out" : ""}`}
-    style={{
-      left: `${card.x}%`,
-      top: `${card.y}px`,
-      transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 1})`,
-    }}
-  >
-    <div className="card-glow"></div>
-    <img
-      src={card.image || "/default-bg.jpg"}
-      alt={card.element.name}
-      className="card-image"
-    />
-    <div className="card-gradient"></div>
+          <div
+            key={card.id}
+            className={`element-card-modern ${card.fadingOut ? "fade-out" : ""}`}
+            style={{
+              left: `${card.x}%`,
+              top: `${card.y}px`,
+              transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 1})`,
+            }}
+          >
+            <div className="card-glow"></div>
+            <img
+              src={card.image || "/default-bg.jpg"}
+              alt={card.element.name}
+              className="card-image"
+            />
+            <div className="card-gradient"></div>
 
-    <div className="card-content">
-      <h2 className="card-symbol">
-        {card.missing.includes("symbol") ? "???" : card.element.symbol}
-      </h2>
-      <p className="card-name">
-        {card.missing.includes("name") ? "???" : card.element.name}
-      </p>
-      <p className="card-number">
-        {card.missing.includes("number")
-          ? "Atomic No: ???"
-          : `Atomic No: ${card.element.number}`}
-      </p>
-    </div>
-  </div>
-))}
+            <div className="card-content">
+              <h2 className="card-symbol">
+                {card.missing.includes("symbol") ? "???" : card.element.symbol}
+              </h2>
+              <p className="card-name">
+                {card.missing.includes("name") ? "???" : card.element.name}
+              </p>
+              <p className="card-number">
+                {card.missing.includes("number")
+                  ? "Atomic No: ???"
+                  : `Atomic No: ${card.element.number}`}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
 
       <style>{`
@@ -863,6 +933,90 @@ const SurvivalH = () => {
             </button>
           </div>
         </div>
+      )}
+
+      {/* --- Quit Confirmation Overlay --- */}
+      {showQuitConfirm && (
+        <div
+          className="quit-confirm-overlay"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.85)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 10000,
+            textAlign: "center",
+            cursor: "default",
+            color: "#fff",
+            flexDirection: "column",
+            gap: "20px",
+          }}
+          onClick={() => setShowQuitConfirm(false)} // click outside closes
+        >
+          <div
+            style={{
+              background: "#222",
+              padding: "30px 40px",
+              borderRadius: "12px",
+              minWidth: "300px",
+              cursor: "auto",
+            }}
+            onClick={(e) => e.stopPropagation()} // stop propagation to overlay
+          >
+            <h2 style={{ fontSize: "2rem", marginBottom: "15px" }}>Quit Game?</h2>
+            <p style={{ fontSize: "1.2rem", opacity: 0.8, marginBottom: "25px" }}>
+              Are you sure you want to end the game?
+            </p>
+
+            <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+              <button
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  background: "red",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+                onClick={handleQuitGame} // confirm quit
+              >
+                Yes
+              </button>
+              <button
+                style={{
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  background: "green",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+                onClick={() => setShowQuitConfirm(false)}
+              >
+                No
+              </button>
+            </div>
+
+            <p style={{ fontSize: "0.9rem", opacity: 0.7, marginTop: "15px", fontStyle: "italic" }}>
+              Click outside to cancel
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* --- ResultOverlay remains unchanged --- */}
+      {showResultOverlay && (
+        <ResultOverlay
+          didWin={hp > 0}
+          score={score}
+          questionCount={questionCount}
+          onContinue={() => {
+            setShowResultOverlay(false);
+            setActiveModal("gameover");
+          }}
+        />
       )}
     </div>
   );

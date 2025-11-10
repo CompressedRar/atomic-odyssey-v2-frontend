@@ -1,11 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
 function BackgroundVideo() {
-  const [currentURL, setCurrentURL] = useState("videos/3.mp4");
-  const [opacity, setOpacity] = useState(0.3);
-  const videoRef = useRef(null);
-  const preloaderRef = useRef(null);
-
   const videoURLs = [
     "videos/3.1.mp4",
     "videos/3.2.mp4",
@@ -13,21 +8,28 @@ function BackgroundVideo() {
     "videos/3.3.mp4",
   ];
 
-  // Duration before switching videos (in seconds)
-  const VIDEO_DURATION = 20; // ⏱ adjust to match your video lengths
+  const VIDEO_DURATION = 60; // seconds
 
-  const handleVideoChange = async () => {
-    setOpacity(0);
+  const [currentURL, setCurrentURL] = useState(videoURLs[0]);
+  const [opacity, setOpacity] = useState(0.3);
 
-    // Pick a new random video that’s different
-    let randomIndex;
+  const videoRef = useRef(null);
+  const preloaderRef = useRef(null);
+
+  // Pick a random next video that’s different from the current
+  const getRandomNextURL = () => {
+    let next;
     do {
-      randomIndex = Math.floor(Math.random() * videoURLs.length);
-    } while (videoURLs[randomIndex] === currentURL);
+      next = videoURLs[Math.floor(Math.random() * videoURLs.length)];
+    } while (next === currentURL);
+    return next;
+  };
 
-    const nextURL = videoURLs[randomIndex];
+  // Change video function with preloading and crossfade
+  const changeVideo = async () => {
+    const nextURL = getRandomNextURL();
 
-    // Preload new video silently
+    // Preload next video
     const preloader = preloaderRef.current;
     if (preloader) {
       preloader.src = nextURL;
@@ -36,34 +38,41 @@ function BackgroundVideo() {
       });
     }
 
-    // Swap and fade back in
-    setCurrentURL(nextURL);
-    setOpacity(0.3)
+    // Fade out current video
+    setOpacity(0);
+    setTimeout(() => {
+      // Swap video
+      setCurrentURL(nextURL);
+      setOpacity(0.3);
+
+      // Play the new video
+      videoRef.current.play().catch(() => { });
+    }, 500); // match fade duration
   };
 
-  // ✅ Continuous video playback + safety restart
+  // Continuous looping every VIDEO_DURATION seconds
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const interval = setInterval(() => {
+      changeVideo();
+    }, VIDEO_DURATION * 1000);
 
-    const ensurePlaying = () => {
-      if (video.paused) {
-        video.play().catch(() => { });
-      }
-    };
-
-    // Play and periodically ensure it stays running
-    video.play().catch(() => { });
-    const checkInterval = setInterval(ensurePlaying, 5000); // every 5s
-    return () => clearInterval(checkInterval);
+    return () => clearInterval(interval);
   }, [currentURL]);
 
-  // ✅ Prevent duplicate background-video instances
+  // Ensure video keeps playing (some browsers pause)
   useEffect(() => {
-    const existing = document.querySelector(".background-video");
-    if (existing && existing !== videoRef.current?.parentNode) {
-      console.warn("Duplicate background video detected — removing extra.");
-      existing.remove();
+    const interval = setInterval(() => {
+      if (videoRef.current && videoRef.current.paused) {
+        videoRef.current.play().catch(() => { });
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Start first video immediately
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => { });
     }
   }, []);
 
@@ -73,7 +82,7 @@ function BackgroundVideo() {
         className="background-video"
         style={{
           opacity,
-          transition: "opacity 1s ease",
+          transition: "opacity 0.5s ease",
           position: "fixed",
           top: 0,
           left: 0,
@@ -88,10 +97,10 @@ function BackgroundVideo() {
           src={currentURL}
           autoPlay
           muted
-          loop // ✅ keep looping each clip until next change
           playsInline
           style={{
-            scale:1,
+            width: "100%",
+            height: "100%",
             objectFit: "cover",
           }}
         />

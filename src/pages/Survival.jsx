@@ -5,6 +5,7 @@ import BackgroundVideo from "../components/BackgroundVideo";
 import another_elements from "../assets/periodic-table.json"
 import Swal from "sweetalert2";
 import { auth } from "../configs/FirebaseConfig";
+import Confetti from "react-confetti";
 import { getDatabase, ref, get, set, onValue } from "firebase/database";
 
 
@@ -268,6 +269,59 @@ function getElementImage(elementName) {
     return null;
 }
 
+const ResultOverlay = ({ didWin, score, questionCount, onContinue }) => (
+    <div
+        className={`result-overlay ${didWin ? "winner" : "loser"}`}
+        style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.85)",
+            color: "#fff",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 10000,
+            textAlign: "center",
+            cursor: "pointer",
+            gap: "20px",
+        }}
+        onClick={onContinue}
+    >
+        {didWin && <Confetti numberOfPieces={600} recycle={false} gravity={0.25} />}
+        <h1 style={{ fontSize: "5rem", marginBottom: "20px" }}>
+            {didWin ? "VICTORY!" : "GAME OVER!"}
+        </h1>
+
+        {/* Score and Answered Questions */}
+        <div style={{
+            display: "flex",
+            gap: "40px",
+            justifyContent: "center",
+            alignItems: "center"
+        }}>
+            <div style={{ textAlign: "center" }}>
+                <p style={{ margin: 0, fontSize: "1.3rem", opacity: 0.8 }}>Score</p>
+                <p style={{ margin: 0, fontSize: "1.8rem", fontWeight: "bold" }}>{score}</p>
+            </div>
+            <div style={{ textAlign: "center" }}>
+                <p style={{ margin: 0, fontSize: "1.3rem", opacity: 0.8 }}>Answered</p>
+                <p style={{ margin: 0, fontSize: "1.8rem", fontWeight: "bold" }}>{questionCount}</p>
+            </div>
+        </div>
+
+        {/* Click anywhere */}
+        <p style={{
+            fontSize: "1rem",
+            opacity: 0.7,
+            marginTop: "20px",
+            fontStyle: "italic"
+        }}>
+            Click anywhere to continue
+        </p>
+    </div>
+);
+
 const Survival = () => {
     const navigate = useNavigate();
 
@@ -281,24 +335,23 @@ const Survival = () => {
     const [score, setScore] = useState(0);
     const [displayedScore, setDisplayedScore] = useState(0);
     const [questionCount, setQuestionCount] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(20);
     const [feedback, setFeedback] = useState(null);
     const [isGameOver, setIsGameOver] = useState(false);
 
     const [answer, setAnswer] = useState("");
     const [activeModal, setActiveModal] = useState(null);
     const [leaderboardData, setLeaderboardData] = useState([]);
-
-    // --- Falling Cards ---
     const [fallingCards, setFallingCards] = useState([]);
+    const [showResultOverlay, setShowResultOverlay] = useState(false);
+
     const columns = [10, 30, 50, 70, 86];
     const maxFalling = 10;
     const minDistance = 120;
-
-    // constants for overlap control
     const CARD_HEIGHT = 300;
     const SAFE_VERTICAL_GAP = CARD_HEIGHT * 1.2;
+    const [showQuitConfirm, setShowQuitConfirm] = useState(false);
 
+    // --- Save Score ---
     const saveScoreToLeaderboard = async (answeredQuestions) => {
         try {
             const user = auth.currentUser;
@@ -315,15 +368,11 @@ const Survival = () => {
                 if (snapshot.val().profilePic) profilePic = snapshot.val().profilePic;
             }
 
-            // ✅ Now get the leaderboard entry for this user
             const leaderboardRef = ref(db, `leaderboards/normalSurvival/${user.uid}`);
             const leaderboardSnap = await get(leaderboardRef);
             const oldData = leaderboardSnap.exists() ? leaderboardSnap.val() : {};
-
-            // ✅ Increment games played safely
             const updatedGamesPlayed = (oldData.gamesPlayed || 0) + 1;
 
-            // ✅ Save the new score and updated gamesPlayed
             await set(leaderboardRef, {
                 uid: user.uid,
                 name: username,
@@ -334,77 +383,32 @@ const Survival = () => {
                 questions: answeredQuestions,
                 timestamp: Date.now(),
             });
-
-            console.log("✅ Score saved to leaderboard!");
+            console.log("✅ Score saved!");
         } catch (err) {
             console.error("❌ Error saving score:", err);
         }
     };
 
-    // --- Utilities ---
+    // --- Feedback ---
     const showFeedback = (msg, color = "white") => {
         setFeedback({ msg, color });
         setTimeout(() => setFeedback(null), 1200);
     };
 
-    // --- Position Helper (No Overlap) ---
-    const isSpaceFree = (x, y = -220) => {
-        return !fallingCards.some(card => {
-            const verticalDistance = Math.abs(card.y - y);
-            const horizontalDistance = Math.abs(card.x - x);
-            return horizontalDistance < minDistance && verticalDistance < SAFE_VERTICAL_GAP;
-        });
-    };
-
-    // --- Spawning Cards ---
-    const spawnFallingCard = () => {
-        setFallingCards(prev => {
-            if (prev.length >= maxFalling) return prev;
-
-            const availableColumns = columns.filter(col => {
-                return !prev.some(card => {
-                    const verticalDistance = Math.abs(card.y - (-220));
-                    const horizontalDistance = Math.abs(card.x - col);
-                    return horizontalDistance < minDistance && verticalDistance < SAFE_VERTICAL_GAP;
-                });
-            });
-
-            if (availableColumns.length === 0) return prev;
-
-            const x = availableColumns[Math.floor(Math.random() * availableColumns.length)];
-            const el = getRandomElement();
-
-            const newCard = {
-                id: Date.now() + Math.random(),
-                x,
-                y: -220,
-                speed: Math.random() * 1 + 0.5,
-                element: el,
-                missing: getRandomMissingFields(),
-                image: getElementImage(el.name),
-                fadingOut: false,
-                rotation: Math.random() * 10 - 5,
-                scale: 0.9 + Math.random() * 0.2,
-            };
-
-            return [...prev, newCard];
-        });
-    };
-
+    // --- Card Spawning ---
     const spawnMultipleCards = (count = maxFalling) => {
-        setFallingCards(prev => {
+        setFallingCards((prev) => {
             let spawned = 0;
             const shuffledColumns = [...columns].sort(() => 0.5 - Math.random());
             const updated = [...prev];
 
             for (let col of shuffledColumns) {
                 if (spawned >= count) break;
-                const isFree = !updated.some(card => {
+                const isFree = !updated.some((card) => {
                     const verticalDistance = Math.abs(card.y - (-220));
                     const horizontalDistance = Math.abs(card.x - col);
                     return horizontalDistance < minDistance && verticalDistance < SAFE_VERTICAL_GAP;
                 });
-
                 if (!isFree) continue;
 
                 const el = getRandomElement();
@@ -420,7 +424,6 @@ const Survival = () => {
                     rotation: Math.random() * 10 - 5,
                     scale: 0.9 + Math.random() * 0.2,
                 };
-
                 updated.push(newCard);
                 spawned++;
             }
@@ -428,7 +431,7 @@ const Survival = () => {
         });
     };
 
-    // --- Intro and Countdown ---
+    // --- Countdown & Intro ---
     useEffect(() => {
         if (isStarting) {
             const timer = setTimeout(() => {
@@ -446,27 +449,24 @@ const Survival = () => {
         if (!isCountingDown) return;
         let c = 3;
         setCountdown(c);
-
         const interval = setInterval(() => {
             c -= 1;
             setCountdown(c);
-
             if (c < 0) {
                 clearInterval(interval);
                 setIsCountingDown(false);
-                setTimeout(() => spawnMultipleCards(2 + Math.floor(Math.random() * 2)), 300);
+                spawnMultipleCards(2 + Math.floor(Math.random() * 2));
             }
         }, 1000);
-
         return () => clearInterval(interval);
     }, [isCountingDown]);
 
-    // --- Score Display Animation ---
+    // --- Score Animation ---
     useEffect(() => {
         if (displayedScore === score) return;
         const step = score > displayedScore ? 1 : -1;
         const timer = setInterval(() => {
-            setDisplayedScore(prev => {
+            setDisplayedScore((prev) => {
                 if (prev === score) {
                     clearInterval(timer);
                     return prev;
@@ -477,30 +477,24 @@ const Survival = () => {
         return () => clearInterval(timer);
     }, [score, displayedScore]);
 
+    // --- Game Over ---
     const gameOver = () => {
         if (isGameOver) return;
         setIsGameOver(true);
+        setShowResultOverlay(true); // show overlay first
+        saveScoreToLeaderboard(questionCount);
     };
 
-    useEffect(() => {
-        if (isGameOver) {
-            saveScoreToLeaderboard(questionCount);
-            setActiveModal("gameover");
-        }
-    }, [isGameOver]);
-
-    // --- Falling Update ---
+    // --- Falling Cards Update ---
     useEffect(() => {
         if (isGameOver || isCountingDown) return;
         let animFrame;
-
         const update = () => {
-            setFallingCards(prev => {
-                const updated = prev.map(card => ({ ...card, y: card.y + card.speed }));
-
-                const survived = updated.filter(card => {
+            setFallingCards((prev) => {
+                const updated = prev.map((card) => ({ ...card, y: card.y + card.speed }));
+                const survived = updated.filter((card) => {
                     if (card.y > window.innerHeight) {
-                        setHp(h => {
+                        setHp((h) => {
                             const newHp = h - 10;
                             if (newHp <= 0) gameOver();
                             return newHp;
@@ -510,22 +504,18 @@ const Survival = () => {
                     }
                     return true;
                 });
-
                 if (survived.length < maxFalling && Math.random() < 0.05) {
                     spawnMultipleCards(2 + Math.floor(Math.random() * 3));
                 }
-
                 return survived;
             });
-
             animFrame = requestAnimationFrame(update);
         };
-
         animFrame = requestAnimationFrame(update);
         return () => cancelAnimationFrame(animFrame);
     }, [isGameOver, isCountingDown]);
 
-    // --- Handle Answers ---
+    // --- Handle Answer ---
     const handleSubmit = () => {
         if (!answer.trim()) return;
         handleAnswerCorrect(answer.trim());
@@ -533,45 +523,54 @@ const Survival = () => {
     };
 
     const handleAnswerCorrect = (ans) => {
-        setFallingCards(prev => {
+        setFallingCards((prev) => {
             let found = false;
-            const updated = prev.map(card => {
+            const updated = prev.map((card) => {
                 let correct = true;
-                card.missing.forEach(field => {
+                card.missing.forEach((field) => {
                     if (field === "name" && ans.toLowerCase() !== card.element.name.toLowerCase()) correct = false;
                     if (field === "symbol" && ans.toLowerCase() !== card.element.symbol.toLowerCase()) correct = false;
                     if (field === "number" && parseInt(ans) !== card.element.number) correct = false;
                 });
-
                 if (correct && !found) {
                     found = true;
-                    setScore(s => s + 10);
-                    setHp(h => Math.min(100, h + 10));
-                    setQuestionCount(q => q + 1);
+                    setScore((s) => s + 10);
+                    setHp((h) => Math.min(100, h + 10));
+                    setQuestionCount((q) => q + 1);
                     showFeedback("+10 pts, +10 HP", "limegreen");
                     return { ...card, fadingOut: true };
                 }
                 return card;
             });
-
             if (!found) {
-                setHp(h => {
+                setHp((h) => {
                     const newHp = h - 10;
                     if (newHp <= 0) gameOver();
                     return newHp;
                 });
                 showFeedback("-10 HP", "red");
             }
-
-            return updated.filter(c => !c.fadingOut);
+            return updated.filter((c) => !c.fadingOut);
         });
     };
 
-    // --- Leaderboard ---
+    const handleQuitGame = () => {
+        // Reset game states if needed
+        setHp(100);
+        setScore(0);
+        setDisplayedScore(0);
+        setQuestionCount(0);
+        setFallingCards([]);
+        setIsGameOver(false);
+        setActiveModal(null);
+        setShowQuitConfirm(false);
+        navigate(-1); // Go back to menu
+    };
+
+    // --- Fetch Leaderboard ---
     const fetchLeaderboard = () => {
         const db = getDatabase();
         const lbRef = ref(db, "leaderboards/normalSurvival");
-
         onValue(lbRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
@@ -584,9 +583,7 @@ const Survival = () => {
         });
     };
 
-    const handleExit = () => navigate(-1);
-
-    // --- UI RENDER ---
+    // --- Render ---
     if (isStarting) {
         return (
             <div className="time-trial-container">
@@ -601,50 +598,42 @@ const Survival = () => {
 
     return (
         <div className="survival-container">
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="background-video"
-                style={{opacity:"1", filter:"brightness(10%)"}}
-            >
+            {/* Background Video */}
+            <video autoPlay loop muted playsInline preload="auto" className="background-video" style={{ opacity: "1", filter: "brightness(10%)" }}>
                 <source src="/videos/3.mp4" type="video/mp4" />
             </video>
 
             {/* Countdown */}
             {isCountingDown && (
-                <div className="countdown-overlay" style={{
-                    position: "fixed",
-                    inset: 0,
-                    background: "rgba(0,0,0,0.8)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    color: "white",
-                    fontSize: "8rem",
-                    fontWeight: "bold",
-                    zIndex: 9999,
-                    textShadow: "0 0 20px #00f0ff",
+                <div style={{
+                    position: "fixed", inset: 0, background: "rgba(0,0,0,0.8)", display: "flex",
+                    justifyContent: "center", alignItems: "center", color: "white",
+                    fontSize: "8rem", fontWeight: "bold", zIndex: 9999, textShadow: "0 0 20px #00f0ff"
                 }}>
                     {countdown > 0 ? countdown : "GO!"}
                 </div>
             )}
 
-            {/* UI Layer */}
-            <div className="ui-container" style={{ position: "relative", zIndex: 10 }}>
-                <div className="top-buttons" style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}>
-                    <button className="exit-btn" onClick={handleExit}
-                        style={{
-                            fontSize: "1.5rem", padding: "10px 15px", borderRadius: "8px",
-                            background: "transparent", color: "#fff", fontWeight: "bold", cursor: "pointer",
-                        }}
-                        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
-                        onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                        ←
-                    </button>
-                </div>
+            {/* UI */}
+            <div className="ui-container" style={{ position: "relative", zIndex: 10 }}><div className="top-buttons" style={{ position: "fixed", top: "10px", left: "10px", zIndex: 999 }}>
+                <button
+                    className="exit-btn"
+                    onClick={() => setShowQuitConfirm(true)} // fixed typo
+                    style={{
+                        fontSize: "1.5rem",
+                        padding: "10px 15px",
+                        borderRadius: "8px",
+                        background: "transparent",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        cursor: "pointer"
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.2)"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+                >
+                    ←
+                </button>
+            </div>
 
                 <h1>Periodic Table Survival - Normal</h1>
 
@@ -652,12 +641,10 @@ const Survival = () => {
                     <div className="hp-status">
                         <p>HP : {hp}</p>
                         <div className="hp-bar">
-                            <div className="hp-fill"
-                                style={{
-                                    width: `${hp}%`,
-                                    background: hp > 50 ? "limegreen" : hp > 20 ? "orange" : "red",
-                                }}
-                            />
+                            <div className="hp-fill" style={{
+                                width: `${hp}%`,
+                                background: hp > 50 ? "limegreen" : hp > 20 ? "orange" : "red",
+                            }} />
                         </div>
                     </div>
                     <p>Score : {displayedScore}</p>
@@ -665,7 +652,7 @@ const Survival = () => {
                 </div>
 
                 {feedback && (
-                    <div className="feedback-text" style={{
+                    <div style={{
                         position: "absolute", top: "100px", left: "50%",
                         transform: "translateX(-50%)", color: feedback.color,
                         fontSize: "24px", fontWeight: "bold",
@@ -683,14 +670,26 @@ const Survival = () => {
                             value={answer}
                             placeholder="Enter your answer"
                             onChange={(e) => setAnswer(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") handleSubmit();
-                            }}
+                            onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
                             className="answer-input"
                             autoFocus
                         />
                         <button onClick={handleSubmit} className="submit-btn">Submit</button>
                     </div>
+                )}
+
+                {/* Result Overlay */}
+                {showResultOverlay && (
+                    <ResultOverlay
+                        didWin={hp > 0}
+                        score={score}
+                        questionCount={questionCount}
+                        onContinue={() => {
+                            setShowResultOverlay(false);
+                            setActiveModal("gameover"); // show game over modal after click
+                        }}
+                        onExit={handleExit}
+                    />
                 )}
             </div>
 
@@ -700,40 +699,21 @@ const Survival = () => {
                 width: "100%", height: "100vh", zIndex: 1, pointerEvents: "none",
             }}>
                 {fallingCards.map((card) => (
-  <div
-    key={card.id}
-    className={`element-card-modern ${card.fadingOut ? "fade-out" : ""}`}
-    style={{
-      left: `${card.x}%`,
-      top: `${card.y}px`,
-      transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 1})`,
-    }}
-  >
-    <div className="card-glow"></div>
-    <img
-      src={card.image || "/default-bg.jpg"}
-      alt={card.element.name}
-      className="card-image"
-    />
-    <div className="card-gradient"></div>
-
-    <div className="card-content">
-      <h2 className="card-symbol">
-        {card.missing.includes("symbol") ? "???" : card.element.symbol}
-      </h2>
-      <p className="card-name">
-        {card.missing.includes("name") ? "???" : card.element.name}
-      </p>
-      <p className="card-number">
-        {card.missing.includes("number")
-          ? "Atomic No: ???"
-          : `Atomic No: ${card.element.number}`}
-      </p>
-    </div>
-  </div>
-))}
-
-
+                    <div key={card.id} className={`element-card-modern ${card.fadingOut ? "fade-out" : ""}`} style={{
+                        left: `${card.x}%`,
+                        top: `${card.y}px`,
+                        transform: `rotate(${card.rotation || 0}deg) scale(${card.scale || 1})`,
+                    }}>
+                        <div className="card-glow"></div>
+                        <img src={card.image || "/default-bg.jpg"} alt={card.element.name} className="card-image" />
+                        <div className="card-gradient"></div>
+                        <div className="card-content">
+                            <h2 className="card-symbol">{card.missing.includes("symbol") ? "???" : card.element.symbol}</h2>
+                            <p className="card-name">{card.missing.includes("name") ? "???" : card.element.name}</p>
+                            <p className="card-number">{card.missing.includes("number") ? "Atomic No: ???" : `Atomic No: ${card.element.number}`}</p>
+                        </div>
+                    </div>
+                ))}
             </div>
 
             <style>{`
@@ -744,7 +724,7 @@ const Survival = () => {
         .fade-out { opacity: 0; transition: opacity 0.7s; }
       `}</style>
 
-            {/* --- Game Over Modal --- */}
+            {/* Game Over Modal */}
             {activeModal === "gameover" && (
                 <div className="game-over-modal" style={{ zIndex: 20 }}>
                     <div className="modal-content">
@@ -752,45 +732,28 @@ const Survival = () => {
                         <p>Final Score: {score}</p>
                         <p>Answered Questions: {questionCount}</p>
                         <div className="modal-buttons">
-                            <button
-                                className="btn try-again"
-                                onClick={() => {
-                                    // Reset all gameplay stats
-                                    setHp(100);
-                                    setScore(0);
-                                    setDisplayedScore(0);
-                                    setQuestionCount(0);
-                                    setFallingCards([]);
-                                    setTimeLeft(20);
-
-                                    // Close Game Over modal
-                                    setActiveModal(null);
-
-                                    // Mark game as not over
-                                    setIsGameOver(false);
-
-                                    // Start countdown again before spawning
-                                    setIsCountingDown(true);
-                                }}
-                            >
-                                Try Again
-                            </button>
+                            <button className="btn try-again" onClick={() => {
+                                setHp(100);
+                                setScore(0);
+                                setDisplayedScore(0);
+                                setQuestionCount(0);
+                                setFallingCards([]);
+                                setTimeLeft(20);
+                                setActiveModal(null);
+                                setIsGameOver(false);
+                                setIsCountingDown(true);
+                            }}>Try Again</button>
                             <button className="btn menu" onClick={() => navigate(-1)}>Back to Menu</button>
-                            <button
-                                className="btn leaderboard"
-                                onClick={() => {
-                                    fetchLeaderboard();
-                                    setActiveModal("leaderboard");
-                                }}
-                            >
-                                View Leaderboard
-                            </button>
+                            <button className="btn leaderboard" onClick={() => {
+                                fetchLeaderboard();
+                                setActiveModal("leaderboard");
+                            }}>View Leaderboard</button>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* --- Leaderboard Modal --- */}
+            {/* Leaderboard Modal */}
             {activeModal === "leaderboard" && (
                 <div className="leaderboard-modal" style={{ zIndex: 20 }}>
                     <div className="modal-content leaderboard-content">
@@ -827,17 +790,67 @@ const Survival = () => {
                             {leaderboardData.slice(3).map((player, idx) => (
                                 <div key={idx} className="leaderboard-row">
                                     <img src={player.profilePic} alt="" />
-                                    <div className="info">
-                                        <p className="username">{player.email}</p>
-                                    </div>
+                                    <div className="info"><p className="username">{player.email}</p></div>
                                     <p className="score">{player.questions}</p>
                                 </div>
                             ))}
                         </div>
 
-                        <button className="btn close" onClick={() => setActiveModal("gameover")}>
-                            Back
-                        </button>
+                        <button className="btn close" onClick={() => setActiveModal("gameover")}>Back</button>
+                    </div>
+                </div>
+            )}
+
+            {showQuitConfirm && (
+                <div className="quit-confirm-overlay" style={{
+                    position: "fixed",
+                    inset: 0,
+                    background: "rgba(0,0,0,0.85)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 20000,
+                }}>
+                    <div className="quit-confirm-modal" style={{
+                        background: "#222",
+                        padding: "30px 40px",
+                        borderRadius: "12px",
+                        textAlign: "center",
+                        color: "#fff",
+                        minWidth: "300px",
+                    }}>
+                        <h2 style={{ marginBottom: "15px" }}>Quit Game?</h2>
+                        <p style={{ marginBottom: "25px" }}>Are you sure you want to end the game?</p>
+                        <div className="quit-confirm-buttons" style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+                            <button
+                                className="yes-btn"
+                                onClick={handleQuitGame}
+                                style={{
+                                    padding: "10px 20px",
+                                    borderRadius: "8px",
+                                    background: "red",
+                                    color: "#fff",
+                                    fontWeight: "bold",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Yes
+                            </button>
+                            <button
+                                className="no-btn"
+                                onClick={() => setShowQuitConfirm(false)}
+                                style={{
+                                    padding: "10px 20px",
+                                    borderRadius: "8px",
+                                    background: "green",
+                                    color: "#fff",
+                                    fontWeight: "bold",
+                                    cursor: "pointer",
+                                }}
+                            >
+                                No
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

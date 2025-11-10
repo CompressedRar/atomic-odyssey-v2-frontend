@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ref, set, get, update, onValue, push } from "firebase/database";
+import { ref, set, get, update, onValue, push, remove } from "firebase/database";
 import { db, auth } from "../configs/FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import "../styles/Competitive.css";
@@ -13,7 +13,7 @@ export default function MatchmakingLobby({ onStartGame }) {
   const [searching, setSearching] = useState(false);
   const MAX_PLAYERS = 2;
 
-  // ✅ Load current user info
+  // Load current user info
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (!user) return;
@@ -25,7 +25,7 @@ export default function MatchmakingLobby({ onStartGame }) {
     return () => unsub();
   }, []);
 
-  // ✅ Find or create match
+  // Find or create match
   const findMatch = async () => {
     if (!playerName) return alert("You must be logged in!");
     setSearching(true);
@@ -66,7 +66,18 @@ export default function MatchmakingLobby({ onStartGame }) {
     setSearching(false);
   };
 
-  // ✅ Listen for live room updates
+  // Cancel matchmaking
+  const cancelMatch = async () => {
+    if (!roomCode) return;
+
+    // ✅ Remove player from room properly
+    await remove(ref(db, `rooms/${roomCode}/players/${playerName}`));
+
+    setRoomCode("");
+    setRoomData(null);
+  };
+
+  // Listen for live room updates
   useEffect(() => {
     if (!roomCode) return;
     const roomRef = ref(db, `rooms/${roomCode}`);
@@ -97,19 +108,30 @@ export default function MatchmakingLobby({ onStartGame }) {
         <button
           onClick={findMatch}
           disabled={searching}
-          className={`${
-            searching ? "bg-gray-600" : "bg-blue-500 hover:bg-blue-600"
-          } text-white px-6 py-3 rounded-lg font-semibold`}
+          className={`${searching ? "bg-gray-600" : "bg-blue-500 hover:bg-blue-600"
+            } text-white px-6 py-3 rounded-lg font-semibold`}
         >
           {searching ? "Finding Match..." : "Find Match"}
         </button>
       ) : (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-80">
-          <p className="text-yellow-400">
-            {roomData?.gameStarted
-              ? "Game Starting..."
-              : "Waiting for opponent..."}
-          </p>
+        <div className="flex flex-col items-center gap-2">
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-80 text-center">
+            <p className="text-yellow-400">
+              {roomData?.gameStarted
+                ? "Game Starting..."
+                : "Waiting for opponent..."}
+            </p>
+          </div>
+
+          {/* 🔹 Cancel Find Match button */}
+          {!roomData?.gameStarted && (
+            <button
+              onClick={cancelMatch}
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded mt-2"
+            >
+              Cancel Find Match
+            </button>
+          )}
         </div>
       )}
     </div>

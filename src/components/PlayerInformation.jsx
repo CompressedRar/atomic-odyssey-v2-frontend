@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../configs/FirebaseConfig";
 import { getDatabase, ref, get, update, onValue, push, set } from "firebase/database";
+import { getAuth } from "firebase/auth";
 import {
   onAuthStateChanged,
   signOut,
@@ -19,6 +20,8 @@ function PlayerInformation() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showViewProfile, setShowViewProfile] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  const [historyData, setHistoryData] = useState([]);
 
   const [editData, setEditData] = useState({
     username: "",
@@ -30,6 +33,54 @@ function PlayerInformation() {
     showPassword: false,
     showConfirmPassword: false,
   });
+
+  // 🔹 Move this to top-level so JSX can access it
+  const gameDisplayNames = {
+    Classic: "Classic",
+    Fusion: "Fusion",
+    competitive: "Competitive",
+    hardSurvival: "Hard Survival",
+    normalSurvival: "Normal Survival",
+    timeTrialEasy: "Time Trial Easy",
+    timeTrialMedium: "Time Trial Medium",
+    timeTrialHard: "Time Trial Hard",
+  };
+
+  const fetchLeaderboardHistory = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) {
+        console.error("User not authenticated.");
+        return;
+      }
+
+      const db = getDatabase();
+
+      const games = Object.keys(gameDisplayNames);
+      const userHistory = [];
+
+      for (const game of games) {
+        const leaderboardRef = ref(db, `leaderboards/${game}/${user.uid}`);
+        const snapshot = await get(leaderboardRef);
+
+        if (snapshot.exists()) {
+          const record = snapshot.val();
+          userHistory.push({
+            username: record.username || record.name || "You",
+            game,
+            score: record.score || 0,
+            timestamp: record.timestamp || 0,
+          });
+        }
+      }
+
+      userHistory.sort((a, b) => b.timestamp - a.timestamp);
+      setHistoryData(userHistory);
+    } catch (error) {
+      console.error("Error fetching leaderboard history:", error);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -54,7 +105,7 @@ function PlayerInformation() {
         ];
 
         const scores = {};
-        const gamesPlayedData = {}; // ✅ new object to store gamesPlayed
+        const gamesPlayedData = {};
 
         for (const mode of gameModes) {
           const leaderboardSnap = await get(ref(db, `leaderboards/${mode}/${user.uid}`));
@@ -62,39 +113,28 @@ function PlayerInformation() {
           if (leaderboardSnap.exists()) {
             const data = leaderboardSnap.val();
             scores[mode] = data.score || 0;
-            gamesPlayedData[mode] = data.gamesPlayed || 0; // ✅ add this
+            gamesPlayedData[mode] = data.gamesPlayed || 0;
           } else {
             scores[mode] = 0;
-            gamesPlayedData[mode] = 0; // ✅ default to 0
+            gamesPlayedData[mode] = 0;
           }
         }
 
-        // ✅ Compute totals
-        const scoreValues = Object.values(scores);
-        const totalScore = scoreValues.reduce((acc, val) => acc + val, 0);
-
-        const totalMatches = Object.values(gamesPlayedData).reduce(
-          (acc, val) => acc + val,
-          0
-        );
-
-        const avgScore =
-          totalMatches > 0 ? (totalScore / totalMatches).toFixed(1) : 0;
-
+        const totalScore = Object.values(scores).reduce((acc, val) => acc + val, 0);
+        const totalMatches = Object.values(gamesPlayedData).reduce((acc, val) => acc + val, 0);
+        const avgScore = totalMatches > 0 ? (totalScore / totalMatches).toFixed(1) : 0;
         const masteryPoints = Math.round(totalScore / 10);
 
-        // ✅ Set userInfo state
         setUserInfo({
           ...userData,
           email: user.email,
           scores,
-          gamesPlayedData, // ✅ optional, if you want to display per mode
+          gamesPlayedData,
           totalMatches,
           avgScore,
           masteryPoints,
         });
 
-        // ✅ Set edit data
         setEditData({
           username: userData.username || "",
           email: user.email || "",
@@ -183,8 +223,7 @@ function PlayerInformation() {
 
       if (Object.keys(updates).length > 0) await update(ref(db), updates);
 
-      if (editData.email && editData.email !== user.email)
-        await updateEmail(user, editData.email);
+      if (editData.email && editData.email !== user.email) await updateEmail(user, editData.email);
       if (editData.password) await updatePassword(user, editData.password);
 
       setUserInfo((prev) => ({
@@ -244,16 +283,13 @@ function PlayerInformation() {
   const [isRotating, setIsRotating] = useState(false);
   const [background, setBackground] = useState("default-bg");
 
-  // 🔥 Global Chat states
   const [showGlobalChat, setShowGlobalChat] = useState(false);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const db = getDatabase();
-
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    // Auto-scroll to bottom whenever messages update
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
@@ -273,7 +309,7 @@ function PlayerInformation() {
     setIsRotating(true);
     setTimeout(() => {
       setIsRotating(false);
-      setShowSettings(true); // ✅ open the correct modal
+      setShowSettings(true);
     }, 400);
   };
 
@@ -282,7 +318,6 @@ function PlayerInformation() {
     update(ref(db, `players/${auth.currentUser.uid}`), { background: newBg });
   };
 
-  // 🔴 GLOBAL CHAT – Realtime listener
   useEffect(() => {
     if (!showGlobalChat) return;
     const chatRef = ref(db, "globalChat");
@@ -304,7 +339,6 @@ function PlayerInformation() {
     if (!user) return;
 
     try {
-      // 🔥 Get user data from Realtime Database (for accurate username + profilePic)
       const userSnap = await get(ref(db, `users/${user.uid}`));
       const userData = userSnap.exists() ? userSnap.val() : {};
 
@@ -342,9 +376,9 @@ function PlayerInformation() {
         </div>
 
         <div className="player-information">
-          <span className="player-ign" style={{marginTop:"15px"}}>
+          <span className="player-ign" style={{ marginTop: "15px" }}>
             <span>{userInfo.username}</span>
-            <span className="additional-player-info" style={{display:"none"}}>
+            <span className="additional-player-info" style={{ display: "none" }}>
               <span className="player-mmr">
                 <span className="material-symbols-outlined">trophy</span>
                 <span>{userInfo.mmr || 0}</span>
@@ -389,11 +423,17 @@ function PlayerInformation() {
             </span>
             <h2>Settings</h2>
             <div className="modal-divider"></div>
-            <button className="modal-btn" style={{display:"none"}} onClick={handleViewProfile}>
-              View Profile
-            </button>
             <button className="modal-btn" onClick={handleEditAccount}>
               Edit Account
+            </button>
+            <button
+              className="modal-btn"
+              onClick={async () => {
+                await fetchLeaderboardHistory();
+                setShowHistoryModal(true); // open modal after fetching
+              }}
+            >
+              History
             </button>
             <button
               className="modal-btn logout-btn"
@@ -408,7 +448,7 @@ function PlayerInformation() {
       {/* 💬 GLOBAL CHAT MODAL */}
       {showGlobalChat && (
         <div className="settings-modal-overlay" onClick={() => setShowGlobalChat(false)}>
-          <div id = "chat-container" className="settings-modal chat-modal"  onClick={(e) => e.stopPropagation()}>
+          <div id="chat-container" className="settings-modal chat-modal" onClick={(e) => e.stopPropagation()}>
             <span
               className="close-btn material-symbols-outlined"
               onClick={() => setShowGlobalChat(false)}
@@ -436,11 +476,11 @@ function PlayerInformation() {
                           alt="PFP"
                           className="chat-avatar"
                         />
-                      
+
                       </div>
                     )}
                     <div className="chat-bubble">
-                      
+
                       {!isOwn && <span className="chat-username">{msg.username}</span>}
                       <span className="chat-content">{msg.message}</span>
                     </div>
@@ -463,8 +503,49 @@ function PlayerInformation() {
         </div>
       )}
 
+      {showHistoryModal && (
+        <div
+          className="history-overlay"
+          onClick={() => setShowHistoryModal(false)}
+        >
+          <div
+            className="history-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="history-close"
+              onClick={() => setShowHistoryModal(false)}
+            >
+              ✕
+            </button>
+
+            <h2 className="history-title">History</h2>
+            <div className="history-divider"></div>
+
+            <div className="history-content">
+              {historyData.map((entry, index) => (
+                <div key={index} className="history-card">
+                  <div className="history-left">
+                    <span className="history-game">
+                      {gameDisplayNames[entry.game] || entry.game}
+                    </span>
+                    <span className="history-date">
+                      {new Date(entry.timestamp).toLocaleString()}
+                    </span>
+                  </div>
+
+                  <div className="history-right">
+                    <span className="history-score">Score: {entry.score}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* View Profile Modal */}
-      {showViewProfile  && (
+      {showViewProfile && (
         <div
           className="settings-modal-overlay"
           onClick={() => setShowViewProfile(false)}
@@ -1352,6 +1433,171 @@ function PlayerInformation() {
 .chat-messages::-webkit-scrollbar-thumb {
   background: #f39c12;
   border-radius: 4px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.history-table th, .history-table td {
+  padding: 8px 12px;
+  border: 1px solid #444;
+  text-align: left;
+}
+.history-table th {
+  background: #333;
+  color: #fff;
+}
+.history-table tbody tr:nth-child(even) {
+  background: #222;
+}
+
+/* Overlay */
+.history-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 30, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal Container */
+.history-modal {
+  background: linear-gradient(180deg, #1f1f2f 0%, #12121a 100%);
+  border: 2px solid #7a5c2e; /* soft gold accent */
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(255, 195, 77, 0.3);
+  width: 420px;
+  max-height: 70vh;
+  padding: 20px 24px;
+  overflow-y: auto;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.history-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.history-close:hover {
+  color: #ffd966; /* hover gold */
+}
+
+/* Title */
+.history-title {
+  text-align: center;
+  color: #ffd966; /* gold title */
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+/* Divider */
+.history-divider {
+  height: 2px;
+  width: 80%;
+  background: rgba(255, 214, 102, 0.3);
+  margin: 0 auto 16px;
+  border-radius: 1px;
+}
+
+/* Content Scroll Area */
+.history-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* Each History Entry */
+.history-card {
+  background: rgba(40, 40, 55, 0.7);
+  border: 1px solid rgba(255, 214, 102, 0.2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.history-card:hover {
+  transform: scale(1.02);
+  background: rgba(60, 50, 40, 0.6);
+}
+
+/* Highlight for most recent match */
+.highlight-entry {
+  border: 1px solid #ffd966;
+  background: rgba(255, 214, 102, 0.15);
+}
+
+/* Left Section */
+.history-left {
+  display: flex;
+  flex-direction: column;
+  color: #e0c68d;
+}
+
+.history-game {
+  font-weight: 600;
+  color: #ffd966;
+}
+
+.history-date {
+  font-size: 0.8rem;
+  color: #c8b080;
+}
+
+/* Right Section */
+.history-right {
+  text-align: right;
+  color: #fffacd;
+}
+
+.history-username {
+  font-weight: 500;
+  color: #ffcc70;
+}
+
+.history-score {
+  font-size: 0.9rem;
+  color: #ffe89c;
+}
+
+/* Empty State */
+.no-history {
+  color: #aaa;
+  text-align: center;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 `}</style>
     </>
