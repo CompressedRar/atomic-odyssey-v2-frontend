@@ -1,0 +1,3281 @@
+[
+    {
+        "formula": "H2O",
+        "elements": {
+            "H": 2,
+            "O": 1
+        },
+        "name": "Water"
+    },
+    {
+        "formula": "CO2",
+        "elements": {
+            "C": 1,
+            "O": 2
+        },
+        "name": "Carbon Dioxide"
+    },
+    {
+        "formula": "NH3",
+        "elements": {
+            "N": 1,
+            "H": 3
+        },
+        "name": "Ammonia"
+    },
+    {
+        "formula": "CH4",
+        "elements": {
+            "C": 1,
+            "H": 4
+        },
+        "name": "Methane"
+    },
+    {
+        "formula": "NaCl",
+        "elements": {
+            "Na": 1,
+            "Cl": 1
+        },
+        "name": "Sodium Chloride"
+    },
+    {
+        "formula": "O2",
+        "elements": {
+            "O": 2
+        },
+        "name": "Oxygen Gas"
+    },
+    {
+        "formula": "H2",
+        "elements": {
+            "H": 2
+        },
+        "name": "Hydrogen Gas"
+    },
+    {
+        "formula": "N2",
+        "elements": {
+            "N": 2
+        },
+        "name": "Nitrogen Gas"
+    },
+    {
+        "formula": "HCl",
+        "elements": {
+            "H": 1,
+            "Cl": 1
+        },
+        "name": "Hydrogen Chloride"
+    },
+    {
+        "formula": "CO",
+        "elements": {
+            "C": 1,
+            "O": 1
+        },
+        "name": "Carbon Monoxide"
+    },
+    {
+        "formula": "H2SO4",
+        "elements": {
+            "H": 2,
+            "S": 1,
+            "O": 4
+        },
+        "name": "Sulfuric Acid"
+    },
+    {
+        "formula": "HNO3",
+        "elements": {
+            "H": 1,
+            "N": 1,
+            "O": 3
+        },
+        "name": "Nitric Acid"
+    },
+    {
+        "formula": "H2CO3",
+        "elements": {
+            "H": 2,
+            "C": 1,
+            "O": 3
+        },
+        "name": "Carbonic Acid"
+    },
+    {
+        "formula": "NaOH",
+        "elements": {
+            "Na": 1,
+            "O": 1,
+            "H": 1
+        },
+        "name": "Sodium Hydroxide"
+    },
+    {
+        "formula": "KOH",
+        "elements": {
+            "K": 1,
+            "O": 1,
+            "H": 1
+        },
+        "name": "Potassium Hydroxide"
+    },
+    {
+        "formula": "Ca(OH)2",
+        "elements": {
+            "Ca": 1,
+            "O": 2,
+            "H": 2
+        },
+        "name": "Calcium Hydroxide"
+    },
+    {
+        "formula": "CaCO3",
+        "elements": {
+            "Ca": 1,
+            "C": 1,
+            "O": 3
+        },
+        "name": "Calcium Carbonate"
+    },
+    {
+        "formula": "KCl",
+        "elements": {
+            "K": 1,
+            "Cl": 1
+        },
+        "name": "Potassium Chloride"
+    },
+    {
+        "formula": "MgO",
+        "elements": {
+            "Mg": 1,
+            "O": 1
+        },
+        "name": "Magnesium Oxide"
+    },
+    {
+        "formula": "Fe2O3",
+        "elements": {
+            "Fe": 2,
+            "O": 3
+        },
+        "name": "Iron(III) Oxide / Rust"
+    },
+    {
+        "formula": "SO2",
+        "elements": {
+            "S": 1,
+            "O": 2
+        },
+        "name": "Sulfur Dioxide"
+    },
+    {
+        "formula": "SO3",
+        "elements": {
+            "S": 1,
+            "O": 3
+        },
+        "name": "Sulfur Trioxide"
+    },
+    {
+        "formula": "NO2",
+        "elements": {
+            "N": 1,
+            "O": 2
+        },
+        "name": "Nitrogen Dioxide"
+    },
+    {
+        "formula": "N2O",
+        "elements": {
+            "N": 2,
+            "O": 1
+        },
+        "name": "Nitrous Oxide / Laughing Gas"
+    },
+    {
+        "formula": "C2H6",
+        "name": "Ethane",
+        "elements": {
+            "C": 2,
+            "H": 6
+        }
+    },
+    {
+        "formula": "C3H8",
+        "name": "Propane",
+        "elements": {
+            "C": 3,
+            "H": 8
+        }
+    },
+    {
+        "formula": "C4H10",
+        "name": "Butane",
+        "elements": {
+            "C": 4,
+            "H": 10
+        }
+    },
+    {
+        "formula": "CH3OH",
+        "name": "Methanol",
+        "elements": {
+            "C": 1,
+            "H": 4,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H5OH",
+        "name": "Ethanol",
+        "elements": {
+            "C": 2,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C3H7OH",
+        "name": "Propanol",
+        "elements": {
+            "C": 3,
+            "H": 8,
+            "O": 1
+        }
+    },
+    {
+        "formula": "CH3COOH",
+        "name": "Acetic Acid",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "O": 2
+        }
+    },
+    {
+        "formula": "HCOOH",
+        "name": "Formic Acid",
+        "elements": {
+            "C": 1,
+            "H": 2,
+            "O": 2
+        }
+    },
+    {
+        "formula": "CH3NH2",
+        "name": "Methylamine",
+        "elements": {
+            "C": 1,
+            "H": 5,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C2H5NH2",
+        "name": "Ethylamine",
+        "elements": {
+            "C": 2,
+            "H": 7,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C6H6",
+        "name": "Benzene",
+        "elements": {
+            "C": 6,
+            "H": 6
+        }
+    },
+    {
+        "formula": "KNO3",
+        "name": "Potassium Nitrate",
+        "elements": {
+            "K": 1,
+            "N": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Na2CO3",
+        "name": "Sodium Carbonate",
+        "elements": {
+            "Na": 2,
+            "C": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "NH4Cl",
+        "name": "Ammonium Chloride",
+        "elements": {
+            "N": 1,
+            "H": 4,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "CaSO4",
+        "name": "Calcium Sulfate",
+        "elements": {
+            "Ca": 1,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "C2H4",
+        "name": "Ethylene",
+        "elements": {
+            "C": 2,
+            "H": 4
+        }
+    },
+    {
+        "formula": "C2H2",
+        "name": "Acetylene",
+        "elements": {
+            "C": 2,
+            "H": 2
+        }
+    },
+    {
+        "formula": "C6H12O6",
+        "name": "Glucose",
+        "elements": {
+            "C": 6,
+            "H": 12,
+            "O": 6
+        }
+    },
+    {
+        "formula": "C2H4O2",
+        "name": "Acetic Acid",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C3H6O",
+        "name": "Acetone",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "MgCl2",
+        "name": "Magnesium Chloride",
+        "elements": {
+            "Mg": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Na2SO4",
+        "name": "Sodium Sulfate",
+        "elements": {
+            "Na": 2,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "K2CO3",
+        "name": "Potassium Carbonate",
+        "elements": {
+            "K": 2,
+            "C": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "C4H9OH",
+        "name": "Butanol",
+        "elements": {
+            "C": 4,
+            "H": 10,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C6H5OH",
+        "name": "Phenol",
+        "elements": {
+            "C": 6,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "NO",
+        "name": "Nitric Oxide",
+        "elements": {
+            "N": 1,
+            "O": 1
+        }
+    },
+    {
+        "formula": "O3",
+        "name": "Ozone",
+        "elements": {
+            "O": 3
+        }
+    },
+    {
+        "formula": "SO2",
+        "name": "Sulfur Dioxide",
+        "elements": {
+            "S": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "NaNO3",
+        "name": "Sodium Nitrate",
+        "elements": {
+            "Na": 1,
+            "N": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "K2SO4",
+        "name": "Potassium Sulfate",
+        "elements": {
+            "K": 2,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "NH4NO3",
+        "name": "Ammonium Nitrate",
+        "elements": {
+            "N": 2,
+            "H": 4,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Ca3(PO4)2",
+        "name": "Calcium Phosphate",
+        "elements": {
+            "Ca": 3,
+            "P": 2,
+            "O": 8
+        }
+    },
+    {
+        "formula": "Al2(SO4)3",
+        "name": "Aluminum Sulfate",
+        "elements": {
+            "Al": 2,
+            "S": 3,
+            "O": 12
+        }
+    },
+    {
+        "formula": "CH3CHO",
+        "name": "Acetaldehyde",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H5CHO",
+        "name": "Propionaldehyde",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C3H6O2",
+        "name": "Propionic Acid",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C2H7N",
+        "name": "Dimethylamine",
+        "elements": {
+            "C": 2,
+            "H": 7,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C3H9N",
+        "name": "Trimethylamine",
+        "elements": {
+            "C": 3,
+            "H": 9,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C2H5NO2",
+        "name": "Glycine",
+        "elements": {
+            "C": 2,
+            "H": 5,
+            "N": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C3H7NO2",
+        "name": "Alanine",
+        "elements": {
+            "C": 3,
+            "H": 7,
+            "N": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C5H9NO4",
+        "name": "Glutamic Acid",
+        "elements": {
+            "C": 5,
+            "H": 9,
+            "N": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "H2S",
+        "name": "Hydrogen Sulfide",
+        "elements": {
+            "H": 2,
+            "S": 1
+        }
+    },
+    {
+        "formula": "NO3",
+        "name": "Nitrate Ion",
+        "elements": {
+            "N": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "SO4",
+        "name": "Sulfate Ion",
+        "elements": {
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "C7H8",
+        "name": "Toluene",
+        "elements": {
+            "C": 7,
+            "H": 8
+        }
+    },
+    {
+        "formula": "C6H5CH3",
+        "name": "Methylbenzene",
+        "elements": {
+            "C": 7,
+            "H": 8
+        }
+    },
+    {
+        "formula": "C6H5NH2",
+        "name": "Aniline",
+        "elements": {
+            "C": 6,
+            "H": 7,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C6H5COOH",
+        "name": "Benzoic Acid",
+        "elements": {
+            "C": 7,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "CO3",
+        "name": "Carbonate Ion",
+        "elements": {
+            "C": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "SiO2",
+        "name": "Silicon Dioxide",
+        "elements": {
+            "Si": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "NO3",
+        "name": "Nitrate Ion",
+        "elements": {
+            "N": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "SO4",
+        "name": "Sulfate Ion",
+        "elements": {
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "PO4",
+        "name": "Phosphate Ion",
+        "elements": {
+            "P": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "FeO",
+        "name": "Iron(II) Oxide",
+        "elements": {
+            "Fe": 1,
+            "O": 1
+        }
+    },
+    {
+        "formula": "Fe3O4",
+        "name": "Magnetite",
+        "elements": {
+            "Fe": 3,
+            "O": 4
+        }
+    },
+    {
+        "formula": "H3PO4",
+        "name": "Phosphoric Acid",
+        "elements": {
+            "H": 3,
+            "P": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "H2S",
+        "name": "Hydrosulfuric Acid / Hydrogen Sulfide",
+        "elements": {
+            "H": 2,
+            "S": 1
+        }
+    },
+    {
+        "formula": "H2C2O4",
+        "name": "Oxalic Acid",
+        "elements": {
+            "H": 2,
+            "C": 2,
+            "O": 4
+        }
+    },
+    {
+        "formula": "H2SeO4",
+        "name": "Selenic Acid",
+        "elements": {
+            "H": 2,
+            "Se": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "Ba(OH)2",
+        "name": "Barium Hydroxide",
+        "elements": {
+            "Ba": 1,
+            "O": 2,
+            "H": 2
+        }
+    },
+    {
+        "formula": "Mg(OH)2",
+        "name": "Magnesium Hydroxide",
+        "elements": {
+            "Mg": 1,
+            "O": 2,
+            "H": 2
+        }
+    },
+    {
+        "formula": "Al(OH)3",
+        "name": "Aluminum Hydroxide",
+        "elements": {
+            "Al": 1,
+            "O": 3,
+            "H": 3
+        }
+    },
+    {
+        "formula": "C3H7NO2",
+        "name": "Alanine",
+        "elements": {
+            "C": 3,
+            "H": 7,
+            "N": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C5H9NO4",
+        "name": "Glutamic Acid",
+        "elements": {
+            "C": 5,
+            "H": 9,
+            "N": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "C3H7N",
+        "name": "Dimethylamine",
+        "elements": {
+            "C": 3,
+            "H": 7,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C2H5NH2",
+        "name": "Ethylamine",
+        "elements": {
+            "C": 2,
+            "H": 7,
+            "N": 1
+        }
+    },
+    {
+        "formula": "CH3NH2",
+        "name": "Methylamine",
+        "elements": {
+            "C": 1,
+            "H": 5,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C3H6O",
+        "name": "Acetone",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H4O",
+        "name": "Acetaldehyde",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C4H8O",
+        "name": "Butanal",
+        "elements": {
+            "C": 4,
+            "H": 8,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H5OH",
+        "name": "Ethanol",
+        "elements": {
+            "C": 2,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C3H7OH",
+        "name": "Propanol",
+        "elements": {
+            "C": 3,
+            "H": 8,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C4H9OH",
+        "name": "Butanol",
+        "elements": {
+            "C": 4,
+            "H": 10,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C6H5OH",
+        "name": "Phenol",
+        "elements": {
+            "C": 6,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C6H5CH3",
+        "name": "Toluene / Methylbenzene",
+        "elements": {
+            "C": 7,
+            "H": 8
+        }
+    },
+    {
+        "formula": "C6H5NH2",
+        "name": "Aniline",
+        "elements": {
+            "C": 6,
+            "H": 7,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C6H5COOH",
+        "name": "Benzoic Acid",
+        "elements": {
+            "C": 7,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "CaCl2",
+        "name": "Calcium Chloride",
+        "elements": {
+            "Ca": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "MgSO4",
+        "name": "Magnesium Sulfate / Epsom Salt",
+        "elements": {
+            "Mg": 1,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "NaHCO3",
+        "name": "Sodium Bicarbonate / Baking Soda",
+        "elements": {
+            "Na": 1,
+            "H": 1,
+            "C": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "K2SO4",
+        "name": "Potassium Sulfate",
+        "elements": {
+            "K": 2,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "NH4NO3",
+        "name": "Ammonium Nitrate",
+        "elements": {
+            "N": 2,
+            "H": 4,
+            "O": 3
+        }
+    },
+    {
+        "formula": "HF",
+        "name": "Hydrofluoric Acid",
+        "elements": {
+            "H": 1,
+            "F": 1
+        }
+    },
+    {
+        "formula": "HBr",
+        "name": "Hydrobromic Acid",
+        "elements": {
+            "H": 1,
+            "Br": 1
+        }
+    },
+    {
+        "formula": "HI",
+        "name": "Hydroiodic Acid",
+        "elements": {
+            "H": 1,
+            "I": 1
+        }
+    },
+    {
+        "formula": "H2Se",
+        "name": "Hydroselenic Acid",
+        "elements": {
+            "H": 2,
+            "Se": 1
+        }
+    },
+    {
+        "formula": "HCN",
+        "name": "Hydrogen Cyanide",
+        "elements": {
+            "H": 1,
+            "C": 1,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C2H6O",
+        "name": "Ethyl Alcohol / Ethanol",
+        "elements": {
+            "C": 2,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C3H8O",
+        "name": "Isopropanol",
+        "elements": {
+            "C": 3,
+            "H": 8,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C4H10O",
+        "name": "Butanol",
+        "elements": {
+            "C": 4,
+            "H": 10,
+            "O": 1
+        }
+    },
+    {
+        "formula": "CH3OCH3",
+        "name": "Dimethyl Ether",
+        "elements": {
+            "C": 2,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H5OCH3",
+        "name": "Ethyl Methyl Ether",
+        "elements": {
+            "C": 3,
+            "H": 8,
+            "O": 1
+        }
+    },
+    {
+        "formula": "CH3CHO",
+        "name": "Acetaldehyde",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H5CHO",
+        "name": "Propionaldehyde",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "CH3COCH3",
+        "name": "Acetone",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C3H6O",
+        "name": "Propanone",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C6H6",
+        "name": "Benzene",
+        "elements": {
+            "C": 6,
+            "H": 6
+        }
+    },
+    {
+        "formula": "C6H5CH3",
+        "name": "Toluene",
+        "elements": {
+            "C": 7,
+            "H": 8
+        }
+    },
+    {
+        "formula": "C5H5N",
+        "name": "Pyridine",
+        "elements": {
+            "C": 5,
+            "H": 5,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C4H4O",
+        "name": "Furan",
+        "elements": {
+            "C": 4,
+            "H": 4,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C4H4N2",
+        "name": "Pyrazine",
+        "elements": {
+            "C": 4,
+            "H": 4,
+            "N": 2
+        }
+    },
+    {
+        "formula": "NO",
+        "name": "Nitric Oxide",
+        "elements": {
+            "N": 1,
+            "O": 1
+        }
+    },
+    {
+        "formula": "N2O",
+        "name": "Nitrous Oxide",
+        "elements": {
+            "N": 2,
+            "O": 1
+        }
+    },
+    {
+        "formula": "O3",
+        "name": "Ozone",
+        "elements": {
+            "O": 3
+        }
+    },
+    {
+        "formula": "SO3",
+        "name": "Sulfur Trioxide",
+        "elements": {
+            "S": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Cl2",
+        "name": "Chlorine Gas",
+        "elements": {
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Br2",
+        "name": "Bromine Gas",
+        "elements": {
+            "Br": 2
+        }
+    },
+    {
+        "formula": "C6H12O6",
+        "name": "Glucose",
+        "elements": {
+            "C": 6,
+            "H": 12,
+            "O": 6
+        }
+    },
+    {
+        "formula": "C12H22O11",
+        "name": "Sucrose",
+        "elements": {
+            "C": 12,
+            "H": 22,
+            "O": 11
+        }
+    },
+    {
+        "formula": "C2H5COOH",
+        "name": "Propionic Acid",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C3H7COOH",
+        "name": "Butyric Acid",
+        "elements": {
+            "C": 4,
+            "H": 8,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C9H8O4",
+        "name": "Aspirin / Acetylsalicylic Acid",
+        "elements": {
+            "C": 9,
+            "H": 8,
+            "O": 4
+        }
+    },
+    {
+        "formula": "C2H4O",
+        "name": "Ethylene Oxide",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C3H6O3",
+        "name": "Lactic Acid",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 3
+        }
+    },
+    {
+        "formula": "C2H6O2",
+        "name": "Ethylene Glycol",
+        "elements": {
+            "C": 2,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C3H8O3",
+        "name": "Glycerol / Glycerin",
+        "elements": {
+            "C": 3,
+            "H": 8,
+            "O": 3
+        }
+    },
+    {
+        "formula": "CH3CH2COOH",
+        "name": "Propionic Acid",
+        "elements": {
+            "C": 3,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C4H6O3",
+        "name": "Maleic Anhydride",
+        "elements": {
+            "C": 4,
+            "H": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "C7H6O2",
+        "name": "Salicylic Acid",
+        "elements": {
+            "C": 7,
+            "H": 6,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C8H10N4O2",
+        "name": "Caffeine",
+        "elements": {
+            "C": 8,
+            "H": 10,
+            "N": 4,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C10H14N2",
+        "name": "Nicotine",
+        "elements": {
+            "C": 10,
+            "H": 14,
+            "N": 2
+        }
+    },
+    {
+        "formula": "C3H3N",
+        "name": "Acetonitrile",
+        "elements": {
+            "C": 2,
+            "H": 3,
+            "N": 1
+        }
+    },
+    {
+        "formula": "CH3CN",
+        "name": "Methyl Cyanide",
+        "elements": {
+            "C": 2,
+            "H": 3,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C6H6O",
+        "name": "Phenol",
+        "elements": {
+            "C": 6,
+            "H": 6,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C2H3Cl",
+        "name": "Vinyl Chloride",
+        "elements": {
+            "C": 2,
+            "H": 3,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "C2H5Cl",
+        "name": "Ethyl Chloride",
+        "elements": {
+            "C": 2,
+            "H": 5,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "C2H4Cl2",
+        "name": "Dichloroethane",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "CH3COCl",
+        "name": "Acetyl Chloride",
+        "elements": {
+            "C": 2,
+            "H": 3,
+            "O": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "C6H6Cl2",
+        "name": "Dichlorobenzene",
+        "elements": {
+            "C": 6,
+            "H": 4,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "CH3Br",
+        "name": "Methyl Bromide",
+        "elements": {
+            "C": 1,
+            "H": 3,
+            "Br": 1
+        }
+    },
+    {
+        "formula": "C2H5Br",
+        "name": "Ethyl Bromide",
+        "elements": {
+            "C": 2,
+            "H": 5,
+            "Br": 1
+        }
+    },
+    {
+        "formula": "C2H4Br2",
+        "name": "Ethylene Dibromide",
+        "elements": {
+            "C": 2,
+            "H": 4,
+            "Br": 2
+        }
+    },
+    {
+        "formula": "CH3I",
+        "name": "Methyl Iodide",
+        "elements": {
+            "C": 1,
+            "H": 3,
+            "I": 1
+        }
+    },
+    {
+        "formula": "C2H5I",
+        "name": "Ethyl Iodide",
+        "elements": {
+            "C": 2,
+            "H": 5,
+            "I": 1
+        }
+    },
+    {
+        "formula": "C6H5Br",
+        "name": "Bromobenzene",
+        "elements": {
+            "C": 6,
+            "H": 5,
+            "Br": 1
+        }
+    },
+    {
+        "formula": "C6H5I",
+        "name": "Iodobenzene",
+        "elements": {
+            "C": 6,
+            "H": 5,
+            "I": 1
+        }
+    },
+    {
+        "formula": "C4H4N2",
+        "name": "Pyrimidine",
+        "elements": {
+            "C": 4,
+            "H": 4,
+            "N": 2
+        }
+    },
+    {
+        "formula": "C5H5N",
+        "name": "Pyridine",
+        "elements": {
+            "C": 5,
+            "H": 5,
+            "N": 1
+        }
+    },
+    {
+        "formula": "C5H5N5O",
+        "name": "Adenine",
+        "elements": {
+            "C": 5,
+            "H": 5,
+            "N": 5,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C5H5N5O2",
+        "name": "Guanine",
+        "elements": {
+            "C": 5,
+            "H": 5,
+            "N": 5,
+            "O": 2
+        }
+    },
+    {
+        "formula": "C4H5N3O",
+        "name": "Cytosine",
+        "elements": {
+            "C": 4,
+            "H": 5,
+            "N": 3,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C5H6N2O",
+        "name": "Thymine",
+        "elements": {
+            "C": 5,
+            "H": 6,
+            "N": 2,
+            "O": 1
+        }
+    },
+    {
+        "formula": "C5H5N2O2",
+        "name": "Uracil",
+        "elements": {
+            "C": 4,
+            "H": 4,
+            "N": 2,
+            "O": 2
+        }
+    },
+    {
+        "formula": "NaBH4",
+        "name": "Sodium Borohydride",
+        "elements": {
+            "Na": 1,
+            "B": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "BF3",
+        "name": "Boron Trifluoride",
+        "elements": {
+            "B": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "AlCl3",
+        "name": "Aluminum Chloride",
+        "elements": {
+            "Al": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "SiH4",
+        "name": "Silane",
+        "elements": {
+            "Si": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "GeH4",
+        "name": "Germane",
+        "elements": {
+            "Ge": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "SnCl4",
+        "name": "Tin(IV) Chloride",
+        "elements": {
+            "Sn": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "PbO2",
+        "name": "Lead(IV) Oxide",
+        "elements": {
+            "Pb": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "As2O3",
+        "name": "Arsenic Trioxide",
+        "elements": {
+            "As": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "SbCl3",
+        "name": "Antimony Trichloride",
+        "elements": {
+            "Sb": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "Bi2O3",
+        "name": "Bismuth(III) Oxide",
+        "elements": {
+            "Bi": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "TeO2",
+        "name": "Tellurium Dioxide",
+        "elements": {
+            "Te": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "SeO2",
+        "name": "Selenium Dioxide",
+        "elements": {
+            "Se": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "POCl3",
+        "name": "Phosphoryl Chloride",
+        "elements": {
+            "P": 1,
+            "O": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "SF6",
+        "name": "Sulfur Hexafluoride",
+        "elements": {
+            "S": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "ClF3",
+        "name": "Chlorine Trifluoride",
+        "elements": {
+            "Cl": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "BrF5",
+        "name": "Bromine Pentafluoride",
+        "elements": {
+            "Br": 1,
+            "F": 5
+        }
+    },
+    {
+        "formula": "IF7",
+        "name": "Iodine Heptafluoride",
+        "elements": {
+            "I": 1,
+            "F": 7
+        }
+    },
+    {
+        "formula": "XeF2",
+        "name": "Xenon Difluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "XeF4",
+        "name": "Xenon Tetrafluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 4
+        }
+    },
+    {
+        "formula": "HClO4",
+        "name": "Perchloric Acid",
+        "elements": {
+            "H": 1,
+            "Cl": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "Cr2O3",
+        "name": "Chromium(III) Oxide",
+        "elements": {
+            "Cr": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "MnO2",
+        "name": "Manganese Dioxide",
+        "elements": {
+            "Mn": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "FeSO4",
+        "name": "Iron(II) Sulfate",
+        "elements": {
+            "Fe": 1,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "CoCl2",
+        "name": "Cobalt(II) Chloride",
+        "elements": {
+            "Co": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Ni(CO)4",
+        "name": "Nickel Carbonyl",
+        "elements": {
+            "Ni": 1,
+            "C": 4,
+            "O": 4
+        }
+    },
+    {
+        "formula": "CuSO4",
+        "name": "Copper(II) Sulfate",
+        "elements": {
+            "Cu": 1,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "ZnS",
+        "name": "Zinc Sulfide",
+        "elements": {
+            "Zn": 1,
+            "S": 1
+        }
+    },
+    {
+        "formula": "AgNO3",
+        "name": "Silver Nitrate",
+        "elements": {
+            "Ag": 1,
+            "N": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "CdS",
+        "name": "Cadmium Sulfide",
+        "elements": {
+            "Cd": 1,
+            "S": 1
+        }
+    },
+    {
+        "formula": "HgCl2",
+        "name": "Mercury(II) Chloride",
+        "elements": {
+            "Hg": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Tl2O3",
+        "name": "Thallium(III) Oxide",
+        "elements": {
+            "Tl": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "PbS",
+        "name": "Lead(II) Sulfide",
+        "elements": {
+            "Pb": 1,
+            "S": 1
+        }
+    },
+    {
+        "formula": "BiCl3",
+        "name": "Bismuth(III) Chloride",
+        "elements": {
+            "Bi": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "UF6",
+        "name": "Uranium Hexafluoride",
+        "elements": {
+            "U": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "ThO2",
+        "name": "Thorium Dioxide",
+        "elements": {
+            "Th": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "La2O3",
+        "name": "Lanthanum Oxide",
+        "elements": {
+            "La": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "CeO2",
+        "name": "Cerium Dioxide",
+        "elements": {
+            "Ce": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Nd2O3",
+        "name": "Neodymium Oxide",
+        "elements": {
+            "Nd": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Sm2O3",
+        "name": "Samarium Oxide",
+        "elements": {
+            "Sm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Eu2O3",
+        "name": "Europium Oxide",
+        "elements": {
+            "Eu": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Gd2O3",
+        "name": "Gadolinium Oxide",
+        "elements": {
+            "Gd": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Tb4O7",
+        "name": "Terbium Oxide",
+        "elements": {
+            "Tb": 4,
+            "O": 7
+        }
+    },
+    {
+        "formula": "Dy2O3",
+        "name": "Dysprosium Oxide",
+        "elements": {
+            "Dy": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Ho2O3",
+        "name": "Holmium Oxide",
+        "elements": {
+            "Ho": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Er2O3",
+        "name": "Erbium Oxide",
+        "elements": {
+            "Er": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Tm2O3",
+        "name": "Thulium Oxide",
+        "elements": {
+            "Tm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Yb2O3",
+        "name": "Ytterbium Oxide",
+        "elements": {
+            "Yb": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Lu2O3",
+        "name": "Lutetium Oxide",
+        "elements": {
+            "Lu": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "PaO2",
+        "name": "Protactinium Dioxide",
+        "elements": {
+            "Pa": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "NpO2",
+        "name": "Neptunium Dioxide",
+        "elements": {
+            "Np": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "PuO2",
+        "name": "Plutonium Dioxide",
+        "elements": {
+            "Pu": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "AmO2",
+        "name": "Americium Dioxide",
+        "elements": {
+            "Am": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "CmO2",
+        "name": "Curium Dioxide",
+        "elements": {
+            "Cm": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "BkO2",
+        "name": "Berkelium Dioxide",
+        "elements": {
+            "Bk": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "CfO2",
+        "name": "Californium Dioxide",
+        "elements": {
+            "Cf": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "EsO2",
+        "name": "Einsteinium Dioxide",
+        "elements": {
+            "Es": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "FmO2",
+        "name": "Fermium Dioxide",
+        "elements": {
+            "Fm": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "MdO2",
+        "name": "Mendelevium Dioxide",
+        "elements": {
+            "Md": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "NoO2",
+        "name": "Nobelium Dioxide",
+        "elements": {
+            "No": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "LrO3",
+        "name": "Lawrencium Oxide",
+        "elements": {
+            "Lr": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "RaSO4",
+        "name": "Radium Sulfate",
+        "elements": {
+            "Ra": 1,
+            "S": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "FrF",
+        "name": "Francium Fluoride",
+        "elements": {
+            "Fr": 1,
+            "F": 1
+        }
+    },
+    {
+        "formula": "Ac2O3",
+        "name": "Actinium Oxide",
+        "elements": {
+            "Ac": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "ThCl4",
+        "name": "Thorium(IV) Chloride",
+        "elements": {
+            "Th": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "PaCl5",
+        "name": "Protactinium Pentachloride",
+        "elements": {
+            "Pa": 1,
+            "Cl": 5
+        }
+    },
+    {
+        "formula": "UCl6",
+        "name": "Uranium Hexachloride",
+        "elements": {
+            "U": 1,
+            "Cl": 6
+        }
+    },
+    {
+        "formula": "NpF6",
+        "name": "Neptunium Hexafluoride",
+        "elements": {
+            "Np": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "XeF2",
+        "name": "Xenon Difluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "XeF4",
+        "name": "Xenon Tetrafluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 4
+        }
+    },
+    {
+        "formula": "XeF6",
+        "name": "Xenon Hexafluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "KrF2",
+        "name": "Krypton Difluoride",
+        "elements": {
+            "Kr": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "BF3",
+        "name": "Boron Trifluoride",
+        "elements": {
+            "B": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "SiCl4",
+        "name": "Silicon Tetrachloride",
+        "elements": {
+            "Si": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "GeCl4",
+        "name": "Germanium Tetrachloride",
+        "elements": {
+            "Ge": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "As2O3",
+        "name": "Arsenic Trioxide",
+        "elements": {
+            "As": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Sb2O3",
+        "name": "Antimony Trioxide",
+        "elements": {
+            "Sb": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "TeO2",
+        "name": "Tellurium Dioxide",
+        "elements": {
+            "Te": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "PoO2",
+        "name": "Polonium Dioxide",
+        "elements": {
+            "Po": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "TlCl",
+        "name": "Thallium(I) Chloride",
+        "elements": {
+            "Tl": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "PbO2",
+        "name": "Lead(IV) Oxide",
+        "elements": {
+            "Pb": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Bi2O3",
+        "name": "Bismuth(III) Oxide",
+        "elements": {
+            "Bi": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "HgCl2",
+        "name": "Mercury(II) Chloride",
+        "elements": {
+            "Hg": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Tl2O3",
+        "name": "Thallium(III) Oxide",
+        "elements": {
+            "Tl": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "SbF5",
+        "name": "Antimony Pentafluoride",
+        "elements": {
+            "Sb": 1,
+            "F": 5
+        }
+    },
+    {
+        "formula": "SeO3",
+        "name": "Selenium Trioxide",
+        "elements": {
+            "Se": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "TeCl4",
+        "name": "Tellurium Tetrachloride",
+        "elements": {
+            "Te": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "PoCl2",
+        "name": "Polonium(II) Chloride",
+        "elements": {
+            "Po": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "RnF2",
+        "name": "Radon Difluoride",
+        "elements": {
+            "Rn": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "H2TeO4",
+        "name": "Telluric Acid",
+        "elements": {
+            "H": 2,
+            "Te": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "SbCl3",
+        "name": "Antimony Trichloride",
+        "elements": {
+            "Sb": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "BiCl3",
+        "name": "Bismuth Trichloride",
+        "elements": {
+            "Bi": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "XeO3",
+        "name": "Xenon Trioxide",
+        "elements": {
+            "Xe": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "KrO3",
+        "name": "Krypton Trioxide",
+        "elements": {
+            "Kr": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "HClO4",
+        "name": "Perchloric Acid",
+        "elements": {
+            "H": 1,
+            "Cl": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "HBrO3",
+        "name": "Bromic Acid",
+        "elements": {
+            "H": 1,
+            "Br": 1,
+            "O": 3
+        }
+    },
+    {
+        "formula": "HI3",
+        "name": "Iodine Trihydride",
+        "elements": {
+            "H": 1,
+            "I": 3
+        }
+    },
+    {
+        "formula": "Na3PO4",
+        "name": "Sodium Phosphate",
+        "elements": {
+            "Na": 3,
+            "P": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "K3PO4",
+        "name": "Potassium Phosphate",
+        "elements": {
+            "K": 3,
+            "P": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "LiAlH4",
+        "name": "Lithium Aluminium Hydride",
+        "elements": {
+            "Li": 1,
+            "Al": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "NaBH4",
+        "name": "Sodium Borohydride",
+        "elements": {
+            "Na": 1,
+            "B": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "UF6",
+        "name": "Uranium Hexafluoride",
+        "elements": {
+            "U": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "PuO2",
+        "name": "Plutonium Dioxide",
+        "elements": {
+            "Pu": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "ThO2",
+        "name": "Thorium Dioxide",
+        "elements": {
+            "Th": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Re2O7",
+        "name": "Rhenium(VII) Oxide",
+        "elements": {
+            "Re": 2,
+            "O": 7
+        }
+    },
+    {
+        "formula": "OsO4",
+        "name": "Osmium Tetroxide",
+        "elements": {
+            "Os": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "IrCl3",
+        "name": "Iridium(III) Chloride",
+        "elements": {
+            "Ir": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "PtCl2",
+        "name": "Platinum(II) Chloride",
+        "elements": {
+            "Pt": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "AuCl3",
+        "name": "Gold(III) Chloride",
+        "elements": {
+            "Au": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "Hg2Cl2",
+        "name": "Mercurous Chloride / Calomel",
+        "elements": {
+            "Hg": 2,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "RnO2",
+        "name": "Radon Dioxide (hypothetical)",
+        "elements": {
+            "Rn": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "AtCl",
+        "name": "Astatine Monochloride",
+        "elements": {
+            "At": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "SiH4",
+        "name": "Silane",
+        "elements": {
+            "Si": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "GeH4",
+        "name": "Germane",
+        "elements": {
+            "Ge": 1,
+            "H": 4
+        }
+    },
+    {
+        "formula": "AsH3",
+        "name": "Arsine",
+        "elements": {
+            "As": 1,
+            "H": 3
+        }
+    },
+    {
+        "formula": "SbH3",
+        "name": "Stibine",
+        "elements": {
+            "Sb": 1,
+            "H": 3
+        }
+    },
+    {
+        "formula": "TeH2",
+        "name": "Tellurium Hydride / Hydrogen Telluride",
+        "elements": {
+            "Te": 1,
+            "H": 2
+        }
+    },
+    {
+        "formula": "PoH2",
+        "name": "Polonium Hydride / Hydrogen Polonide",
+        "elements": {
+            "Po": 1,
+            "H": 2
+        }
+    },
+    {
+        "formula": "ThCl4",
+        "name": "Thorium Tetrachloride",
+        "elements": {
+            "Th": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "UO2(NO3)2",
+        "name": "Uranium(VI) Nitrate",
+        "elements": {
+            "U": 1,
+            "O": 8,
+            "N": 2
+        }
+    },
+    {
+        "formula": "NpO2",
+        "name": "Neptunium Dioxide",
+        "elements": {
+            "Np": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "AmO2",
+        "name": "Americium Dioxide",
+        "elements": {
+            "Am": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "CmCl3",
+        "name": "Curium(III) Chloride",
+        "elements": {
+            "Cm": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "La2O3",
+        "name": "Lanthanum Oxide",
+        "elements": {
+            "La": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "CeO2",
+        "name": "Cerium(IV) Oxide",
+        "elements": {
+            "Ce": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Pr6O11",
+        "name": "Praseodymium Oxide",
+        "elements": {
+            "Pr": 6,
+            "O": 11
+        }
+    },
+    {
+        "formula": "Nd2O3",
+        "name": "Neodymium(III) Oxide",
+        "elements": {
+            "Nd": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Sm2O3",
+        "name": "Samarium Oxide",
+        "elements": {
+            "Sm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Eu2O3",
+        "name": "Europium Oxide",
+        "elements": {
+            "Eu": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Gd2O3",
+        "name": "Gadolinium Oxide",
+        "elements": {
+            "Gd": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Tb4O7",
+        "name": "Terbium Oxide",
+        "elements": {
+            "Tb": 4,
+            "O": 7
+        }
+    },
+    {
+        "formula": "Dy2O3",
+        "name": "Dysprosium Oxide",
+        "elements": {
+            "Dy": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Ho2O3",
+        "name": "Holmium Oxide",
+        "elements": {
+            "Ho": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Er2O3",
+        "name": "Erbium Oxide",
+        "elements": {
+            "Er": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Tm2O3",
+        "name": "Thulium Oxide",
+        "elements": {
+            "Tm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Yb2O3",
+        "name": "Ytterbium Oxide",
+        "elements": {
+            "Yb": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Lu2O3",
+        "name": "Lutetium Oxide",
+        "elements": {
+            "Lu": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "FrCl",
+        "name": "Francium Chloride (hypothetical)",
+        "elements": {
+            "Fr": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "RaCl2",
+        "name": "Radium Chloride",
+        "elements": {
+            "Ra": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Ac2O3",
+        "name": "Actinium Oxide",
+        "elements": {
+            "Ac": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "ThF4",
+        "name": "Thorium Tetrafluoride",
+        "elements": {
+            "Th": 1,
+            "F": 4
+        }
+    },
+    {
+        "formula": "UF4",
+        "name": "Uranium Tetrafluoride",
+        "elements": {
+            "U": 1,
+            "F": 4
+        }
+    },
+    {
+        "formula": "NpF3",
+        "name": "Neptunium Trifluoride",
+        "elements": {
+            "Np": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "PuF4",
+        "name": "Plutonium Tetrafluoride",
+        "elements": {
+            "Pu": 1,
+            "F": 4
+        }
+    },
+    {
+        "formula": "AmF3",
+        "name": "Americium Trifluoride",
+        "elements": {
+            "Am": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "CmF3",
+        "name": "Curium Trifluoride",
+        "elements": {
+            "Cm": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "FrF",
+        "name": "Francium Fluoride (hypothetical)",
+        "elements": {
+            "Fr": 1,
+            "F": 1
+        }
+    },
+    {
+        "formula": "XeF2",
+        "name": "Xenon Difluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "XeF4",
+        "name": "Xenon Tetrafluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 4
+        }
+    },
+    {
+        "formula": "XeF6",
+        "name": "Xenon Hexafluoride",
+        "elements": {
+            "Xe": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "KrF2",
+        "name": "Krypton Difluoride",
+        "elements": {
+            "Kr": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "H2Te",
+        "name": "Hydrogen Telluride",
+        "elements": {
+            "H": 2,
+            "Te": 1
+        }
+    },
+    {
+        "formula": "TeO2",
+        "name": "Tellurium Dioxide",
+        "elements": {
+            "Te": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "SbCl3",
+        "name": "Antimony Trichloride",
+        "elements": {
+            "Sb": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "BiCl3",
+        "name": "Bismuth Trichloride",
+        "elements": {
+            "Bi": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "PoCl2",
+        "name": "Polonium Dichloride",
+        "elements": {
+            "Po": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "AtCl",
+        "name": "Astatine Monochloride (hypothetical)",
+        "elements": {
+            "At": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "RnF2",
+        "name": "Radon Difluoride (hypothetical)",
+        "elements": {
+            "Rn": 1,
+            "F": 2
+        }
+    },
+    {
+        "formula": "TcO2",
+        "name": "Technetium Dioxide",
+        "elements": {
+            "Tc": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Re2O7",
+        "name": "Rhenium Heptoxide",
+        "elements": {
+            "Re": 2,
+            "O": 7
+        }
+    },
+    {
+        "formula": "OsO4",
+        "name": "Osmium Tetroxide",
+        "elements": {
+            "Os": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "IrCl3",
+        "name": "Iridium(III) Chloride",
+        "elements": {
+            "Ir": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "PtCl2",
+        "name": "Platinum(II) Chloride",
+        "elements": {
+            "Pt": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "AuCl3",
+        "name": "Gold(III) Chloride",
+        "elements": {
+            "Au": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "HgCl2",
+        "name": "Mercury(II) Chloride / Mercuric Chloride",
+        "elements": {
+            "Hg": 1,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "TlCl",
+        "name": "Thallium(I) Chloride",
+        "elements": {
+            "Tl": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "PbO2",
+        "name": "Lead(IV) Oxide",
+        "elements": {
+            "Pb": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Bi2O3",
+        "name": "Bismuth(III) Oxide",
+        "elements": {
+            "Bi": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "UCl6",
+        "name": "Uranium Hexachloride",
+        "elements": {
+            "U": 1,
+            "Cl": 6
+        }
+    },
+    {
+        "formula": "PuO2",
+        "name": "Plutonium Dioxide",
+        "elements": {
+            "Pu": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "NpCl5",
+        "name": "Neptunium Pentachloride",
+        "elements": {
+            "Np": 1,
+            "Cl": 5
+        }
+    },
+    {
+        "formula": "CfF3",
+        "name": "Californium Trifluoride",
+        "elements": {
+            "Cf": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "EsF3",
+        "name": "Einsteinium Trifluoride",
+        "elements": {
+            "Es": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "FmF3",
+        "name": "Fermium Trifluoride",
+        "elements": {
+            "Fm": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "MdF3",
+        "name": "Mendelevium Trifluoride",
+        "elements": {
+            "Md": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "NoF3",
+        "name": "Nobelium Trifluoride",
+        "elements": {
+            "No": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "LrF3",
+        "name": "Lawrencium Trifluoride",
+        "elements": {
+            "Lr": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "RfCl4",
+        "name": "Rutherfordium Tetrachloride (hypothetical)",
+        "elements": {
+            "Rf": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "DbCl5",
+        "name": "Dubnium Pentachloride (hypothetical)",
+        "elements": {
+            "Db": 1,
+            "Cl": 5
+        }
+    },
+    {
+        "formula": "SgCl6",
+        "name": "Seaborgium Hexachloride (hypothetical)",
+        "elements": {
+            "Sg": 1,
+            "Cl": 6
+        }
+    },
+    {
+        "formula": "BhCl3",
+        "name": "Bohrium Trichloride (hypothetical)",
+        "elements": {
+            "Bh": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "HsCl4",
+        "name": "Hassium Tetrachloride (hypothetical)",
+        "elements": {
+            "Hs": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "MtCl4",
+        "name": "Meitnerium Tetrachloride (hypothetical)",
+        "elements": {
+            "Mt": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "DsCl3",
+        "name": "Darmstadtium Trichloride (hypothetical)",
+        "elements": {
+            "Ds": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "RgCl",
+        "name": "Roentgenium Chloride (hypothetical)",
+        "elements": {
+            "Rg": 1,
+            "Cl": 1
+        }
+    },
+    {
+        "formula": "CnCl4",
+        "name": "Copernicium Tetrachloride (hypothetical)",
+        "elements": {
+            "Cn": 1,
+            "Cl": 4
+        }
+    },
+    {
+        "formula": "FlF",
+        "name": "Flerovium Fluoride (hypothetical)",
+        "elements": {
+            "Fl": 1,
+            "F": 1
+        }
+    },
+    {
+        "formula": "LvF",
+        "name": "Livermorium Fluoride (hypothetical)",
+        "elements": {
+            "Lv": 1,
+            "F": 1
+        }
+    },
+    {
+        "formula": "La2O3",
+        "name": "Lanthanum Oxide",
+        "elements": {
+            "La": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "CeO2",
+        "name": "Cerium Dioxide",
+        "elements": {
+            "Ce": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Pr6O11",
+        "name": "Praseodymium Oxide",
+        "elements": {
+            "Pr": 6,
+            "O": 11
+        }
+    },
+    {
+        "formula": "Nd2O3",
+        "name": "Neodymium Oxide",
+        "elements": {
+            "Nd": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Pm2O3",
+        "name": "Promethium Oxide",
+        "elements": {
+            "Pm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Sm2O3",
+        "name": "Samarium Oxide",
+        "elements": {
+            "Sm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Eu2O3",
+        "name": "Europium Oxide",
+        "elements": {
+            "Eu": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Gd2O3",
+        "name": "Gadolinium Oxide",
+        "elements": {
+            "Gd": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Tb4O7",
+        "name": "Terbium Oxide",
+        "elements": {
+            "Tb": 4,
+            "O": 7
+        }
+    },
+    {
+        "formula": "Dy2O3",
+        "name": "Dysprosium Oxide",
+        "elements": {
+            "Dy": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Ho2O3",
+        "name": "Holmium Oxide",
+        "elements": {
+            "Ho": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Er2O3",
+        "name": "Erbium Oxide",
+        "elements": {
+            "Er": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Tm2O3",
+        "name": "Thulium Oxide",
+        "elements": {
+            "Tm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Yb2O3",
+        "name": "Ytterbium Oxide",
+        "elements": {
+            "Yb": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Lu2O3",
+        "name": "Lutetium Oxide",
+        "elements": {
+            "Lu": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "ThO2",
+        "name": "Thorium Dioxide",
+        "elements": {
+            "Th": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Pa2O5",
+        "name": "Protactinium Pentoxide",
+        "elements": {
+            "Pa": 2,
+            "O": 5
+        }
+    },
+    {
+        "formula": "AmO2",
+        "name": "Americium Dioxide",
+        "elements": {
+            "Am": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Cm2O3",
+        "name": "Curium Oxide",
+        "elements": {
+            "Cm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Bk2O3",
+        "name": "Berkelium Oxide",
+        "elements": {
+            "Bk": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Cf2O3",
+        "name": "Californium Oxide",
+        "elements": {
+            "Cf": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Es2O3",
+        "name": "Einsteinium Oxide",
+        "elements": {
+            "Es": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Fm2O3",
+        "name": "Fermium Oxide",
+        "elements": {
+            "Fm": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Md2O3",
+        "name": "Mendelevium Oxide",
+        "elements": {
+            "Md": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "No2O3",
+        "name": "Nobelium Oxide",
+        "elements": {
+            "No": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "Lr2O3",
+        "name": "Lawrencium Oxide",
+        "elements": {
+            "Lr": 2,
+            "O": 3
+        }
+    },
+    {
+        "formula": "HfO2",
+        "name": "Hafnium Dioxide",
+        "elements": {
+            "Hf": 1,
+            "O": 2
+        }
+    },
+    {
+        "formula": "Ta2O5",
+        "name": "Tantalum Pentoxide",
+        "elements": {
+            "Ta": 2,
+            "O": 5
+        }
+    },
+    {
+        "formula": "WCl6",
+        "name": "Tungsten Hexachloride",
+        "elements": {
+            "W": 1,
+            "Cl": 6
+        }
+    },
+    {
+        "formula": "Re2O7",
+        "name": "Rhenium Heptoxide",
+        "elements": {
+            "Re": 2,
+            "O": 7
+        }
+    },
+    {
+        "formula": "OsO4",
+        "name": "Osmium Tetroxide",
+        "elements": {
+            "Os": 1,
+            "O": 4
+        }
+    },
+    {
+        "formula": "IrCl3",
+        "name": "Iridium(III) Chloride",
+        "elements": {
+            "Ir": 1,
+            "Cl": 3
+        }
+    },
+    {
+        "formula": "PtF6",
+        "name": "Platinum Hexafluoride",
+        "elements": {
+            "Pt": 1,
+            "F": 6
+        }
+    },
+    {
+        "formula": "AuF3",
+        "name": "Gold(III) Fluoride",
+        "elements": {
+            "Au": 1,
+            "F": 3
+        }
+    },
+    {
+        "formula": "Hg2Cl2",
+        "name": "Mercurous Chloride / Calomel",
+        "elements": {
+            "Hg": 2,
+            "Cl": 2
+        }
+    },
+    {
+        "formula": "Tl2O",
+        "name": "Thallium(I) Oxide",
+        "elements": {
+            "Tl": 2,
+            "O": 1
+        }
+    },
+    {
+        "formula": "Pb3O4",
+        "name": "Lead(II,IV) Oxide / Red Lead",
+        "elements": {
+            "Pb": 3,
+            "O": 4
+        }
+    },
+    {
+        "formula": "Bi2S3",
+        "name": "Bismuth(III) Sulfide",
+        "elements": {
+            "Bi": 2,
+            "S": 3
+        }
+    },
+    {
+        "formula": "PoO2",
+        "name": "Polonium Dioxide",
+        "elements": {
+            "Po": 1,
+            "O": 2
+        }
+    }
+]

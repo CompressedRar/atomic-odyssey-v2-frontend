@@ -21,6 +21,7 @@ function Quizzes() {
       case "metals": navigate("/metals"); break;
       case "noblegas": navigate("/noblegas"); break;
       case "pvp": navigate("/pvp"); break;
+      case "playground": navigate("/playground"); break;
       default: break;
     }
   };
@@ -98,6 +99,15 @@ function Quizzes() {
       <br />
       <h1>Review </h1>
       <div className="quiz-modes-container">
+
+        <span className="quiz-mode" id="playground" onClick={() => handleModeClick("playground")}>
+          <div className="quiz-bg"></div>
+          <div className="quiz-grad"></div>
+          <div className="quiz-desc">
+            <span className="mode-name">Mixing Playground</span>
+            <span className="mode-desc">Try different combination different elements.</span>
+          </div>
+        </span>
         {/* Non-Metals */}
         <span className="quiz-mode" id="nonmetals" onClick={() => handleModeClick("nonmetals")}>
           <div className="quiz-bg"></div>

@@ -28,6 +28,7 @@ import Lobby from "./pages/CompetitiveLobby.jsx";
 import Competitive from "./pages/Competitive.jsx";
 import AdminDashboard from "./pages/Administrator.jsx";
 import FusionMode from "./pages/Fusion.jsx";
+import PlaygroundMode from "./pages/Playground.jsx";
 
 function App() {
   return (
@@ -187,6 +188,15 @@ function App() {
               element={
                 <ProtectedRoute>
                   <FusionMode />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/playground"
+              element={
+                <ProtectedRoute>
+                  <PlaygroundMode />
                 </ProtectedRoute>
               }
             />
