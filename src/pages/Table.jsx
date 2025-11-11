@@ -1,10 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Logout } from "../components/Logout";
 import Element from "../components/Element"
 import elements from "../assets/periodic-table.json"
 import BackgroundVideo from "../components/BackgroundVideo";
 import ElementInformation from "../components/ElementInformation";
-
+import { auth } from "../configs/FirebaseConfig";
+import { getDatabase, ref, get, update, onValue, push, set } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signOut,
+  updateEmail,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
 import "../styles/Game.css"
 
 function Table(){
@@ -12,6 +22,19 @@ function Table(){
 
     const [el, setElements] = useState(new Array())
     const [searchKeyword, setSearchKeyword] = useState("")
+    const chatContainerRef = useRef(null);
+    const [showGlobalChat, setShowGlobalChat] = useState(false);
+        const [messages, setMessages] = useState([]);
+        const [message, setMessage] = useState("");
+        const db = getDatabase();
+    
+      useEffect(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+      }, [messages]);
+
+      
 
     const [elementInformation, setInformation] = useState(null)
     const groups = {'nonmetal': "var(--nonmetal)", 
@@ -32,6 +55,30 @@ function Table(){
         }
         return elementArray   
     }
+
+    const handleSendMessage = async () => {
+        if (!message.trim()) return;
+        const user = auth.currentUser;
+        if (!user) return;
+    
+        try {
+          const userSnap = await get(ref(db, `users/${user.uid}`));
+          const userData = userSnap.exists() ? userSnap.val() : {};
+    
+          const newMsgRef = push(ref(db, "globalChat"));
+          await set(newMsgRef, {
+            userId: user.uid,
+            username: userData.username || user.displayName || user.email?.split("@")[0] || "Player",
+            message: message.trim(),
+            timestamp: Date.now(),
+            profilePic: userData.profilePic || user.photoURL || "",
+          });
+    
+          setMessage("");
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+      };
 
     function iterateElements(){
         var keys = Object.keys(elements)
@@ -91,6 +138,21 @@ function Table(){
         return allElementsInHTML
     }
 
+    useEffect(() => {
+        const chatRef = ref(db, "globalChat");
+        const unsubscribe = onValue(chatRef, (snapshot) => {
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            const chatArray = Object.values(data).sort((a, b) => a.timestamp - b.timestamp);
+            setMessages(chatArray);
+        } else {
+            setMessages([]);
+        }
+        });
+    }, []);
+
+    
+
     const checkAllElements = (e) => {
         setSearchKeyword(e.target.value)
         console.log(e.target.value)
@@ -146,6 +208,42 @@ function Table(){
                     onClick={() => setCurrentElement(null)} 
                 />
                 )}
+
+            <div className="lobby-chat">
+        <div id="chat-container" className="settings-modal chat-modal" onClick={(e) => e.stopPropagation()}>
+            
+
+            <h2 className="title">Global Chat</h2>
+            <div className="modal-divider"></div>
+
+            <div className="chat-messages" ref={chatContainerRef}>
+              {messages.map((msg, index) => {
+                const isOwn = msg.userId === auth.currentUser?.uid;
+                return (
+                  <div key={index} className={`chat-message `}>
+                    
+                    <div className="chat-bubble">
+
+                      {!isOwn ? <span className="chat-username">{msg.username}</span> : <span className="chat-username" style={{color:"yellow"}}>You</span> }
+                      <span className="chat-content">{msg.message}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="chat-input-section">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+              />
+              <button hidden onClick={handleSendMessage}>Send</button>
+            </div>
+          </div>
+      </div>
             
             <div className="legend-container">
 

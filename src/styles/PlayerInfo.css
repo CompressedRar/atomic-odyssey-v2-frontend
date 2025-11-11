@@ -8,8 +8,7 @@
     left: 0;
     z-index: 100;
     box-sizing: border-box;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding: 2%;
     gap: 20px;
     padding-top: 2%;
     grid-template-columns: 0.3fr 8fr 1fr;
@@ -621,7 +620,10 @@
 }
 
 .chat-input-section input:focus {
-  background: #1a1a1a;
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
+  background-color: #000000;
 }
 
 .chat-input-section button {
@@ -646,4 +648,163 @@
 .chat-messages::-webkit-scrollbar-thumb {
   background: #f39c12;
   border-radius: 4px;
+}
+
+.lobby-chat {
+  position: fixed;
+  right: 1%;
+  top: 10vh;
+  width: 290px;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 0px;
+  z-index: 100;
+}
+
+.lobby-chat .chat-modal {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0px;
+  background-color: rgba(12,12,12,0.5);
+}
+
+.lobby-chat .chat-messages {
+  width: 100%;
+  padding: 0;
+  gap: 10px;
+  justify-content: flex-end;
+  scrollbar-width: 0px;
+}
+
+.lobby-chat .chat-messages .chat-message {
+  font-size: 1rem;
+  padding: 0;
+  text-wrap: unwrap;
+  max-width: 100%;
+}
+.lobby-chat .chat-messages .chat-message .chat-bubble {
+  font-size: 10px;
+  
+  background-color: #000000;
+  padding: 5px;
+}
+.lobby-chat .chat-bubble .chat-content {
+  background-color: transparent;
+}
+
+.lobby-chat .chat-input-section input{
+  background-color: #000000;
+}
+
+.loading-screen-info {
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.loading-splash {
+  font-size: 3rem;
+  padding: 40px;
+  background-color: #00ff73;
+  color: black;
+  border-radius: 10px;
+  transition: all 0.3ms;
+  animation: loadingAnim 2s infinite ease-in-out;
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+}
+
+.loading-splash::before {
+  content: "H";
+  animation: changeLabel 2s infinite;
+}
+
+.loading-quote {
+  font-size: 1rem;
+}
+
+.loading-quote::before {
+  content: "H";
+  animation: changeQuote 60s;
+}
+
+
+@keyframes changeLabel {
+   0%   { content: "H";  }  /* Hydrogen */
+  5%   { content: "He"; }  /* Helium */
+  10%  { content: "Li"; }  /* Lithium */
+  15%  { content: "Be"; }  /* Beryllium */
+  20%  { content: "B";  }  /* Boron */
+  25%  { content: "C";  }  /* Carbon */
+  30%  { content: "N";  }  /* Nitrogen */
+  35%  { content: "O";  }  /* Oxygen */
+  40%  { content: "F";  }  /* Fluorine */
+  45%  { content: "Ne"; }  /* Neon */
+  50%  { content: "Na"; }  /* Sodium */
+  55%  { content: "Mg"; }  /* Magnesium */
+  60%  { content: "Al"; }  /* Aluminum */
+  65%  { content: "Si"; }  /* Silicon */
+  70%  { content: "P";  }  /* Phosphorus */
+  75%  { content: "S";  }  /* Sulfur */
+  80%  { content: "Cl"; }  /* Chlorine */
+  85%  { content: "Ar"; }  /* Argon */
+  90%  { content: "K";  }  /* Potassium */
+  95%  { content: "Ca"; }  /* Calcium */
+  100% { content: "H";  }
+}
+
+@keyframes loadingAnim {
+  0% {
+    scale: 1;
+    background-color: #ffc82f;
+  }
+  25% {
+    background-color: #902fff;
+  }
+  50% {
+    scale: 1.2;
+    background-color: #ff2f90;
+  }
+  75% {
+    background-color: #87fc52;
+  }
+  100% {
+    background-color: #ff2f2f;
+    scale: 1;
+  }
+}
+
+@keyframes changeQuote {
+  0%   { content: "Chemistry is the study of change."; }
+  5%   { content: "Every element has its own story."; }
+  10%  { content: "Matter is everything and everything is matter."; }
+  15%  { content: "Atoms are the building blocks of the universe."; }
+  20%  { content: "Elements combine to create life."; }
+  25%  { content: "The periodic table is the alphabet of chemistry."; }
+  30%  { content: "We are all made of star-stuff."; }
+  35%  { content: "Balance in reactions mirrors balance in nature."; }
+  40%  { content: "Small things make the biggest differences."; }
+  45%  { content: "Science begins with curiosity."; }
+  50%  { content: "Nature loves patterns and structure."; }
+  55%  { content: "Even chaos follows chemical rules."; }
+  60%  { content: "Atoms seek stability, just like us."; }
+  65%  { content: "Elements react to form something greater."; }
+  70%  { content: "Everything is chemistry in disguise."; }
+  75%  { content: "Energy flows, matter transforms."; }
+  80%  { content: "Reactions require the right conditions."; }
+  85%  { content: "Invisible forces hold the world together."; }
+  90%  { content: "Structure determines function."; }
+  95%  { content: "The periodic table is still growing."; }
+  100% { content: "Chemistry is the study of change."; }
 }

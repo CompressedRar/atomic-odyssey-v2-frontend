@@ -12,6 +12,7 @@ import "../styles/animations.css";
 import msg from "../components/CustomAlerts.js";
 import Swal from "sweetalert2";
 import BackgroundVideo from "../components/BackgroundVideo.jsx";
+import axios from "axios";
 
 function SignUpPage() {
     const [username, setUsername] = useState("");
@@ -45,6 +46,29 @@ function SignUpPage() {
         };
     }, [preview]);
 
+    const handleProfile = async () =>{
+        const formData = new FormData()
+
+        if(profile == null){
+            MessageError("File must not be empty.")
+        }
+
+        formData.append("file", profile)
+
+        try {
+            console.log("SENDING DATA")
+            const result = await axios.post("http://127.0.0.1:5000/api/auth/upload/profile", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                } 
+            })
+            return result.data.link
+        }
+        catch(exception){
+            console.log(exception)
+        }
+    }
+
     const handleSignUp = async (e) => {
         e.preventDefault();
 
@@ -69,6 +93,8 @@ function SignUpPage() {
 
             const profileBase64 = await toBase64(profile);
 
+            const prof_link = await handleProfile()
+
             // 1️⃣ Create user
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredentials.user;
@@ -89,7 +115,7 @@ function SignUpPage() {
             await set(ref(db, "users/" + user.uid), {
                 username,
                 email,
-                profilePic: profileBase64,
+                profilePic: prof_link,
                 mmr: 0,
                 stars: 0,
                 verified: false,
@@ -103,7 +129,7 @@ function SignUpPage() {
                 icon: "success",
                 title: "Account Created!",
                 html: "A verification email has been sent. Please verify your email before logging in.",
-                confirmButtonText: "Continued",
+                confirmButtonText: "Continue to Login",
             }).then(() => {
                 window.location.href = "/";
             });

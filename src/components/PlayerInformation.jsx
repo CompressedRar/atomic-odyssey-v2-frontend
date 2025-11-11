@@ -319,7 +319,6 @@ function PlayerInformation() {
   };
 
   useEffect(() => {
-    if (!showGlobalChat) return;
     const chatRef = ref(db, "globalChat");
     const unsubscribe = onValue(chatRef, (snapshot) => {
       if (snapshot.exists()) {
@@ -330,8 +329,7 @@ function PlayerInformation() {
         setMessages([]);
       }
     });
-    return () => unsubscribe();
-  }, [showGlobalChat]);
+  }, []);
 
   const handleSendMessage = async () => {
     if (!message.trim()) return;
@@ -358,7 +356,12 @@ function PlayerInformation() {
   };
 
   if (!userInfo)
-    return <div className="player-info-container">Loading player info...</div>;
+    return <div className="loading-screen-info">
+      <span className="loading-splash"></span>
+      <small>
+        <span className="loading-quote"></span>
+      </small>
+    </div>
 
   return (
     <>
@@ -396,6 +399,7 @@ function PlayerInformation() {
             className="material-symbols-outlined"
             onClick={() => setShowGlobalChat(true)}
             title="Global Chat"
+            style={{display:"none"}}
           >
             chat
           </span>
@@ -502,6 +506,42 @@ function PlayerInformation() {
           </div>
         </div>
       )}
+
+      {showGlobalChat && <div className="lobby-chat">
+        <div id="chat-container" className="settings-modal chat-modal" onClick={(e) => e.stopPropagation()}>
+            
+
+            <h2 className="title">Global Chat</h2>
+            <div className="modal-divider"></div>
+
+            <div className="chat-messages" ref={chatContainerRef}>
+              {messages.map((msg, index) => {
+                const isOwn = msg.userId === auth.currentUser?.uid;
+                return (
+                  <div key={index} className={`chat-message `}>
+                    
+                    <div className="chat-bubble">
+
+                      {!isOwn ? <span className="chat-username">{msg.username}</span> : <span className="chat-username">You</span> }
+                      <span className="chat-content">{msg.message}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="chat-input-section">
+              <input
+                type="text"
+                placeholder="Type your message..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+              />
+              <button hidden onClick={handleSendMessage}>Send</button>
+            </div>
+          </div>
+      </div>}
 
       {showHistoryModal && (
         <div
