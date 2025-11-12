@@ -219,10 +219,51 @@ export default function Classic() {
         }
     };
 
+    const saveScoreToHistory = async (answeredQuestions) => {
+    try {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const db = getDatabase();
+        const userRef = ref(db, `users/${user.uid}`);
+        const snapshot = await get(userRef);
+
+        let username = "Anonymous";
+        let profilePic = "https://via.placeholder.com/50";
+        if (snapshot.exists()) {
+        const data = snapshot.val();
+        if (data.username) username = data.username;
+        if (data.profilePic) profilePic = data.profilePic;
+        }
+
+        const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
+
+        // ✅ Use push() to create a unique entry for each game
+        const historyRef = ref(db, `history/Classic/${user.uid}`);
+        const newEntryRef = push(historyRef);
+
+        await set(newEntryRef, {
+        uid: user.uid,
+        name: username,
+        email: user.email,
+        profilePic,
+        score,
+        totalTimeTaken,
+        timestamp: Date.now(),
+        answeredQuestions: answeredQuestions || [],
+        });
+
+        console.log("✅ Score added to history!");
+    } catch (err) {
+        console.error("❌ Error saving score:", err);
+    }
+    };
+
     useEffect(() => {
         if (isGameOver) {
             const answeredQuestions = answered.filter((a) => a).length;
             saveScoreToLeaderboard(answeredQuestions);
+            saveScoreToHistory(answeredQuestions);
             setActiveModal("gameover");
         }
     }, [isGameOver]);
