@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Classic.css";
 import Swal from "sweetalert2";
 import { auth } from "../configs/FirebaseConfig";
-import { getDatabase, ref, get, set } from "firebase/database";
+import { getDatabase, ref, get, set, push } from "firebase/database";
 import Confetti from "react-confetti";
 import { div } from "framer-motion/client";
 

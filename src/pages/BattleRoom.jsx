@@ -4,6 +4,7 @@ import {
   set,
   get,
   update,
+  push,
   remove,
   onDisconnect,
   onValue,

@@ -4,7 +4,7 @@ import periodicJspon from "../assets/periodic-table.json"
 import compounds from "../assets/quiz-compound.json"
 import "../styles/Classic.css";
 import { auth } from "../configs/FirebaseConfig";
-import { getDatabase, ref, get, set } from "firebase/database";
+import { getDatabase, ref, get, set, push } from "firebase/database";
 
 const elementsData  = Object.values(periodicJspon)
 

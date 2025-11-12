@@ -6,7 +6,7 @@ import another_elements from "../assets/periodic-table.json"
 import Swal from "sweetalert2";
 import { auth } from "../configs/FirebaseConfig";
 import Confetti from "react-confetti";
-import { getDatabase, ref, get, set, onValue } from "firebase/database";
+import { getDatabase, ref, get, set, onValue, push } from "firebase/database";
 
 
 const elements = [

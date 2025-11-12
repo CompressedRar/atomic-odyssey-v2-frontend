@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/TimeTrial.css";
 import BackgroundVideo from "../components/BackgroundVideo";
 import { auth } from "../configs/FirebaseConfig";
-import { getDatabase, ref, get, set } from "firebase/database";
+import { getDatabase, ref, get, set, push } from "firebase/database";
 
 import Swal from "sweetalert2";
 
