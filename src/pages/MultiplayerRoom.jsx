@@ -27,6 +27,9 @@ export default function MultiplayerRoom({ roomCode }) {
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
   const [localQuit, setLocalQuit] = useState(false);
 
+  const [hasAnswered, setHasAnswered] = useState(false);
+
+
   const MAX_POINTS = 10;
   const MIN_PLAYERS = 2; // minimum to start
   const elements = Object.values(periodicTable);
@@ -168,14 +171,19 @@ export default function MultiplayerRoom({ roomCode }) {
 
       // Check for win condition
       if (newScore >= MAX_POINTS) {
-        // Determine top scorer
-        const sorted = Object.entries(data.players).sort(
-          (a, b) => (b[1].score || 0) - (a[1].score || 0)
-        );
-        const [top] = sorted;
-        updates.winner = top[0];
-        updates.feedback = `${top[0]} wins the battle!`;
+        const highest = Math.max(...Object.values(data.players).map(p => p.score || 0), newScore);
+        const winners = [
+          ...Object.entries(data.players).filter(([_, p]) => p.score === highest).map(([n]) => n),
+        ];
+        if (!winners.includes(username)) winners.push(username);
+        updates.winner = winners.join(", ");
+        updates.feedback =
+          winners.length > 1
+            ? `${winners.join(" & ")} tied for the win!`
+            : `${winners[0]} wins the battle!`;
       }
+
+
     } else {
       updates.feedback = `${username} answered wrong!`;
       updates.answered = false;
