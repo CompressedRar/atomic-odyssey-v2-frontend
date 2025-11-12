@@ -583,6 +583,10 @@ const Survival = () => {
         });
     };
 
+    const handleExit = () => {
+        navigate(-1); // Go back to menu or previous page
+    };
+
     // --- Render ---
     if (isStarting) {
         return (
