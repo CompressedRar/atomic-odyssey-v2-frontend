@@ -25,13 +25,38 @@ export default function BattleRoom({ roomCode }) {
   const [loading, setLoading] = useState(true);
   const [questionAnimate, setQuestionAnimate] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
-  const [localQuit, setLocalQuit] = useState(false); // <-- Tracks if current player quit
+  const [localQuit, setLocalQuit] = useState(false);
 
   const MAX_POINTS = 10;
   const elements = Object.values(periodicTable);
 
-  // ------------------------------
-  // Detect if BattleRoom is visible
+  // ------------------------------ HELPER: Save to Leaderboard ------------------------------
+  const saveToLeaderboard = async (playerName, score) => {
+    try {
+      if (!playerName) return;
+      const leaderboardRef = ref(db, `leaderboards/competitive/${playerName}`);
+      const snapshot = await get(leaderboardRef);
+
+      // Keep highest score only
+      if (snapshot.exists()) {
+        const existingScore = snapshot.val().score || 0;
+        if (score > existingScore) {
+          await update(leaderboardRef, { score, timestamp: Date.now() });
+        }
+      } else {
+        await set(leaderboardRef, {
+          name: playerName,
+          score,
+          timestamp: Date.now(),
+        });
+      }
+      console.log(`✅ Saved ${playerName} (${score}) to leaderboard`);
+    } catch (err) {
+      console.error("Error saving leaderboard:", err);
+    }
+  };
+
+  // ------------------------------ ACTIVITY DETECTION ------------------------------
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsActive(entry.isIntersecting),
@@ -43,7 +68,7 @@ export default function BattleRoom({ roomCode }) {
     };
   }, []);
 
-  // Load username
+  // ------------------------------ LOAD USERNAME ------------------------------
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
       if (!u) return;
@@ -62,7 +87,7 @@ export default function BattleRoom({ roomCode }) {
     return () => unsub();
   }, []);
 
-  // Player presence
+  // ------------------------------ PLAYER PRESENCE ------------------------------
   useEffect(() => {
     if (!username || !roomCode) return;
     const playerRef = ref(db, `rooms/${roomCode}/players/${username}/online`);
@@ -70,7 +95,7 @@ export default function BattleRoom({ roomCode }) {
     onDisconnect(playerRef).set(false);
   }, [username, roomCode]);
 
-  // Listen for room updates
+  // ------------------------------ ROOM LISTENER ------------------------------
   useEffect(() => {
     if (!roomCode) return;
     const roomRef = ref(db, `rooms/${roomCode}`);
@@ -95,8 +120,9 @@ export default function BattleRoom({ roomCode }) {
     return () => unsub();
   }, [roomCode, username]);
 
-  // Generate Questions
+  // ------------------------------ QUESTION GENERATION ------------------------------
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
+
   const generateQuestion = () => {
     const el = elements[Math.floor(Math.random() * elements.length)];
     const types = [
@@ -137,7 +163,7 @@ export default function BattleRoom({ roomCode }) {
     return types[Math.floor(Math.random() * types.length)];
   };
 
-  // Start New Question
+  // ------------------------------ START NEW QUESTION ------------------------------
   const startNewQuestion = async () => {
     if (!roomData || !username || roomData.host !== username) return;
     if (roomData.winner) return;
@@ -149,7 +175,7 @@ export default function BattleRoom({ roomCode }) {
     });
   };
 
-  // Handle answer
+  // ------------------------------ HANDLE ANSWER ------------------------------
   const handleAnswer = async (choice) => {
     if (!question || !username || winner) return;
     const roomRef = ref(db, `rooms/${roomCode}`);
@@ -166,9 +192,17 @@ export default function BattleRoom({ roomCode }) {
       updates.feedback = `${username} answered correctly!`;
       updates.answered = true;
 
+      // If player reaches MAX_POINTS → winner
       if (newScore >= MAX_POINTS) {
         updates.winner = username;
         updates.feedback = `${username} wins the battle!`;
+
+        // 🏆 Save both players to leaderboard
+        const players = data.players || {};
+        for (const [name, p] of Object.entries(players)) {
+          const finalScore = name === username ? newScore : p.score ?? 0;
+          await saveToLeaderboard(name, finalScore);
+        }
       }
     } else {
       updates.feedback = `${username} answered wrong! Try again.`;
@@ -178,7 +212,7 @@ export default function BattleRoom({ roomCode }) {
     await update(roomRef, updates);
   };
 
-  // Auto next question
+  // ------------------------------ AUTO NEXT QUESTION ------------------------------
   useEffect(() => {
     if (roomData?.feedback?.includes("answered correctly") && !roomData?.winner) {
       const t = setTimeout(() => startNewQuestion(), 2000);
@@ -186,12 +220,12 @@ export default function BattleRoom({ roomCode }) {
     }
   }, [roomData?.feedback, roomData?.winner]);
 
-  // Winner
+  // ------------------------------ WINNER ------------------------------
   useEffect(() => {
     if (roomData?.winner) setWinner(roomData.winner);
   }, [roomData?.winner]);
 
-  // Quit Game logic
+  // ------------------------------ QUIT GAME ------------------------------
   const handleQuitGame = async () => {
     if (!username || !roomCode || !roomData) return;
 
@@ -207,19 +241,27 @@ export default function BattleRoom({ roomCode }) {
     );
 
     if (remainingPlayers.length > 0) {
-      const [winnerName] = remainingPlayers[0];
+      const [winnerName, winnerData] = remainingPlayers[0];
       await update(roomRef, { winner: winnerName, ended: true });
+
+      // 🏆 Save both to leaderboard
+      await saveToLeaderboard(winnerName, winnerData.score ?? 0);
+      await saveToLeaderboard(username, players[username]?.score ?? 0);
     } else {
+      // Everyone left → save all scores
+      for (const [name, p] of Object.entries(players)) {
+        await saveToLeaderboard(name, p.score ?? 0);
+      }
       await update(roomRef, { ended: true });
     }
 
-    setLocalQuit(true);       // Quitting player sees defeat overlay
+    setLocalQuit(true);
     setShowQuitConfirm(false);
   };
 
   const handleRestart = () => window.location.reload();
 
-  // ---------------- Render UI ----------------
+  // ------------------------------ UI ------------------------------
   if (loading || !username) return <div>Loading...</div>;
   if (roomData?.ended && !winner && !localQuit)
     return <div className="text-white text-center mt-10">This battle has ended.</div>;
@@ -286,7 +328,7 @@ export default function BattleRoom({ roomCode }) {
           })}
       </div>
 
-      {/* Question Section */}
+      {/* Question */}
       {question && (
         <div className={`question-container ${questionAnimate ? "fade-in" : ""}`}>
           <h2 className="question">{question.text}</h2>
@@ -307,14 +349,13 @@ export default function BattleRoom({ roomCode }) {
       {/* Feedback */}
       {roomData?.feedback && <p className="feeds">{roomData.feedback}</p>}
 
-      {/* Winner/Loser overlay */}
+      {/* Result Overlay */}
       {(winner || localQuit) && (
         <div
           onClick={handleRestart}
-          className={`result-overlay ${localQuit ? "loser" : winner === username ? "winner" : "loser"
-            }`}
+          className={`result-overlay ${localQuit ? "loser" : winner === username ? "winner" : "loser"}`}
         >
-          {(!localQuit && winner === username) && (
+          {!localQuit && winner === username && (
             <Confetti numberOfPieces={600} recycle={false} gravity={0.25} />
           )}
           <h1>{localQuit ? "DEFEAT!" : winner === username ? "VICTORY!" : "DEFEAT!"}</h1>
