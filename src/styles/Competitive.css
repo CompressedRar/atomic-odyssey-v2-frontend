@@ -295,3 +295,8 @@
   border-radius: 6px;
   cursor: not-allowed;
 }
+
+.choice-btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

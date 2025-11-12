@@ -14,6 +14,10 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [adminInfo, setAdminInfo] = useState(null);
 
+  // 🔹 New room-related states
+  const [activeRooms, setActiveRooms] = useState(0);
+  const [finishedRooms, setFinishedRooms] = useState(0);
+
   // 🔹 Fetch currently logged-in admin info
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -59,6 +63,37 @@ export default function AdminDashboard() {
       }
     };
     fetchUsers();
+  }, []);
+
+  // 🔹 Fetch active/finished room stats from Firebase
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const db = getDatabase();
+        const snapshot = await get(ref(db, "rooms"));
+        if (snapshot.exists()) {
+          const rooms = snapshot.val();
+          const roomList = Object.values(rooms);
+
+          const active = roomList.filter((r) => r.gameStarted && !r.ended).length;
+          const finished = roomList.filter((r) => r.ended).length;
+
+          setActiveRooms(active);
+          setFinishedRooms(finished);
+        } else {
+          setActiveRooms(0);
+          setFinishedRooms(0);
+        }
+      } catch (err) {
+        console.error("Error fetching room stats:", err);
+      }
+    };
+
+    fetchRooms();
+
+    // Optional: refresh every 10 seconds
+    const interval = setInterval(fetchRooms, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   // 🔹 Compute dashboard stats
@@ -177,13 +212,7 @@ export default function AdminDashboard() {
               />
               <div>
                 <strong>{adminInfo?.username || "Admin"}</strong>
-                <p
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "#aaa",
-                    margin: 0,
-                  }}
-                >
+                <p style={{ fontSize: "0.8rem", color: "#aaa", margin: 0 }}>
                   {adminInfo?.email}
                 </p>
               </div>
@@ -214,6 +243,24 @@ export default function AdminDashboard() {
                 <p className="stat-number">{loading ? "..." : disabledUsers}</p>
               </div>
               <span className="material-icons stat-icon">person_off</span>
+            </div>
+
+            {/* 🔹 New Active Rooms Card */}
+            <div className="card">
+              <div>
+                <h4>Active Rooms</h4>
+                <p className="stat-number">{activeRooms}</p>
+              </div>
+              <span className="material-icons stat-icon">sports_esports</span>
+            </div>
+
+            {/* 🔹 New Finished Rooms Card */}
+            <div className="card">
+              <div>
+                <h4>Finished Rooms</h4>
+                <p className="stat-number">{finishedRooms}</p>
+              </div>
+              <span className="material-icons stat-icon">flag</span>
             </div>
           </section>
 

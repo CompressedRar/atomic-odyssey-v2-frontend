@@ -57,7 +57,7 @@ function SignUpPage() {
 
         try {
             console.log("SENDING DATA")
-            const result = await axios.post("http://127.0.0.1:5000/api/auth/upload/profile", formData, {
+            const result = await axios.post("http://192.168.110.70:5000/api/auth/upload/profile", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 } 
