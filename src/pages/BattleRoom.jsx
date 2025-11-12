@@ -69,6 +69,82 @@ export default function BattleRoom({ roomCode }) {
     set(playerRef, true);
     onDisconnect(playerRef).set(false);
   }, [username, roomCode]);
+   const saveScoreToLeaderboard = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const userRef = ref(db, `users/${user.uid}`);
+      const snapshot = await get(userRef);
+
+      let username = "Anonymous";
+      let profilePic = "https://via.placeholder.com/50";
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        if (data.username) username = data.username;
+        if (data.profilePic) profilePic = data.profilePic;
+      }
+
+      const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
+      const leaderboardRef = ref(db, `leaderboards/Classic/${user.uid}`);
+      const leaderboardSnap = await get(leaderboardRef);
+      const oldData = leaderboardSnap.exists() ? leaderboardSnap.val() : {};
+      const updatedGamesPlayed = (oldData.gamesPlayed || 0) + 1;
+
+      await set(leaderboardRef, {
+        uid: user.uid,
+        name: username,
+        email: user.email,
+        profilePic,
+        score,
+        gamesPlayed: updatedGamesPlayed,
+        totalTimeTaken,
+        timestamp: Date.now(),
+      });
+
+      console.log("✅ Score saved to leaderboard!");
+    } catch (err) {
+      console.error("❌ Error saving score:", err);
+    }
+  };
+
+  // 🔹 Save to History
+  const saveScoreToHistory = async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const userRef = ref(db, `users/${user.uid}`);
+      const snapshot = await get(userRef);
+
+      let username = "Anonymous";
+      let profilePic = "https://via.placeholder.com/50";
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        if (data.username) username = data.username;
+        if (data.profilePic) profilePic = data.profilePic;
+      }
+
+      const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
+      const historyRef = ref(db, `history/Classic/${user.uid}`);
+      const newEntryRef = push(historyRef);
+
+      await set(newEntryRef, {
+        uid: user.uid,
+        name: username,
+        email: user.email,
+        profilePic,
+        score,
+        totalTimeTaken,
+        timestamp: Date.now(),
+        answeredQuestions,
+      });
+
+      console.log("✅ Score added to history!");
+    } catch (err) {
+      console.error("❌ Error saving score:", err);
+    }
+  };
 
   // Listen for room updates
   useEffect(() => {
@@ -168,7 +244,9 @@ export default function BattleRoom({ roomCode }) {
 
       if (newScore >= MAX_POINTS) {
         updates.winner = username;
+        
         updates.feedback = `${username} wins the battle!`;
+         await Promise.all([saveScoreToLeaderboard(), saveScoreToHistory()]);
       }
     } else {
       updates.feedback = `${username} answered wrong! Try again.`;
@@ -212,7 +290,7 @@ export default function BattleRoom({ roomCode }) {
     } else {
       await update(roomRef, { ended: true });
     }
-
+     await Promise.all([saveScoreToLeaderboard(), saveScoreToHistory()]);
     setLocalQuit(true);       // Quitting player sees defeat overlay
     setShowQuitConfirm(false);
   };
