@@ -76,7 +76,21 @@
     height: 100%;
     transform: translateY(-100%);
 }
+#pvp {
+    grid-column: span 2;
+}
+#pvp .quiz-desc{
+    padding: 4%;
+    padding-top: 1%;
+    
+}
 
+#pvp:hover {
+    scale:1;
+}
+#multi:hover {
+    scale:1;
+}
 #classic .quiz-bg {
     opacity: 1;
     background-size: cover;
@@ -145,4 +159,11 @@
     background-size: cover;
     background-position: center;
     background-image: url("/quizzes-bg/playground.jpg");
+}
+
+#multi .quiz-bg {
+    opacity: 1;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/quizzes-bg/multi.jpg");
 }

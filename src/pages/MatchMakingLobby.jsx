@@ -101,8 +101,8 @@ export default function MatchmakingLobby({ onStartGame }) {
 
   return (
     <div className="pvp-container">
-      <h1 className="text-3xl font-bold mb-2">Competitive</h1>
-      <p className="text-gray-400 mb-6">Compete and clash with other players.</p>
+      <h1 className="text-3xl font-bold mb-2">Versus</h1>
+      <p className="text-gray-400 mb-6">Compete and clash with other player.</p>
 
       {!roomCode ? (
         <button

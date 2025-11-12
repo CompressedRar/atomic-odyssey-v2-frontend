@@ -236,3 +236,62 @@
         transform: translateY(0);
     }
 }
+
+.multi-lobby {
+    
+}
+
+.multi-buttons, .multi-start {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.multi-start {
+    justify-content: space-between;
+}
+
+.room-code {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.join-input {
+    gap: 10px;
+    display: flex;
+    
+}
+
+.join-input input{
+    padding: 10px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: 'Poppins';
+}
+
+.join-input button {
+    background-color: #5762ff;
+}
+
+.quiz-mode.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+.lobby-disabled {
+  text-align: center;
+  color: #bbb;
+}
+
+.btn-disabled {
+  background: #444;
+  border: none;
+  color: #999;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: not-allowed;
+}

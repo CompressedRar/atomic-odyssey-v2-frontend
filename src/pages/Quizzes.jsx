@@ -5,10 +5,13 @@ import "../styles/animations.css";
 import Competitive from "./Competitive";
 import MatchmakingLobby from "./MatchMakingLobby";
 import BattleRoom from "./BattleRoom";
+import MultiplayerLobby from "./Multiplayer";
+import MultiplayerRoom from "./MultiplayerRoom";
 
 function Quizzes() {
   const navigate = useNavigate();
   const [roomInfo, setRoomInfo] = useState(null);
+  const [multiRoomInfo, setMultiRoomInfo] = useState(null)
 
   const handleModeClick = (mode) => {
     switch (mode) {
@@ -77,23 +80,46 @@ function Quizzes() {
         </span>
 
         {/* PvP */}
-        <span className="quiz-mode" id="pvp">
-          <div className="quiz-bg"></div>
-          <div className="quiz-grad"></div>
-          <div className="quiz-desc">
-            <MatchmakingLobby
-              onStartGame={(roomCode, userInfo) =>
-                setRoomInfo({ roomCode, userInfo })
-              }
-              onCancelMatch={handleCancelMatch} // 🔹 pass cancel callback
-            />
-          </div>
-        </span>
+        
+      </div>
+
+      <h1>Multiplayer</h1>
+        <div className="quiz-modes-container">
+        <span className={`quiz-mode ${multiRoomInfo ? "disabled" : ""}`}  id="pvp" style={{maxHeight:"300px"}}>
+            <div className="quiz-bg"></div>
+            <div className="quiz-grad"></div>
+            <div className="quiz-desc">
+              <MatchmakingLobby
+                onStartGame={(roomCode, userInfo) =>
+                  setRoomInfo({ roomCode, userInfo })
+                }
+                onCancelMatch={handleCancelMatch} // 🔹 pass cancel callback
+              />
+            </div>
+          </span>
+
+          <span className={`quiz-mode ${roomInfo ? "disabled" : ""}`}   id="multi" style = {{gridColumn:"span 2"}}>
+            <div className="quiz-bg"></div>
+            <div className="quiz-grad"></div>
+            <div className="quiz-desc">
+              
+              <MultiplayerLobby
+                onStartGame={(roomCode, userInfo) =>
+                  setMultiRoomInfo({ roomCode, userInfo })
+                }
+                onCancelMatch={handleCancelMatch} // 🔹 pass cancel callback
+              />
+            </div>
+          </span>
       </div>
 
       {/* BattleRoom display */}
       {roomInfo && (
         <BattleRoom {...roomInfo} />
+      )}
+
+      {multiRoomInfo && (
+        <MultiplayerRoom {...multiRoomInfo} />
       )}
 
       <br />
