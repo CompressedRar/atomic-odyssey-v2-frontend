@@ -50,7 +50,7 @@ function Quizzes() {
         </span>
 
         {/* Classic Mode */}
-        <span className="quiz-mode" id="classic" onClick={() => handleModeClick("classic")}>
+        <span className="quiz-mode" id="classic" onClick={() => {navigate("/classic")}}>
           <div className="quiz-bg"></div>
           <div className="quiz-grad"></div>
           <div className="quiz-desc">

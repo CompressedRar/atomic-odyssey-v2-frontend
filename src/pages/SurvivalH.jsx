@@ -5,7 +5,7 @@ import BackgroundVideo from "../components/BackgroundVideo";
 import another_elements from "../assets/periodic-table.json"
 import { auth } from "../configs/FirebaseConfig";
 import Confetti from "react-confetti";
-import { getDatabase, ref, get, set, onValue } from "firebase/database";
+import { getDatabase, ref, get, set, onValue, push } from "firebase/database";
 
 const elements = [
   { name: "Hydrogen", symbol: "H", number: 1 },
@@ -536,11 +536,13 @@ const SurvivalH = () => {
     setIsGameOver(true);
     setShowResultOverlay(true);
     saveScoreToLeaderboard(questionCount);
+    saveScoreToHistory(questionCount)
   };
 
   useEffect(() => {
     if (isGameOver) {
       saveScoreToLeaderboard(questionCount);
+      saveScoreToHistory(questionCount)
       // DO NOT trigger modal here
     }
   }, [isGameOver]);
@@ -622,6 +624,45 @@ const SurvivalH = () => {
       return updated.filter(c => !c.fadingOut);
     });
   };
+  const saveScoreToHistory = async (answeredQuestions) => {
+    try {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const db = getDatabase();
+        const userRef = ref(db, `users/${user.uid}`);
+        const snapshot = await get(userRef);
+
+        let username = "Anonymous";
+        let profilePic = "https://via.placeholder.com/50";
+        if (snapshot.exists()) {
+        const data = snapshot.val();
+        if (data.username) username = data.username;
+        if (data.profilePic) profilePic = data.profilePic;
+        }
+
+        const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
+
+        // ✅ Use push() to create a unique entry for each game
+        const historyRef = ref(db, `history/Classic/${user.uid}`);
+        const newEntryRef = push(historyRef);
+
+        await set(newEntryRef, {
+        uid: user.uid,
+        name: username,
+        email: user.email,
+        profilePic,
+        score,
+        totalTimeTaken,
+        timestamp: Date.now(),
+        answeredQuestions: answeredQuestions || [],
+        });
+
+        console.log("✅ Score added to history!");
+    } catch (err) {
+        console.error("❌ Error saving score:", err);
+    }
+    };
 
   // --- Leaderboard ---
   const fetchLeaderboard = () => {

@@ -88,13 +88,6 @@ export default function AdminLeaderboard() {
           </optgroup>
         </select>
 
-        <button
-          className="btn-small btn-red"
-          onClick={handleClearLeaderboard}
-          disabled={loading || leaderboardData.length === 0}
-        >
-          Clear Leaderboard
-        </button>
       </div>
 
       {/* Leaderboard Table */}
