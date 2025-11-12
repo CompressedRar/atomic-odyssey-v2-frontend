@@ -69,6 +69,7 @@ export default function BattleRoom({ roomCode }) {
     set(playerRef, true);
     onDisconnect(playerRef).set(false);
   }, [username, roomCode]);
+
    const saveScoreToLeaderboard = async () => {
     try {
       const user = auth.currentUser;
@@ -86,7 +87,7 @@ export default function BattleRoom({ roomCode }) {
       }
 
       const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
-      const leaderboardRef = ref(db, `leaderboards/Classic/${user.uid}`);
+      const leaderboardRef = ref(db, `leaderboards/Competitive/${user.uid}`);
       const leaderboardSnap = await get(leaderboardRef);
       const oldData = leaderboardSnap.exists() ? leaderboardSnap.val() : {};
       const updatedGamesPlayed = (oldData.gamesPlayed || 0) + 1;
@@ -126,7 +127,7 @@ export default function BattleRoom({ roomCode }) {
       }
 
       const totalTimeTaken = TOTAL_GAME_TIME - timeLeft;
-      const historyRef = ref(db, `history/Classic/${user.uid}`);
+      const historyRef = ref(db, `history/Competitive/${user.uid}`);
       const newEntryRef = push(historyRef);
 
       await set(newEntryRef, {
@@ -243,10 +244,12 @@ export default function BattleRoom({ roomCode }) {
       updates.answered = true;
 
       if (newScore >= MAX_POINTS) {
+        await saveScoreToLeaderboard();
+        await saveScoreToHistory()
         updates.winner = username;
         
         updates.feedback = `${username} wins the battle!`;
-         await Promise.all([saveScoreToLeaderboard(), saveScoreToHistory()]);
+         
       }
     } else {
       updates.feedback = `${username} answered wrong! Try again.`;
@@ -290,7 +293,8 @@ export default function BattleRoom({ roomCode }) {
     } else {
       await update(roomRef, { ended: true });
     }
-     await Promise.all([saveScoreToLeaderboard(), saveScoreToHistory()]);
+    await saveScoreToLeaderboard();
+    await saveScoreToHistory()
     setLocalQuit(true);       // Quitting player sees defeat overlay
     setShowQuitConfirm(false);
   };
